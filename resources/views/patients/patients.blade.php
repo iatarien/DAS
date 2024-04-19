@@ -63,11 +63,12 @@
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
                                             <td>
+                                                <a class="btn btn-primary" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/card">بطاقة معوق</a><br><br>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/fiche_info">بطاقة معلومات</a><br><br>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_info">شهادة معلومات</a><br><br>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
                                             </td>
-                                            <td><a class="btn btn-primary" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
+                                            <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
                                             <td><a class="btn btn-danger" href="/delete_patient/{{$patient->id_patient}}">حذف</a></td>
                                         </tr>
                                         @endforeach
