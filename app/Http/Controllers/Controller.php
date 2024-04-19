@@ -17,10 +17,23 @@ class Controller extends BaseController
     
     public function __construct() 
     {
-        // Fetch the Site Settings object
-        $bloc = DB::table('bloc')->first();
-        $this->bloc = $bloc->bloc_name;
-        View::share('bloc', $this->bloc);
+        $settings = DB::table('company')->where('id_comp',1)->first();
+        $this->ville = $settings->ville;
+        $this->ville_fr = $settings->ville_fr;
+        $this->ministere_fr = $settings->ministere_fr;
+        $this->ministere = $settings->ministere;
+        $this->direction = $settings->direction;
+        $this->direction_fr = $settings->direction_fr;
+        $this->year = $settings->year;
+
+        View::share('ville', $this->ville);
+        View::share('ville_fr', $this->ville_fr);
+        View::share('direction', $this->direction);
+        View::share('direction_fr', $this->direction_fr);
+        View::share('ministere', $this->ministere);
+        View::share('ministere_fr', $this->ministere_fr);
+        View::share('the_year', $this->year);
+
 
     }
 }

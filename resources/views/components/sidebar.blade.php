@@ -1,14 +1,10 @@
 <!-- Sidebar -->
 <ul dir="rtl" style="padding-right : 15px;" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-<!-- Sidebar - Brand -->
-<a style="justify-content : right !important" class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-    <div style="margin : 0 !important;"  class="sidebar-brand-text mx-3"> الجناح البيداغوجي {{$bloc}} <sup></sup></div>
-</a>
-
 <!-- Divider -->
-<hr class="sidebar-divider my-0">
 
+<br><br><br><br>
+<hr class="sidebar-divider my-0">
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
     <a class="nav-link" href="/">
@@ -30,9 +26,9 @@
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
-    <a class="nav-link" href="/add_rapport">
-        <i class="fas fa-fw fa-tag"></i>
-        <span>إضافة تقرير</span></a>
+    <a class="nav-link" href="/add_patient">
+        <i class="fas fa-fw fa-pen"></i>
+        <span>إضافة بطاقة شخص معوق</span></a>
 </li>
 <hr class="sidebar-divider">
 

@@ -67,10 +67,10 @@ class UsersController extends Controller
         DB::table('users')->where('id', $id)->update(['full_name'=>$full_name,'username'=>$username,
         'password'=>$password,'position'=>$position,'service'=>$service,"chapitre"=>$chapitre]);
         DB::table('safe')->where('id', $id)->update(['password'=>$request['password']]);
-        if($user->service =="Chef des Labos"){
+        if($user->service =="Admin"){
             return Redirect::to('/users');
         }else{
-            return Redirect::to('/');
+            return Redirect::to('/users');
         }
         
     }

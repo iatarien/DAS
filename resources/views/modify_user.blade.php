@@ -11,7 +11,7 @@
             @include('components.topbar')
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" dir="ltr" style="text-align : right">
+                <div class="container-fluid" dir="ltr" style="text-align : right; width : 60%;">
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">تعديل الحساب</h1><br>
@@ -55,7 +55,7 @@
 								</div>
 							</div>
 							<?php $clss =""; ?>
-							@if($user->service !="Chef des Labos")
+							@if($user->service !="Admin")
 							<?php $clss = "disabled";  ?>
 							@endif
 							<div class="form-group row">
@@ -63,12 +63,8 @@
 								<div class="col-lg-8">
 								<select {{$clss}} required="" class="form-control" name="service">
 									<option selected style="visibility: hidden;" value="{{$u->service}}">{{$u->service}}</option>
-									<option value="Ingenieur">Ingenieur</option>
-									<option value="Chef des Labos">Chef des Labos</option>
-									<option value="Chef de Departement">Chef de Departement</option>
-									<option value="Doyen">Doyen</option>
-									<option value="SG">Secretaire Générale</option>
-									<option value="Responsable des Moyen">Responsable des Moyen</option>
+									<option value="Agent">Agent de saisie</option>
+									<option value="Chef">Chef</option>
 									</select>
 								</div>
 							</div>

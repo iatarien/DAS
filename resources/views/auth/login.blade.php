@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>برنامج تسيير المخابر البيداغوجية</title>
+        <title>DAS</title>
           <!-- Favicons -->
         <link href="/assets/img/favicon.png" rel="icon">
         <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">

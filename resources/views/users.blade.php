@@ -3,14 +3,14 @@
         @include('components.sidebar')
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color : white;">
 
             <!-- Main Content -->
             <div id="content">
 
             @include('components.topbar')
                 <!-- Begin Page Content -->
-                <div class="container-fluid" dir="ltr" style="text-align : left">
+                <div class="container-fluid" dir="ltr" style="text-align : left; width : 60%; color : black;">
 
 				<div class="panel-body">
 					<div class="padd">
@@ -57,14 +57,8 @@
 								<label class="control-label col-lg-2">Role</label>
 								<div class="col-lg-10">
 								<select required="" class="form-control" name="service">
-									<option value="Ingenieur">Ingenieur</option>
-									<option value="Chef des Labos">Chef des Labos</option>
-									<option value="Chef de Departement">Chef de Departement</option>
-									<option value="Doyen">Doyen</option>
-									<option value="SG">Secretaire Générale</option>
-									<option value="Responsable des Moyen">Responsable des Moyen</option>
-									
-
+									<option value="Agent">Agent de saisie</option>
+									<option value="Chef">Chef</option>
 									</select>
 								</div>
 							</div>
@@ -77,16 +71,15 @@
 							<!-- Buttons -->
 							<div class="form-group row">
 								<!-- Buttons -->
-								<div class="col-lg-offset-2 col-lg-9">
-								<button type="submit" class="btn btn-primary">Ajouter</button>
-								<button type="reset" class="btn btn-default">Annuler</button>
+								<div align="center" class="col-lg-12">
+									<button type="submit" class="btn btn-primary">Ajouter</button>
 								</div>
 							</div>
 							</form>
 						</div>
 						</div>
 					</div>
-
+					<hr>
 					<section class="panel">
 						<div class="panel-body progress-panel">
 							<div class="row">

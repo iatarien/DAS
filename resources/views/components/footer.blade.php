@@ -8,7 +8,7 @@
               <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; {{ Date('Y') }} Univ Tamenrasset</span>
+                        <span>Copyright &copy; {{ Date('Y') }} {{$direction_fr}} {{$ville_fr}}</span>
                     </div>
                 </div>
             </footer>
