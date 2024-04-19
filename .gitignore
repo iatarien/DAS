@@ -1,0 +1,14 @@
+/node_modules
+/bootstrap
+/config
+/database
+/public
+/publicuploads
+/storage
+/tests
+/vendor
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
