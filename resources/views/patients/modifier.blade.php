@@ -45,7 +45,18 @@
                                         <input style="text-align : right" dir="ltr" required="" type="text" class="form-control" value="{{$patient->prenom_fr}}"  name="prenom_fr">
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">اسم الأب</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right" required="" type="text" class="form-control" value="{{$patient->father}}"  name="father">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">لقب و اسم الأم</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right" required="" type="text" class="form-control" value="{{$patient->mother}}"  name="mother">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title">تاريخ الإزدياد</label>
                                     <div class="col-lg-8">
@@ -81,7 +92,18 @@
                                         <input style="text-align : right" dir="ltr" required="" value="{{$patient->taux}}" type="number" class="form-control"  name="taux">
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title"> رقم البطاقة</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right" required="" dir="ltr" type="number" class="form-control"  value="{{$patient->num_card}}" name="num_card">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">تاريخ :</label>
+                                    <div class="col-lg-8">
+                                    <input  style="text-align : right" required="" type="date" class="form-control" value="{{$patient->date_card}}" name="date_card">
+                                    </div>
+                                </div>
                                 <div class="form-group" align="center">
                                     <button class="btn btn-primary" type="submit">حفظ</button>
                                 </div>

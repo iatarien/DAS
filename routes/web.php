@@ -32,11 +32,9 @@ Route::post('/update_user', 'UsersController@update_user');
 Route::post('/delete_user', 'UsersController@delete_user');
 Route::post('/chnage_profile_photo','UsersController@chnage_profile_photo');
 
-/** RESERVES ROUTES */
-Route::get('/add_reserve/{patient}/{outil}/{state}', 'ReserveController@add_reserve');
+/** ATTESTATIONS ROUTES */
 
-Route::post('/insert_reserve', 'ReserveController@insert_reserve');
-
+Route::get('/fiche/{id}/{type}', 'AttestationController@fiche');
 
 /** AUTH ROUTES **/
 Auth::routes();

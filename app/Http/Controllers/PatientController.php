@@ -62,16 +62,22 @@ class PatientController extends Controller
         $prenom = $request['prenom'];
         $nom_fr = $request['nom_fr'];
         $prenom_fr = $request['prenom_fr'];
+        $father = $request['father'];
+        $mother = $request['mother'];
         $date_naissance = $request['date_naissance'];
         $lieu_naissance = $request['lieu_naissance'];
         $adresse = $request['adresse'];
         $handicap = $request['handicap'];
         $taux = $request['taux'];
 
+        $num_card = $request['num_card'];
+        $date_card = $request['date_card'];
 
         $id = DB::table('patients')->
         insertGetId(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
+        "father"=>$father,"mother"=>$mother,
+        "num_card"=>$num_card,"date_card"=>$date_card,
         "adresse"=>$adresse,"taux"=>$taux,"user_id"=>$user]);
 
         return Redirect::to('/patients');
@@ -84,16 +90,22 @@ class PatientController extends Controller
         $prenom = $request['prenom'];
         $nom_fr = $request['nom_fr'];
         $prenom_fr = $request['prenom_fr'];
+        $father = $request['father'];
+        $mother = $request['mother'];
         $date_naissance = $request['date_naissance'];
         $lieu_naissance = $request['lieu_naissance'];
         $adresse = $request['adresse'];
         $handicap = $request['handicap'];
         $taux = $request['taux'];
 
+        $num_card = $request['num_card'];
+        $date_card = $request['date_card'];
 
         $id = DB::table('patients')->where('id_patient',$patient)->
         update(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
+        "father"=>$father,"mother"=>$mother,
+        "num_card"=>$num_card,"date_card"=>$date_card,
         "adresse"=>$adresse,"taux"=>$taux]);
 
         return Redirect::to('/patients');

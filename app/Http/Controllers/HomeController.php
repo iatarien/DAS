@@ -69,6 +69,7 @@ class HomeController extends Controller
     {   
 
         $user = Auth::user();
+        return Redirect::to('/patients');
         return view('index',['user' => $user]);
         $user = Auth::user();
         if($secteur =="all"){

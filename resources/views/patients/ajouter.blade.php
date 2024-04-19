@@ -44,7 +44,18 @@
                                         <input style="text-align : right" dir="ltr" required="" type="text" class="form-control"  name="prenom_fr">
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">اسم الأب</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right" required="" type="text" class="form-control"  name="father">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">لقب و اسم الأم</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right" required="" type="text" class="form-control"  name="mother">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title">تاريخ الإزدياد</label>
                                     <div class="col-lg-8">
@@ -79,7 +90,18 @@
                                         <input style="text-align : right" dir="ltr" required="" type="number" class="form-control"  name="taux">
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title"> رقم البطاقة</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right" required="" dir="ltr" type="number" class="form-control"  name="num_card">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">تاريخ :</label>
+                                    <div class="col-lg-8">
+                                    <input  style="text-align : right" required="" type="date" class="form-control"  name="date_card">
+                                    </div>
+                                </div>
                                 <div class="form-group" align="center">
                                     <button class="btn btn-primary" type="submit">حفظ</button>
                                 </div>

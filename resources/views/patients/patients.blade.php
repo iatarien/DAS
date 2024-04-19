@@ -45,7 +45,8 @@
                                             <th>مكان الإزدياد</th>
                                             <th>العنوان</th>
                                             <th>طبيعة الإعاقة</th>
-                                            <th>نسبة الإعاقة</th>    
+                                            <th>نسبة الإعاقة</th>   
+                                            <th>معاينة</th>   
                                             <th>تعديل</th>  
                                             <th>حدف</th> 
                                         </tr>
@@ -61,8 +62,13 @@
                                             <td>{{$patient->adresse}}</td>
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
-                                            <td><a class="btn btn-primary" href="edit_patient/{{$patient->id_patient}}">تعديل</td>
-                                            <td><a class="btn btn-danger" href="delete_patient/{{$patient->id_patient}}">حذف</td>
+                                            <td>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/fiche_info">بطاقة معلومات</a><br><br>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_info">شهادة معلومات</a><br><br>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
+                                            </td>
+                                            <td><a class="btn btn-primary" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
+                                            <td><a class="btn btn-danger" href="/delete_patient/{{$patient->id_patient}}">حذف</a></td>
                                         </tr>
                                         @endforeach
 
