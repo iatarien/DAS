@@ -34,8 +34,10 @@ class AttestationController extends Controller
         $user = Auth::user();
         $patient = DB::table('patients')->join("handicaps","handicaps.id_handicap","=","patients.handicap")->where("id_patient",$id)->first();
         $view = 'attestations.fiche';
-        if($type="card"){
+        if($type=="card"){
             $view = 'attestations.card';
+        }elseif($type=="card2"){
+            $view = 'attestations.card2';
         }
         return view($view,['user'=> $user,"patient"=>$patient,"type"=>$type]);
 

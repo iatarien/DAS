@@ -41,12 +41,12 @@
                                         <tr>
                                             <th>اللقب</th>
                                             <th>الاسم</th>
-                                            <th>تاريخ الإزدياد</th>
-                                            <th>مكان الإزدياد</th>
+                                            <th>تاريخ و مكان الإزدياد</th>
                                             <th>العنوان</th>
                                             <th>طبيعة الإعاقة</th>
                                             <th>نسبة الإعاقة</th>   
-                                            <th>معاينة</th>   
+                                            <th>بطاقة معوق</th>   
+                                            <th>شهادات</th>   
                                             <th>تعديل</th>  
                                             <th>حدف</th> 
                                         </tr>
@@ -57,13 +57,15 @@
                                         <tr>
                                             <td>{{$patient->nom}}</td>
                                             <td>{{$patient->prenom}}</td>
-                                            <td>{{$patient->date_naissance}}</td>
-                                            <td>{{$patient->lieu_naissance}}</td>
+                                            <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
                                             <td>{{$patient->adresse}}</td>
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
                                             <td>
                                                 <a class="btn btn-primary" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/card">بطاقة معوق</a><br><br>
+                                                <a class="btn btn-primary" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/card2">الخلف</a><br><br>
+                                            </td>
+                                            <td>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/fiche_info">بطاقة معلومات</a><br><br>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_info">شهادة معلومات</a><br><br>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>

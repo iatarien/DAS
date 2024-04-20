@@ -78,6 +78,7 @@ class PatientController extends Controller
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
         "father"=>$father,"mother"=>$mother,
         "num_card"=>$num_card,"date_card"=>$date_card,
+        "inserted_at"=>Date('Y-m-d'),"year"=>Date("Y"),
         "adresse"=>$adresse,"taux"=>$taux,"user_id"=>$user]);
 
         return Redirect::to('/patients');

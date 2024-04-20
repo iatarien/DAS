@@ -13,7 +13,7 @@
 	}
 	@media print {
 		html,body{
-			height:100mm;
+			height:106mm;
 	    	width:150mm;
 			overflow-y : hidden !important;
 		}
@@ -27,23 +27,12 @@
 	    line-height: 1.6;
 	    -webkit-print-color-adjust: exact !important;
 	}
+
     span {
         text-align: right;
     }
 	.show {
 		color : black !important;
-		width : 70%;
-		text-align : center;
-	}
-	.show_small {
-		color : black !important;
-		width : 85%;
-		text-align : center;
-	}
-	.show_big {
-		color : black !important;
-		width : 55%;
-		text-align : center;
 	}
 </style>
 
@@ -52,41 +41,32 @@
 <?php
 $type_ar ="";
 ?>
-<section  style="background-color: lightblue; margin-top : 6mm; font-weight : bold; font-size: 3.8mm;" id="fiche" dir="rtl">
+<section  style="background-color: lightblue; margin-top : 6mm; font-weight : bold; " id="fiche" dir="rtl">
 	<div id="fiche_top" style="display: flex; justify-content: center; border : 1px solid; height : 99.6mm;">
-        <div style="width : 50%; border : 1px solid; padding-right : 5mm; padding-left : 8mm; padding-top : 10mm;" >
-            <div  style="display : flex; justify-content: center; align-items : center"><span >طبيعة الإعاقة : </span>
-			<span class="show">{{$patient->name_handicap}}</span></div>
-			<div  style="display : flex; justify-content: center; align-items : center"><span >نسبة الإعاقة : </span>
-			<span class="show">% {{$patient->taux}}</span></div>
-            <br><br>
-            <span>
-                سلمت هذه البطاقة من طرف مدير {{$direction}} لولاية <span class="show">&emsp;&emsp;{{$ville}}</span>
+        <div style="width : 50%; border : 1px solid; padding-right : 5mm; padding-left : 8mm; padding-top : 3mm; text-align : justify; " >
+            <span >تسهل هذه البطاقة الوصول إلى المزايا&emsp; المنصوص عليها في القانون رقم 02-09 
+				 المؤرخ في 25 صفر &emsp;عام 1423 الموافق 8 مايو 2002 و المتعلق بحماية الأشخاص المعوقين و ترقيتهم.
             </span>
-            <br><br>
-            <span style="text-align : center; width : 100%; display : block;">
-               في : <span class="show">&emsp;&emsp;{{$patient->date_card}}</span>
-            </span>
-            <br>
-            <span style="text-align : center; width : 100%; display : block;">
-               إمضاء
-            </span>
+            <br><br><br><br>
+            <div style="font-size : 12mm; rotate : -45deg; text-align : center;">
+              الأولوية
+			</div>
+
         </div>
-        <div style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm;" >
-            <div style="height : 24mm; width : 27mm; border : 0.54mm solid;"></div><br>
-            	<div  style="display : flex; justify-content: center; align-items : center"><span > اللقب : </span>
-				<span class="show_small">{{$patient->nom}}</span> </div>
-                <div  style="display : flex; justify-content: center; align-items : center">الاسم : </span>
-				<span class="show_small">{{$patient->prenom}}</span></div>
-                <div  style="display : flex; justify-content: center; align-items : center"> <span> تاريخ و مكان الميلاد : </span>
-				<span class="show_big">{{$patient->date_naissance}}</span></div>
-				<div style="text-align : center;"><span class="show"> بــ : {{$patient->lieu_naissance}}</span><br></div>
-                    العنوان : .................................................</span><br>
-				<div style="text-align : center;"><span class="show">{{$patient->adresse}}</span><br></div>
-                    اللقب و الاسم باللغة اللاتينية :.......................<br>
-                    <div style="text-align : center;"><span class="show">{{$patient->nom_fr}} {{$patient->prenom_fr}}</span></div>
-                    إمضاء المعني :..........................................<br>
-            </span>
+        <div style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm; font-size: 3.8mm; text-align : center;" >
+            <span> الجمهورية الجزائرية الديمقراطية الشعبية</span>
+			<hr style="border-color : black; width : 28mm; margin-top : 0;"><br>
+			<span>وزارة {{$ministere}}</span>
+			<hr style="border-color : black; width : 28mm; margin-top : 0;"><br><br><br>
+			<div style="font-size : 8mm; text-align : center;">
+              بطاقة الشخص المعوق
+			</div><br><br><br>
+			<div style="display : flex; justify-content: center; align-items : center">
+			الرقم :&emsp; <div style="height : 11mm; width : 24mm; border : 0.54mm solid;display : flex; justify-content: center; align-items : center">
+			<span class="show">{{$patient->num_card}}</span></div>
+			<div style="height : 11mm; width : 24mm; border : 0.54mm solid; border-right : none; display : flex; justify-content: center; align-items : center">
+			<span class="show">{{$patient->year}}</span></div>
+			</div>
         </div>
 
 	</div>
@@ -105,7 +85,7 @@ $type_ar ="";
 	  display: inline-block;
 	  font-size: 16px;" 
   onclick="printdiv('fiche')"> طباعة </button>
-  
+
   <button id="bouton_2" style="
 	  background-color: lightblue; /* Green */
 	  border: none;
@@ -116,7 +96,7 @@ $type_ar ="";
 	  text-decoration: none;
 	  display: inline-block;
 	  font-size: 16px;" 
-  onclick=location.href="/fiche/"+"{{$patient->id_patient}}"+"/card2/"> الخلف </button>
+  onclick=location.href="/fiche/"+"{{$patient->id_patient}}"+"/card/"> الأمام </button>
 
 <button id="bouton_2" style="
 	  background-color: skyblue; /* Green */
@@ -142,27 +122,36 @@ window.onbeforeunload = function () {
     window.close();
 };
 
-
-
 function hide(){
 	fiche = document.getElementById('fiche');
 	fiche.style.color = "transparent";
 	fiche.style.backgroundColor = "transparent";
 
+	var elements = document.getElementsByTagName("hr");
 
+    for(var i = elements.length - 1; i >= 0; --i)
+    {
+        elements[i].style.borderColor ="transparent";
+    }
 }
 function unhide(){
 	fiche = document.getElementById('fiche');
 	fiche.style.color = "black";
 	fiche.style.backgroundColor = "lightblue";
 
+	var elements = document.getElementsByTagName("hr");
 
+    for(var i = elements.length - 1; i >= 0; --i)
+    {
+        elements[i].style.borderColor ="black";
+    }
 }
+
 
 function printdiv(printdivname) {
 	document.getElementById('bouton').style.display = "none";
 	document.getElementById('bouton_2').style.display = "none";
-	
+
 	hide();
     print();
 	unhide();

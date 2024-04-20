@@ -1,0 +1,9 @@
+delete patient
+
+confirm
+
+history
+
+stats
+
+filters
