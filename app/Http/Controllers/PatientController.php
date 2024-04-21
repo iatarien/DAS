@@ -8,7 +8,7 @@ use DB;
 use Auth;
 use Bcrypt;
 use Redirect;
-
+use DateTime;
 class PatientController extends Controller
 {
     /**
@@ -38,7 +38,23 @@ class PatientController extends Controller
         return view('patients.patients',['user' => $user,"patients"=>$patients]);
         
     }
-     
+    public function calc_age($birthday){
+        $date = new DateTime($birthday);
+        $now = new DateTime();
+        $interval = $now->diff($date);
+        return $interval->y;
+    }
+    public function stats($filters="")
+    {   
+        $user = Auth::user();
+        $patients = DB::table('patients')->join("handicaps","handicaps.id_handicap","=","patients.handicap")->get();
+        foreach($patients as $patient){
+            $patient->age = $this->calc_age($patient->date_naissance);
+        }
+        $handicaps = DB::table('handicaps')->get();
+        return view('patients.stats',['user' => $user,"patients"=>$patients,"handicaps"=>$handicaps]);
+        
+    }
     public function add_patient()
     {   
         $user = Auth::user();
@@ -69,6 +85,7 @@ class PatientController extends Controller
         $adresse = $request['adresse'];
         $handicap = $request['handicap'];
         $taux = $request['taux'];
+        $sexe = $request['sexe'];
 
         $num_card = $request['num_card'];
         $date_card = $request['date_card'];
@@ -76,7 +93,7 @@ class PatientController extends Controller
         $id = DB::table('patients')->
         insertGetId(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
-        "father"=>$father,"mother"=>$mother,
+        "father"=>$father,"mother"=>$mother,"sexe"=>$sexe,
         "num_card"=>$num_card,"date_card"=>$date_card,
         "inserted_at"=>Date('Y-m-d'),"year"=>Date("Y"),
         "adresse"=>$adresse,"taux"=>$taux,"user_id"=>$user]);
@@ -98,6 +115,7 @@ class PatientController extends Controller
         $adresse = $request['adresse'];
         $handicap = $request['handicap'];
         $taux = $request['taux'];
+        $sexe = $request['sexe'];
 
         $num_card = $request['num_card'];
         $date_card = $request['date_card'];
@@ -105,7 +123,7 @@ class PatientController extends Controller
         $id = DB::table('patients')->where('id_patient',$patient)->
         update(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
-        "father"=>$father,"mother"=>$mother,
+        "father"=>$father,"mother"=>$mother,"sexe"=>$sexe,
         "num_card"=>$num_card,"date_card"=>$date_card,
         "adresse"=>$adresse,"taux"=>$taux]);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 20, 2024 at 03:25 PM
+-- Generation Time: Apr 21, 2024 at 07:00 PM
 -- Server version: 5.7.40
 -- PHP Version: 7.4.33
 
@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `prenom` text NOT NULL,
   `nom_fr` text NOT NULL,
   `prenom_fr` text NOT NULL,
+  `sexe` varchar(10) NOT NULL,
   `father` text NOT NULL,
   `mother` text NOT NULL,
   `date_naissance` date NOT NULL,
@@ -104,8 +105,8 @@ CREATE TABLE IF NOT EXISTS `patients` (
 -- Dumping data for table `patients`
 --
 
-INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `num_card`, `date_card`, `inserted_at`, `year`) VALUES
-(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', 'الجزائر العاصمة', 4, 100, 1, NULL, '8100', '2024-04-19', '2024-04-20', '2024');
+INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `num_card`, `date_card`, `inserted_at`, `year`) VALUES
+(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', 'الجزائر العاصمة', 4, 100, 1, NULL, '8100', '2024-04-19', '2024-04-20', '2024');
 
 -- --------------------------------------------------------
 

@@ -45,6 +45,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">الجنس</label>
+                                    <div class="col-lg-8">
+                                        <select required="" class="form-control"  name="sexe">
+                                            <option >ذكر</option>
+                                            <option >أنثى</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title">اسم الأب</label>
                                     <div class="col-lg-8">
                                         <input style="text-align : right" required="" type="text" class="form-control"  name="father">

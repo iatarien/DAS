@@ -4,25 +4,10 @@
 <!-- Divider -->
 
 <br><br><br><br>
-<hr class="sidebar-divider my-0">
-<!-- Nav Item - Dashboard -->
-<li class="nav-item active">
-    <a class="nav-link" href="/">
-        <i class="fas fa-fw fa-calendar"></i>
-        <span>المتابعة البيداغوجية</span></a>
-</li>
+
 
 <!-- Divider -->
-<hr class="sidebar-divider">
 
-
-
-<!-- Nav Item - Tables -->
-<li class="nav-item active">
-    <a class="nav-link" href="/rapports">
-        <i class="fas fa-fw fa-copy"></i>
-        <span>التقارير</span></a>
-</li>
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
@@ -30,15 +15,33 @@
         <i class="fas fa-fw fa-pen"></i>
         <span>إضافة بطاقة شخص معوق</span></a>
 </li>
-<hr class="sidebar-divider">
 
+<hr class="sidebar-divider">
+<li class="nav-item active">
+    <a class="nav-link" href="/validate">
+        <i class="fas fa-fw fa-check"></i>
+        <span>تثبيت البطاقات</span></a>
+</li>
+<hr class="sidebar-divider">
+<li class="nav-item active">
+    <a class="nav-link" href="/patients">
+        <i class="fas fa-fw fa-copy"></i>
+        <span> البطاقات و الشهادات </span></a>
+</li>
+<hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
-    <a class="nav-link" href="/">
+    <a class="nav-link" href="/stats">
         <i class="fas fa-fw fa-table"></i>
-        <span>حصيلة شهرية/سنوية</span></a>
+        <span>حصيلة إجمالية</span></a>
 </li>
-
+<hr class="sidebar-divider my-0">
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    <a class="nav-link" href="/rejected">
+        <i class="fas fa-fw fa-calendar"></i>
+        <span> الغير مستفيدين</span></a>
+</li>
 <hr class="sidebar-divider">
 
 <!-- Nav Item - Tables -->

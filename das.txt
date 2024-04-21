@@ -7,3 +7,8 @@ history
 stats
 
 filters
+
+
+- printer name
+- ages ?
+- rejected ?
