@@ -14,25 +14,11 @@
     .table {
         transform: rotateX(180deg);
     }
+    .table td {
+        font-weight : bold;
+    }
 </style>
 
-<?php 
-
-function get_stat($patients,$handicap,$min,$max,$sexe){
-
-    $s = 0;
-
-    foreach( $patients as $patient){
-
-        if($patient->handicap == $handicap && $patient->sexe == $sexe){
-            if($patient->age >= $min && $patient->age < $max){
-                $s = $s+1;
-            }
-        }
-    }
-    return $s;
-} 
-?>
         @include('components.sidebar')
 
         <!-- Content Wrapper -->
@@ -91,42 +77,43 @@ function get_stat($patients,$handicap,$min,$max,$sexe){
                                     </thead>
 
                                     <tbody>
-                                        @foreach($handicaps as $handicap)
+                                        @foreach($stats as $handicap)
                                         <tr>
                                             <td>{{$handicap->name_handicap}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,0,3,"ذكر")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,0,3,"أنثى")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,3,5,"ذكر")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,3,5,"أنثى")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,5,18,"ذكر")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,5,18,"أنثى")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,18,35,"ذكر")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,18,35,"أنثى")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,35,60,"ذكر")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,35,60,"أنثى")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,60,3500000,"ذكر")}}</td>
-                                            <td>{{get_stat($patients,$handicap->id_handicap,60,3500000,"أنثى")}}</td>
-                                            
+                                            <td>{{$handicap->stats_0_3_m}}</td>
+                                            <td>{{$handicap->stats_0_3_f}}</td>
+                                            <td>{{$handicap->stats_3_5_m}}</td>
+                                            <td>{{$handicap->stats_3_5_f}}</td>
+                                            <td>{{$handicap->stats_5_18_m}}</td>
+                                            <td>{{$handicap->stats_5_18_f}}</td>
+                                            <td>{{$handicap->stats_18_35_m}}</td>
+                                            <td>{{$handicap->stats_18_35_f}}</td>
+                                            <td>{{$handicap->stats_35_60_m}}</td>
+                                            <td>{{$handicap->stats_35_60_f}}</td>
+                                            <td>{{$handicap->stats_60_m}}</td>
+                                            <td>{{$handicap->stats_60_f}}</td>
+                                            <td>{{$handicap->total_handicap_m}}</td>
+                                            <td>{{$handicap->total_handicap_f}}</td>
+                                            <td>{{$handicap->total_handicap}}</td>
                                         </tr>
                                         @endforeach
                                         <tr>
                                             <td>المجموع</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
+                                            <td id="tot_1">{{array_sum(array_column($stats,"stats_0_3_m"))}}</td>
+                                            <td id="tot_2">{{array_sum(array_column($stats,"stats_0_3_f"))}}</td>
+                                            <td id="tot_3">{{array_sum(array_column($stats,"stats_3_5_m"))}}</td>
+                                            <td id="tot_4">{{array_sum(array_column($stats,"stats_3_5_f"))}}</td>
+                                            <td id="tot_5">{{array_sum(array_column($stats,"stats_5_18_m"))}}</td>
+                                            <td id="tot_6">{{array_sum(array_column($stats,"stats_5_18_f"))}}</td>
+                                            <td id="tot_7">{{array_sum(array_column($stats,"stats_18_35_m"))}}</td>
+                                            <td id="tot_8">{{array_sum(array_column($stats,"stats_18_35_f"))}}</td>
+                                            <td id="tot_9">{{array_sum(array_column($stats,"stats_35_60_m"))}}</td>
+                                            <td id="tot_10">{{array_sum(array_column($stats,"stats_35_60_f"))}}</td>
+                                            <td id="tot_11">{{array_sum(array_column($stats,"stats_60_m"))}}</td>
+                                            <td id="tot_12">{{array_sum(array_column($stats,"stats_60_f"))}}</td>
+                                            <td id="tot_13">{{array_sum(array_column($stats,"total_handicap_m"))}}</td>
+                                            <td id="tot_14">{{array_sum(array_column($stats,"total_handicap_f"))}}</td>
+                                            <td id="tot_15">{{array_sum(array_column($stats,"total_handicap"))}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -176,63 +163,46 @@ function get_stat($patients,$handicap,$min,$max,$sexe){
                                     </thead>
 
                                     <tbody>
-                                        @foreach($handicaps as $handicap)
+                                    @foreach($stats_2 as $handicap)
                                         <tr>
                                             <td>{{$handicap->name_handicap}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
+                                            <td>{{$handicap->stats_0_3_m}}</td>
+                                            <td>{{$handicap->stats_0_3_f}}</td>
+                                            <td>{{$handicap->stats_3_5_m}}</td>
+                                            <td>{{$handicap->stats_3_5_f}}</td>
+                                            <td>{{$handicap->stats_5_18_m}}</td>
+                                            <td>{{$handicap->stats_5_18_f}}</td>
+                                            <td>{{$handicap->stats_18_35_m}}</td>
+                                            <td>{{$handicap->stats_18_35_f}}</td>
+                                            <td>{{$handicap->stats_35_60_m}}</td>
+                                            <td>{{$handicap->stats_35_60_f}}</td>
+                                            <td>{{$handicap->stats_60_m}}</td>
+                                            <td>{{$handicap->stats_60_f}}</td>
+                                            <td>{{$handicap->total_handicap_m}}</td>
+                                            <td>{{$handicap->total_handicap_f}}</td>
+                                            <td>{{$handicap->total_handicap}}</td>
                                         </tr>
                                         @endforeach
                                         <tr>
                                             <td>المجموع</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
+                                            <td id="tot2_1">{{array_sum(array_column($stats_2,"stats_0_3_m"))}}</td>
+                                            <td id="tot2_2">{{array_sum(array_column($stats_2,"stats_0_3_f"))}}</td>
+                                            <td id="tot2_3">{{array_sum(array_column($stats_2,"stats_3_5_m"))}}</td>
+                                            <td id="tot2_4">{{array_sum(array_column($stats_2,"stats_3_5_f"))}}</td>
+                                            <td id="tot2_5">{{array_sum(array_column($stats_2,"stats_5_18_m"))}}</td>
+                                            <td id="tot2_6">{{array_sum(array_column($stats_2,"stats_5_18_f"))}}</td>
+                                            <td id="tot2_7">{{array_sum(array_column($stats_2,"stats_18_35_m"))}}</td>
+                                            <td id="tot2_8">{{array_sum(array_column($stats_2,"stats_18_35_f"))}}</td>
+                                            <td id="tot2_9">{{array_sum(array_column($stats_2,"stats_35_60_m"))}}</td>
+                                            <td id="tot2_10">{{array_sum(array_column($stats_2,"stats_35_60_f"))}}</td>
+                                            <td id="tot2_11">{{array_sum(array_column($stats_2,"stats_60_m"))}}</td>
+                                            <td id="tot2_12">{{array_sum(array_column($stats_2,"stats_60_f"))}}</td>
+                                            <td id="tot2_13">{{array_sum(array_column($stats_2,"total_handicap_m"))}}</td>
+                                            <td id="tot2_14">{{array_sum(array_column($stats_2,"total_handicap_f"))}}</td>
+                                            <td id="tot_15">{{array_sum(array_column($stats_2,"total_handicap"))}}</td>
                                         </tr>
-                                        <tr style="background-color : lightgray;">
-                                            <th>المجموع الكلي</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
+                                        <tr style="background-color : lightgray;" id="some_total">
+
                                             
                                         </tr>
                                     </tbody>
@@ -250,5 +220,14 @@ function get_stat($patients,$handicap,$min,$max,$sexe){
 <script type="text/javascript">
 window.onload = function(){
 	document.getElementById('loading').style.display = "none";
+    //total();
 };
+function total(){
+    str = "<th>المجموع الكلي</th>";
+    for(var i =1; i< 16; i++){
+        s = parseInt(document.getElementById('tot_'+i).innerHTML) + parseInt(document.getElementById('tot2_'+i).innerHTML);
+        str += "<th>"+s+"</th>";
+    }
+    document.getElementById("some_total").innerHTML = str;
+}
 </script>

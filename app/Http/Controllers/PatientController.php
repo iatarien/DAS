@@ -47,14 +47,102 @@ class PatientController extends Controller
     public function stats($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->join("handicaps","handicaps.id_handicap","=","patients.handicap")->get();
-        foreach($patients as $patient){
+        $patients100 = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        where("taux",100)->get();
+        foreach($patients100 as $patient){
             $patient->age = $this->calc_age($patient->date_naissance);
         }
         $handicaps = DB::table('handicaps')->get();
-        return view('patients.stats',['user' => $user,"patients"=>$patients,"handicaps"=>$handicaps]);
+        $stats = array();
+        $stats = $this->calc_stats($stats, $patients100,$handicaps);
+
+        $patients = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        where("taux","<",100)->get();
+        foreach($patients as $patient){
+            $patient->age = $this->calc_age($patient->date_naissance);
+        }
+        $stats_2 = array();
+        $stats_2 = $this->calc_stats($stats_2,$patients,$handicaps);
+
+        return view('patients.stats',['user' => $user,"stats"=>$stats,"stats_2"=>$stats_2]);
         
     }
+
+    public function calc_stats($stats,$patients,$handicaps){
+        $stats = array();
+        foreach($handicaps as $handicap){
+            $total_handicap_m = 0;
+            $total_handicap_f = 0;
+            $stats_0_3_m = 0;
+            $stats_3_5_m = 0;
+            $stats_5_18_m = 0;
+            $stats_18_35_m = 0;
+            $stats_35_60_m = 0;
+            $stats_60_m = 0;
+            $stats_0_3_f = 0;
+            $stats_3_5_f = 0;
+            $stats_5_18_f = 0;
+            $stats_18_35_f = 0;
+            $stats_35_60_f = 0;
+            $stats_60_f = 0;
+            foreach( $patients as $patient){
+                if($patient->handicap == $handicap->id_handicap){ 
+                    if($patient->sexe == "ذكر"){
+                        $total_handicap_m += 1;
+                        if($patient->age >= 0 && $patient->age < 3){
+                            $stats_0_3_m += 1;
+                        }elseif($patient->age >= 3 && $patient->age < 5){
+                            $stats_3_5_m += 1;
+                        }elseif($patient->age >= 5 && $patient->age < 18){
+                            $stats_5_18_m += 1;
+                        }elseif($patient->age >= 18 && $patient->age < 35){
+                            $stats_18_35_m += 1;
+                        }elseif($patient->age >= 35 && $patient->age < 60){
+                            $stats_35_60_m += 1;
+                        }elseif($patient->age >= 60 ){
+                            $stats_60_m += 1;
+                        }
+                    }elseif($patient->sexe == "أنثى"){
+                        $total_handicap_f += 1;
+                        if($patient->age >= 0 && $patient->age < 3){
+                            $stats_0_3_f += 1;
+                        }elseif($patient->age >= 3 && $patient->age < 5){
+                            $stats_3_5_f += 1;
+                        }elseif($patient->age >= 5 && $patient->age < 18){
+                            $stats_5_18_f += 1;
+                        }elseif($patient->age >= 18 && $patient->age < 35){
+                            $stats_18_35_f += 1;
+                        }elseif($patient->age >= 35 && $patient->age < 60){
+                            $stats_35_60_f += 1;
+                        }elseif($patient->age >= 60 ){
+                            $stats_60_f += 1;
+                        }
+                    }
+                }
+            }
+            $handicap->stats_0_3_m = $stats_0_3_m;
+            $handicap->stats_3_5_m = $stats_3_5_m;
+            $handicap->stats_5_18_m = $stats_5_18_m;
+            $handicap->stats_18_35_m = $stats_18_35_m;
+            $handicap->stats_35_60_m = $stats_35_60_m;
+            $handicap->stats_60_m = $stats_60_m;
+            $handicap->stats_0_3_f = $stats_0_3_f;
+            $handicap->stats_3_5_f = $stats_3_5_f;
+            $handicap->stats_5_18_f = $stats_5_18_f;
+            $handicap->stats_18_35_f = $stats_18_35_f;
+            $handicap->stats_35_60_f = $stats_35_60_f;
+            $handicap->stats_60_f = $stats_60_f;
+            $handicap->total_handicap_m = $total_handicap_m;
+            $handicap->total_handicap_f = $total_handicap_f;
+            $handicap->total_handicap = $total_handicap_f + $total_handicap_m;
+            array_push($stats,$handicap);
+        }
+        
+        return $stats;
+    }
+
     public function add_patient()
     {   
         $user = Auth::user();
