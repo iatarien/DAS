@@ -31,7 +31,7 @@
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
-    <a class="nav-link" href="/stats">
+    <a class="nav-link" href="/stats/all">
         <i class="fas fa-fw fa-table"></i>
         <span>حصيلة إجمالية</span></a>
 </li>

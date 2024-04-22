@@ -20,7 +20,8 @@ Route::get('/patients/{filters?}', 'PatientController@show_patients');
 Route::get('/add_patient', 'PatientController@add_patient');
 Route::get('/edit_patient/{id}', 'PatientController@edit_patient');
 
-Route::get('/stats/{filters?}', 'PatientController@stats');
+Route::get('/stats/{annee?}', 'PatientController@stats');
+Route::get('/get_stats/{annee?}', 'PatientController@get_stats');
 
 Route::post('/insert_patient', 'PatientController@insert_patient');
 Route::post('/update_patient', 'PatientController@update_patient');

@@ -9,6 +9,8 @@ use Auth;
 use Bcrypt;
 use Redirect;
 use DateTime;
+use stdClass;
+use Response;
 class PatientController extends Controller
 {
     /**
@@ -44,11 +46,11 @@ class PatientController extends Controller
         $interval = $now->diff($date);
         return $interval->y;
     }
-    public function stats($filters="")
+    public function stats($annee="")
     {   
         $user = Auth::user();
         $patients100 = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
         where("taux",100)->get();
         foreach($patients100 as $patient){
             $patient->age = $this->calc_age($patient->date_naissance);
@@ -57,16 +59,40 @@ class PatientController extends Controller
         $stats = array();
         $stats = $this->calc_stats($stats, $patients100,$handicaps);
 
+        return view('patients.stats',['user' => $user,"stats"=>$stats,"stats_2"=>$stats,"annee"=>$annee]);
+        
+    }
+    public function get_stats($annee="")
+    {   
+        $user = Auth::user();
+
+        $handicaps = DB::table('handicaps')->get();
         $patients = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
         where("taux","<",100)->get();
         foreach($patients as $patient){
             $patient->age = $this->calc_age($patient->date_naissance);
         }
         $stats_2 = array();
         $stats_2 = $this->calc_stats($stats_2,$patients,$handicaps);
-
-        return view('patients.stats',['user' => $user,"stats"=>$stats,"stats_2"=>$stats_2]);
+        $stats = new stdClass();
+        $stats->tab = $stats_2;
+        $stats->tot2_1 = array_sum(array_column($stats_2,"stats_0_3_m"));
+        $stats->tot2_2= array_sum(array_column($stats_2,"stats_0_3_f"));
+        $stats->tot2_3= array_sum(array_column($stats_2,"stats_3_5_m"));
+        $stats->tot2_4= array_sum(array_column($stats_2,"stats_3_5_f"));
+        $stats->tot2_5= array_sum(array_column($stats_2,"stats_5_18_m"));
+        $stats->tot2_6= array_sum(array_column($stats_2,"stats_5_18_f"));
+        $stats->tot2_7= array_sum(array_column($stats_2,"stats_18_35_m"));
+        $stats->tot2_8= array_sum(array_column($stats_2,"stats_18_35_f"));
+        $stats->tot2_9= array_sum(array_column($stats_2,"stats_35_60_m"));
+        $stats->tot2_10= array_sum(array_column($stats_2,"stats_35_60_f"));
+        $stats->tot2_11= array_sum(array_column($stats_2,"stats_60_m"));
+        $stats->tot2_12= array_sum(array_column($stats_2,"stats_60_f"));
+        $stats->tot2_13= array_sum(array_column($stats_2,"total_handicap_m"));
+        $stats->tot2_14= array_sum(array_column($stats_2,"total_handicap_f"));
+        $stats->tot2_15= array_sum(array_column($stats_2,"total_handicap"));
+        return Response::json($stats);
         
     }
 
