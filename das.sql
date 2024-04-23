@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 21, 2024 at 07:00 PM
--- Server version: 5.7.40
--- PHP Version: 7.4.33
+-- Generation Time: Apr 23, 2024 at 03:13 PM
+-- Server version: 5.7.31
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `handicaps` (
   `name_handicap` text NOT NULL,
   `acronym` text NOT NULL,
   PRIMARY KEY (`id_handicap`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `handicaps`
@@ -69,7 +69,8 @@ INSERT INTO `handicaps` (`id_handicap`, `name_handicap`, `acronym`) VALUES
 (1, 'اعاقة حركية', 'ا.ح'),
 (2, 'اعاقة سمعية', 'ا.س'),
 (3, 'اعاقة بصرية', 'ا.ب'),
-(4, 'اعاقة ذهنية', 'ا.ه');
+(4, 'اعاقة ذهنية', 'ا.ه'),
+(5, 'متعدد الإعاقات', 'م.إ');
 
 -- --------------------------------------------------------
 
@@ -96,17 +97,20 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `confirmed_by` int(11) DEFAULT NULL,
   `num_card` text,
   `date_card` date DEFAULT NULL,
+  `medical_file` text,
   `inserted_at` date DEFAULT NULL,
   `year` varchar(4) NOT NULL,
   PRIMARY KEY (`id_patient`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients`
 --
 
-INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `num_card`, `date_card`, `inserted_at`, `year`) VALUES
-(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', 'الجزائر العاصمة', 4, 100, 1, NULL, '8100', '2024-04-19', '2024-04-20', '2024');
+INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `num_card`, `date_card`, `medical_file`, `inserted_at`, `year`) VALUES
+(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', 'الجزائر العاصمة', 4, 100, 1, 2, '8100', '2024-04-19', '/files/23928-39.pdf', '2024-04-20', '2024'),
+(3, 'لول', 'لال', 'lol', 'lal', 'ذكر', 'a', 'b', '2008-03-13', 'alger', 'alger', 5, 80, 1, 2, '8001', '2024-04-22', NULL, '2024-04-22', '2024'),
+(8, 'بقي', 'عيسى', 'Beggui', 'Aissa', 'ذكر', 'محمد', 'غربي فاطمة', '1982-10-24', 'عين البيضاء ورقلة', 'حي بني ثور ورقلة', 4, 90, 1, NULL, '8520', '2024-04-23', '/files/8Bilan 1ére trimestre 2024 ADM- PSD - Final.pdf', '2024-04-23', '2024');
 
 -- --------------------------------------------------------
 
