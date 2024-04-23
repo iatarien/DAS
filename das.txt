@@ -1,17 +1,29 @@
-confirm
+add threshold to handicaps
+confirm / reject
+num_card after confirmation
+add communes :')
+make medical file obligatoire
+recours and tanazol
+filters for patients
+
 
 history
 
-filters
 
 
 
 upload_max_filesize = 100M
 
-- printer name
-- ages ?
+- printer name - 6030.
+- ages ? 
 - rejected ?
+
+- card data from back - communne 027
+- card num order - auto
 - confirm .... what to confirm ?
-- is medical filed mandatory ?
+
+- is medical filed mandatory ?- obligatoire
+
 - old data
+
 - The fuck is recours and changes

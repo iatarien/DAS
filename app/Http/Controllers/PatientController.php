@@ -40,9 +40,9 @@ class PatientController extends Controller
         return view('patients.patients',['user' => $user,"patients"=>$patients]);
         
     }
-    public function calc_age($birthday){
+    public function calc_age($now, $birthday){
         $date = new DateTime($birthday);
-        $now = new DateTime();
+        $now = new DateTime("31-12-".$now);
         $interval = $now->diff($date);
         return $interval->y;
     }
@@ -59,9 +59,14 @@ class PatientController extends Controller
             where("year",$annee)->where("taux",100)->get();
         }
         
+        if($annee == "all" || $annee ==""){
+            $now = Date('Y');
+        }else{
+            $now = $annee;
+        }
 
         foreach($patients100 as $patient){
-            $patient->age = $this->calc_age($patient->date_naissance);
+            $patient->age = $this->calc_age($now,$patient->date_naissance);
         }
         $handicaps = DB::table('handicaps')->get();
         $stats = array();
@@ -85,9 +90,14 @@ class PatientController extends Controller
             where("year",$annee)->where("taux","<",100)->get();
         }
 
+        if($annee == "all" || $annee ==""){
+            $now = Date('Y');
+        }else{
+            $now = $annee;
+        }
 
         foreach($patients as $patient){
-            $patient->age = $this->calc_age($patient->date_naissance);
+            $patient->age = $this->calc_age($now,$patient->date_naissance);
         }
         $stats_2 = array();
         $stats_2 = $this->calc_stats($stats_2,$patients,$handicaps);
