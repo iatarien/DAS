@@ -14,6 +14,9 @@
     .table {
         transform: rotateX(180deg);
     }
+    a.disabled {
+        pointer-events: none;
+    }
 </style>
         @include('components.sidebar')
 
@@ -70,8 +73,14 @@
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_info">شهادة معلومات</a><br><br>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
                                             </td>
-                                            <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
-                                            <td><a class="btn btn-danger" href="/delete_patient/{{$patient->id_patient}}">حذف</a></td>
+                                            @if($patient->user_id == $user->id)
+                                                <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
+                                                <td><a class="btn btn-danger" onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" href="javascript:void(0)">حذف</a></td>
+                                            @else
+                                                <td><button disabled class="btn btn-info" href="#">تعديل</button></td>
+                                                <td><button disabled class="btn btn-danger" onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" href="#">حذف</button></td>
+                                            
+                                            @endif
                                         </tr>
                                         @endforeach
 
@@ -88,8 +97,25 @@
             <!-- End of Main Content -->
 
             @include('components.footer')
+<script src="{{ url('js/sweetalert2.min.js') }}"></script> 
 <script type="text/javascript">
 window.onload = function(){
 	document.getElementById('loading').style.display = "none";
 };
+function supprimer(link){
+  Swal.fire({
+      title: "هل أنت متأكد من أنك تريد الحذف ؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "نعم",
+      cancelButtonText: "إلغاء"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.location.href = link;
+      }
+    });
+
+}
 </script>

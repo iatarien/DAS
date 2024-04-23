@@ -49,9 +49,17 @@ class PatientController extends Controller
     public function stats($annee="")
     {   
         $user = Auth::user();
-        $patients100 = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
-        where("taux",100)->get();
+        if($annee =="all" || $annee ==""){
+            $patients100 = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            where("taux",100)->get();
+        }else{
+            $patients100 = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            where("year",$annee)->where("taux",100)->get();
+        }
+        
+
         foreach($patients100 as $patient){
             $patient->age = $this->calc_age($patient->date_naissance);
         }
@@ -67,9 +75,17 @@ class PatientController extends Controller
         $user = Auth::user();
 
         $handicaps = DB::table('handicaps')->get();
-        $patients = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
-        where("taux","<",100)->get();
+        if($annee =="all" || $annee ==""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            where("taux","<",100)->get();
+        }else{
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            where("year",$annee)->where("taux","<",100)->get();
+        }
+
+
         foreach($patients as $patient){
             $patient->age = $this->calc_age($patient->date_naissance);
         }
@@ -177,6 +193,13 @@ class PatientController extends Controller
         
     }
 
+    public function delete_patient($id)
+    {   
+        $user = Auth::user();
+        $patient = DB::table('patients')->where("id_patient",$id)->delete();
+        return Redirect::to('/patients');
+    }
+
     public function edit_patient($id)
     {   
         $user = Auth::user();
@@ -204,6 +227,8 @@ class PatientController extends Controller
         $num_card = $request['num_card'];
         $date_card = $request['date_card'];
 
+        
+
         $id = DB::table('patients')->
         insertGetId(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
@@ -211,6 +236,16 @@ class PatientController extends Controller
         "num_card"=>$num_card,"date_card"=>$date_card,
         "inserted_at"=>Date('Y-m-d'),"year"=>Date("Y"),
         "adresse"=>$adresse,"taux"=>$taux,"user_id"=>$user]);
+
+        if(isset($request["medical_file"]) && $request["medical_file"] != NULL){
+            $file = $request['medical_file'];
+            $destination0 = public_path().'\files';
+            $destination = '/files/';
+            $name= $destination.$id.$file->getClientOriginalName();
+            $file->move($destination0,$name);
+            DB::table('patients')->where('id_patient',$id)->update(
+            ['medical_file'=>$name]);
+        }
 
         return Redirect::to('/patients');
     }
@@ -240,6 +275,16 @@ class PatientController extends Controller
         "father"=>$father,"mother"=>$mother,"sexe"=>$sexe,
         "num_card"=>$num_card,"date_card"=>$date_card,
         "adresse"=>$adresse,"taux"=>$taux]);
+
+        if(isset($request["medical_file"]) && $request["medical_file"] != NULL){
+            $file = $request['medical_file'];
+            $destination0 = public_path().'\files';
+            $destination = '/files/';
+            $name= $destination.$patient.$file->getClientOriginalName();
+            $file->move($destination0,$name);
+            DB::table('patients')->where('id_patient',$patient)->update(
+            ['medical_file'=>$name]);
+        }
 
         return Redirect::to('/patients');
     }

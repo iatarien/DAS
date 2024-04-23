@@ -1,14 +1,17 @@
-delete patient
-
 confirm
 
 history
 
-stats
-
 filters
 
+
+
+upload_max_filesize = 100M
 
 - printer name
 - ages ?
 - rejected ?
+- confirm .... what to confirm ?
+- is medical filed mandatory ?
+- old data
+- The fuck is recours and changes

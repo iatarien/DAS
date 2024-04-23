@@ -30,14 +30,15 @@
             @include('components.topbar')
             <div class="form-group row" dir="rtl" style="justify-content : center;">
                 <label style="display : flex; justify-content : left; align-items : end;" class="control-label col-md-1">السنة</label>
-                <select class="form-control col-md-1">
+                <select style="text-align : center;" onchange="year_changed(this.value)" class="form-control col-md-2">
                     @if(isset($annee))
                         @if($annee =="all")
-                            <option value="all">جميع السنوات</option>
+                            <option style="visibility : hidden" value="all">جميع السنوات</option>
                         @else
-                            <option>{{$annee}}</option>
+                            <option style="visibility : hidden">{{$annee}}</option>
                         @endif
                     @endif
+                    <option value="all">جميع السنوات</option>
                     <?php for($i = 2023; $i < 2150; $i++){ ?>
                         <option>{{$i}}</option>
                     <?php } ?>
@@ -213,12 +214,16 @@
             @include('components.footer')
 <script type="text/javascript">
 window.onload = function(){
-
     get_stats();
-
 };
+
+function year_changed(value){
+    window.location.href ="/stats/"+value;
+}
+
 function get_stats(){
-    link = "/get_stats/";
+    year = "{{$annee}}";
+    link = "/get_stats/"+year;
     $.ajax({
         url: link,
         method: "GET",  

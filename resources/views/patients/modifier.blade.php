@@ -18,7 +18,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">تعديل بطاقة شخص معوق</h6>
                         </div>
                         <div class="card-body">
-                            <form autocomplete="off" class="form-horizontal" action="/update_patient" method="POST">
+                            <form autocomplete="off" class="form-horizontal" action="/update_patient" method="POST"  enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" value="{{$patient->id_patient}}" name="patient">
                                 <div class="form-group row">
@@ -114,6 +114,17 @@
                                     <input  style="text-align : right" required="" type="date" class="form-control" value="{{$patient->date_card}}" name="date_card">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">الملف الطبي :</label>
+                                    <div class="col-lg-8">
+                                        <input  type="file"  max-size="10240" name="medical_file" id="medical_file" accept="application/pdf" class="form-control" >
+                                    </div>
+                                    @if($patient->medical_file != NULL && $patient->medical_file != "")
+                                    <div class="col-lg-1">
+                                        <a class="btn btn-info"  target="_blank"  href="{{$patient->medical_file}}">Visualiser </a>
+                                    </div>
+                                    @endif
+                                </div>
                                 <div class="form-group" align="center">
                                     <button class="btn btn-primary" type="submit">حفظ</button>
                                 </div>
@@ -128,7 +139,9 @@
             <!-- End of Main Content -->
 
             @include('components.footer')
+<script src="{{ url('js/sweetalert2.min.js') }}"></script>           
 <script type="text/javascript">
+    
 function changed_eng(val){
     if(val =="all"){
         document.getElementById('some').style.display ='none';
@@ -139,4 +152,28 @@ function changed_eng(val){
 window.onload = function(){
 	document.getElementById('loading').style.display = "none";
 };
+</script>
+<script>
+$(function(){
+    $('form').submit(function(){
+        var isOk = true;
+        $('input[type=file][max-size]').each(function(){
+            if(typeof this.files[0] !== 'undefined'){
+                var maxSize = parseInt($(this).attr('max-size'),10)*1000,
+                size = this.files[0].size;
+                isOk = maxSize > size;
+                if(!isOk){
+                    Swal.fire({
+                    title: "La taille des fichiers est trop volumineuse !",
+                    text: "(La taille de chaque fichier ne doit pas dépasser 10 Mo)",
+                    icon: "error",
+                    confirmButtonText : "Rééssayer",
+                    });
+                }
+                return isOk;
+            }
+        });
+        return isOk;
+    });
+});
 </script>
