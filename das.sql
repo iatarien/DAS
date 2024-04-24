@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 23, 2024 at 03:13 PM
+-- Generation Time: Apr 24, 2024 at 03:26 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.4.9
 
@@ -20,6 +20,51 @@ SET time_zone = "+00:00";
 --
 -- Database: `das`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `communes`
+--
+
+DROP TABLE IF EXISTS `communes`;
+CREATE TABLE IF NOT EXISTS `communes` (
+  `code` varchar(10) NOT NULL,
+  `commune_name` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `communes`
+--
+
+INSERT INTO `communes` (`code`, `commune_name`) VALUES
+('01', 'أوماش '),
+('02', 'البرانيس'),
+('03', 'الحاجب '),
+('04', 'الحوش'),
+('05', 'الغروس '),
+('06', 'الفيض '),
+('07', 'القنطرة '),
+('08', 'المزيرعة'),
+('09', 'برج بن عزوز'),
+('10', 'بسكرة '),
+('11', 'بوشقرون '),
+('12', 'جمورة'),
+('13', ' خنقة سيدي ناجي'),
+('14', 'اورلال '),
+('15', 'زربية الوادي'),
+('16', 'سيدي عقبة'),
+('17', 'شتمة '),
+('18', 'طولقة '),
+('19', ' عين الناقة'),
+('20', ' عين زعطوط'),
+('21', 'فوغاله'),
+('22', 'لوطاية '),
+('23', 'ليشانه '),
+('24', 'ليوة '),
+('25', 'مخادمة '),
+('26', 'مشونش'),
+('27', 'مليلي');
 
 -- --------------------------------------------------------
 
@@ -58,19 +103,20 @@ CREATE TABLE IF NOT EXISTS `handicaps` (
   `id_handicap` int(11) NOT NULL AUTO_INCREMENT,
   `name_handicap` text NOT NULL,
   `acronym` text NOT NULL,
+  `threshold` int(11) NOT NULL,
   PRIMARY KEY (`id_handicap`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `handicaps`
 --
 
-INSERT INTO `handicaps` (`id_handicap`, `name_handicap`, `acronym`) VALUES
-(1, 'اعاقة حركية', 'ا.ح'),
-(2, 'اعاقة سمعية', 'ا.س'),
-(3, 'اعاقة بصرية', 'ا.ب'),
-(4, 'اعاقة ذهنية', 'ا.ه'),
-(5, 'متعدد الإعاقات', 'م.إ');
+INSERT INTO `handicaps` (`id_handicap`, `name_handicap`, `acronym`, `threshold`) VALUES
+(1, 'اعاقة حركية', 'ا.ح', 50),
+(2, 'اعاقة سمعية', 'ا.س', 80),
+(3, 'اعاقة بصرية', 'ا.ب', 95),
+(4, 'اعاقة ذهنية', 'ا.ه', 50),
+(5, 'متعدد الإعاقات', 'م.إ', 50);
 
 -- --------------------------------------------------------
 
@@ -90,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `mother` text NOT NULL,
   `date_naissance` date NOT NULL,
   `lieu_naissance` text NOT NULL,
+  `commune` varchar(10) DEFAULT NULL,
   `adresse` text NOT NULL,
   `handicap` int(11) NOT NULL,
   `taux` int(11) NOT NULL,
@@ -101,16 +148,18 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `inserted_at` date DEFAULT NULL,
   `year` varchar(4) NOT NULL,
   PRIMARY KEY (`id_patient`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients`
 --
 
-INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `num_card`, `date_card`, `medical_file`, `inserted_at`, `year`) VALUES
-(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', 'الجزائر العاصمة', 4, 100, 1, 2, '8100', '2024-04-19', '/files/23928-39.pdf', '2024-04-20', '2024'),
-(3, 'لول', 'لال', 'lol', 'lal', 'ذكر', 'a', 'b', '2008-03-13', 'alger', 'alger', 5, 80, 1, 2, '8001', '2024-04-22', NULL, '2024-04-22', '2024'),
-(8, 'بقي', 'عيسى', 'Beggui', 'Aissa', 'ذكر', 'محمد', 'غربي فاطمة', '1982-10-24', 'عين البيضاء ورقلة', 'حي بني ثور ورقلة', 4, 90, 1, NULL, '8520', '2024-04-23', '/files/8Bilan 1ére trimestre 2024 ADM- PSD - Final.pdf', '2024-04-23', '2024');
+INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `commune`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `num_card`, `date_card`, `medical_file`, `inserted_at`, `year`) VALUES
+(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', '10', 'الجزائر العاصمة', 4, 100, 1, 2, '8100', '2024-04-19', '/files/23928-39.pdf', '2024-04-20', '2024'),
+(3, 'لول', 'لال', 'lol', 'lal', 'ذكر', 'a', 'b', '2008-03-13', 'alger', '17', 'alger', 5, 80, 1, 2, '8001', '2024-04-22', NULL, '2024-04-22', '2024'),
+(8, 'بقي', 'عيسى', 'Beggui', 'Aissa', 'ذكر', 'محمد', 'غربي فاطمة', '1982-10-24', 'عين البيضاء ورقلة', '17', 'حي بني ثور ورقلة', 4, 90, 1, NULL, '8520', '2024-04-23', '/files/8Bilan 1ére trimestre 2024 ADM- PSD - Final.pdf', '2024-04-23', '2024'),
+(9, 'ميسي', 'ليونل', 'Messi', 'Lionel', 'أنثى', 'اليخاندرو', 'ليلى', '1982-10-12', 'الارجنتين', '25', 'لوس أنجلس ميامي', 4, 50, 1, NULL, '2560', '2024-04-24', '/files/9vignette 2021 5000 da.pdf', '2024-04-24', '2024'),
+(10, 'ديابي', 'عبدو', 'Abdou', 'Diaby', 'أنثى', 'جاك', 'نعيمة', '1962-04-12', 'لندن', '18', 'صبحى ريالتي سنتر', 1, 30, 1, NULL, NULL, NULL, '/files/10college.pdf', '2024-04-24', '2024');
 
 -- --------------------------------------------------------
 
