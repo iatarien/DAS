@@ -1,8 +1,10 @@
-add threshold to handicaps
+
+
 confirm / reject
 num_card after confirmation
+
 add communes :')
-make medical file obligatoire
+
 recours and tanazol
 filters for patients
 

@@ -13,7 +13,7 @@
 <li class="nav-item active">
     <a class="nav-link" href="/add_patient">
         <i class="fas fa-fw fa-pen"></i>
-        <span>إضافة بطاقة شخص معوق</span></a>
+        <span>إضافة شخص معوق</span></a>
 </li>
 
 <hr class="sidebar-divider">
@@ -44,6 +44,13 @@
 </li>
 <hr class="sidebar-divider">
 
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    <a class="nav-link" href="/handicaps">
+        <i class="fas fa-blind"></i>
+        <span>أنواع الإعاقات</span></a>
+</li>
+<hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
     <a class="nav-link" href="/users">

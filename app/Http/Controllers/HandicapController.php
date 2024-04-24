@@ -8,7 +8,7 @@ use DB;
 use Auth;
 use Bcrypt;
 use Redirect;
-class HomeController extends Controller
+class HandicapController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,9 +28,15 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
+   
+
+   
     public function index()
     {   
-        return Redirect::to('/patients');
+        $user = Auth::user();
+        $handicaps = DB::table("handicaps")->get();
+        return view('handicaps.index',
+        ['user' => $user,"handicaps"=>$handicaps]);
     }
    
     public function ajouter(){
@@ -41,8 +47,8 @@ class HomeController extends Controller
     public function modifier($id){
         $user = Auth::user();
         $handicap = DB::table("handicaps")->where('id_handicap',$id)->first();
-
-        return view('handicaps.ajouter',['user'=>$user]);
+        
+        return view('handicaps.modifier',['user'=>$user,"handicap"=>$handicap]);
     }
 
 
@@ -52,7 +58,7 @@ class HomeController extends Controller
         $acronym = $request['acronym'];
         $threshold = $request['threshold'];
 
-        $id = DB::table('handicap')->
+        $id = DB::table('handicaps')->
         insertGetId(["name_handicap"=>$name_handicap,"acronym"=>$acronym,
         "threshold"=>$threshold]);
         return Redirect::to('/handicaps');
@@ -66,11 +72,12 @@ class HomeController extends Controller
         $acronym = $request['acronym'];
         $threshold = $request['threshold'];
         
-        DB::table('handicap')->where("id_handicap",$id)->
+        DB::table('handicaps')->where("id_handicap",$id)->
         update(["name_handicap"=>$name_handicap,"acronym"=>$acronym,
         "threshold"=>$threshold]);
 
         return Redirect::to('/handicaps');
     }
+
     
 }

@@ -80,6 +80,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">البلدية</label>
+                                    <div class="col-lg-8">
+                                        <select required="" class="form-control"  name="commune">
+                                            <option selected style="visibility : hidden;" value="{{$patient->code}}">
+                                                {{$patient->code}} - {{$patient->commune_name}}
+                                            </option>
+                                            @foreach($communes as $commune)
+                                            <option value="{{$commune->code}}">{{$commune->code}} - {{$commune->commune_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title"> العنوان</label>
                                     <div class="col-lg-8">
                                         <input style="text-align : right" required="" type="text" class="form-control" value="{{$patient->adresse}}" name="adresse">
@@ -102,18 +115,7 @@
                                         <input style="text-align : right" dir="ltr" required="" value="{{$patient->taux}}" type="number" class="form-control"  name="taux">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="control-label col-lg-2 text-right" for="title"> رقم البطاقة</label>
-                                    <div class="col-lg-8">
-                                        <input style="text-align : right" required="" dir="ltr" type="number" class="form-control"  value="{{$patient->num_card}}" name="num_card">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="control-label col-lg-2 text-right" for="title">تاريخ :</label>
-                                    <div class="col-lg-8">
-                                    <input  style="text-align : right" required="" type="date" class="form-control" value="{{$patient->date_card}}" name="date_card">
-                                    </div>
-                                </div>
+
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title">الملف الطبي :</label>
                                     <div class="col-lg-8">
@@ -121,7 +123,7 @@
                                     </div>
                                     @if($patient->medical_file != NULL && $patient->medical_file != "")
                                     <div class="col-lg-1">
-                                        <a class="btn btn-info"  target="_blank"  href="{{$patient->medical_file}}">Visualiser </a>
+                                        <a class="btn btn-info" target="_blank"  href="{{$patient->medical_file}}">معاينة</a>
                                     </div>
                                     @endif
                                 </div>
