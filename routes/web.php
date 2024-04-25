@@ -17,13 +17,18 @@ Route::get('/close', 'ReserveController@close');
 
 /** PATIENT ROUTES **/
 
-Route::get('/patients/{filters?}', 'PatientController@show_patients');
+Route::get('/patients/{filters?}', 'PatientController@show_patients'); /* non validated to edit */
+Route::get('/validate_patients', 'PatientController@validate_patients'); /* to validate non validated */
+Route::get('/validated_patients', 'PatientController@validated_patients'); /* validated */
+
 Route::get('/add_patient', 'PatientController@add_patient');
 Route::get('/edit_patient/{id}', 'PatientController@edit_patient');
+Route::get('/validate_patient/{id}', 'PatientController@validate_patient');
 Route::get('/delete_patient/{id}', 'PatientController@delete_patient');
 
 Route::post('/insert_patient', 'PatientController@insert_patient');
 Route::post('/update_patient', 'PatientController@update_patient');
+Route::post('/confirm_patient', 'PatientController@confirm_patient');
 
 Route::get('/stats/{annee?}', 'PatientController@stats');
 Route::get('/get_stats/{annee?}', 'PatientController@get_stats');

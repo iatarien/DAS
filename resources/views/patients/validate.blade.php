@@ -34,7 +34,7 @@
                     <!-- Page Heading -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"> الأشخاص غير المثبتين</h6>
+                            <h6 class="m-0 font-weight-bold text-primary"> تثبيت الأشخاص المعوقين </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive" >
@@ -47,8 +47,7 @@
                                             <th>تاريخ و مكان الإزدياد</th>
                                             <th>طبيعة الإعاقة</th>
                                             <th>نسبة الإعاقة</th>   
-                                            <th>تعديل</th>  
-                                            <th>حدف</th> 
+                                            <th>تثبيت</th>  
                                         </tr>
                                     </thead>
 
@@ -60,14 +59,8 @@
                                             <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
-                                            @if($patient->user_id == $user->id)
-                                                <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
-                                                <td><a class="btn btn-danger" onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" href="javascript:void(0)">حذف</a></td>
-                                            @else
-                                                <td><button disabled class="btn btn-info" href="#">تعديل</button></td>
-                                                <td><button disabled class="btn btn-danger" onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" href="#">حذف</button></td>
-                                            
-                                            @endif
+                                            <td><a class="btn btn-info" href="/validate_patient/{{$patient->id_patient}}">تثبيت</a></td>
+      
                                         </tr>
                                         @endforeach
 

@@ -17,6 +17,10 @@
     a.disabled {
         pointer-events: none;
     }
+    .btn {
+       padding :  0.50rem 0.25rem;
+       font-size : 13px;
+    }
 </style>
         @include('components.sidebar')
 
@@ -34,7 +38,7 @@
                     <!-- Page Heading -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"> الأشخاص غير المثبتين</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">طباعة البيانات</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive" >
@@ -47,8 +51,12 @@
                                             <th>تاريخ و مكان الإزدياد</th>
                                             <th>طبيعة الإعاقة</th>
                                             <th>نسبة الإعاقة</th>   
+                                            <th>بطاقة معوق</th>   
+                                            <th >بطاقة معلومات</th>  
+                                            <th >شهادة معلومات</th>  
+                                            <th >شهادة إدارية</th>   
                                             <th>تعديل</th>  
-                                            <th>حدف</th> 
+
                                         </tr>
                                     </thead>
 
@@ -60,13 +68,22 @@
                                             <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
+                                            <td>
+                                                <a class="btn btn-primary" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/card">بطاقة معوق</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/fiche_info">بطاقة معلومات</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_info">شهادة معلومات</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
+                                            </td>
                                             @if($patient->user_id == $user->id)
                                                 <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
-                                                <td><a class="btn btn-danger" onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" href="javascript:void(0)">حذف</a></td>
                                             @else
                                                 <td><button disabled class="btn btn-info" href="#">تعديل</button></td>
-                                                <td><button disabled class="btn btn-danger" onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" href="#">حذف</button></td>
-                                            
                                             @endif
                                         </tr>
                                         @endforeach

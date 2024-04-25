@@ -35,9 +35,44 @@ class PatientController extends Controller
     public function show_patients($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->join("handicaps","handicaps.id_handicap","=","patients.handicap")->get();
+        $patients = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        whereNotNull("confirmed_by")->get();
 
         return view('patients.patients',['user' => $user,"patients"=>$patients]);
+        
+    }
+    public function validate_patient($id)
+    {   
+        $user = Auth::user();
+        $handicaps = DB::table('handicaps')->get();
+        $patient = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("communes","communes.code","=","patients.commune")->
+        where("id_patient",$id)->first();
+        $communes = DB::table('communes')->get();
+        return view('patients.confirm',['user' => $user,"handicaps"=>$handicaps,
+        "patient"=>$patient,"communes"=>$communes]);
+        
+    }
+    public function validate_patients($filters="")
+    {   
+        $user = Auth::user();
+        $patients = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        whereNull("confirmed_by")->whereNull("rejected_by")->get();
+
+        return view('patients.validate',['user' => $user,"patients"=>$patients]);
+        
+    }
+    public function validated_patients($filters="")
+    {   
+        $user = Auth::user();
+        $patients = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        whereNotNull("confirmed_by")->get();
+
+        return view('patients.validated_patients',['user' => $user,"patients"=>$patients]);
         
     }
     public function calc_age($now, $birthday){
@@ -308,6 +343,62 @@ class PatientController extends Controller
         }
 
         return Redirect::to('/patients');
+    }
+
+    public function confirm_patient(Request $request){
+        $patient = $request['patient'];
+        $user = Auth::user()->id;
+        $nom = $request['nom'];
+        $prenom = $request['prenom'];
+        $nom_fr = $request['nom_fr'];
+        $prenom_fr = $request['prenom_fr'];
+        $father = $request['father'];
+        $mother = $request['mother'];
+        $date_naissance = $request['date_naissance'];
+        $lieu_naissance = $request['lieu_naissance'];
+        $adresse = $request['adresse'];
+        $commune = $request['commune'];
+
+        $handicap = $request['handicap'];
+        $taux = $request['taux'];
+        $sexe = $request['sexe'];
+
+        $num_card = $request['num_card'];
+        $date_card = $request['date_card'];
+
+        $accepted = $request['accepted'];
+        $confirmed_by = NULL;
+        $rejected_by = NULL;
+        
+        if($accepted =="accept"){
+            $confirmed_by = $user;
+        }else{
+            $rejected_by = $user;
+        }
+
+        $id = DB::table('patients')->where('id_patient',$patient)->
+        update(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
+        "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,
+        "father"=>$father,"mother"=>$mother,"sexe"=>$sexe,"commune"=>$commune,
+        "num_card"=>$num_card,"date_card"=>$date_card,
+        "confirmed_by"=>$confirmed_by,"rejected_by"=>$rejected_by,
+        "adresse"=>$adresse,"taux"=>$taux]);
+
+        if(isset($request["medical_file"]) && $request["medical_file"] != NULL){
+            $file = $request['medical_file'];
+            $destination0 = public_path().'\files';
+            $destination = '/files/';
+            $name= $destination.$patient.$file->getClientOriginalName();
+            $file->move($destination0,$name);
+            DB::table('patients')->where('id_patient',$patient)->update(
+            ['medical_file'=>$name]);
+        }
+        if($accepted =="accept"){
+            return Redirect::to('/validated_patients');
+        }else{
+            return Redirect::to('/rejected_patients');
+        }
+        
     }
 
 }

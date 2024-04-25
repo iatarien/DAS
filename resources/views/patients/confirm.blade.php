@@ -15,10 +15,10 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">تعديل بطاقة شخص معوق</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">تثبيت </h6>
                         </div>
                         <div class="card-body">
-                            <form autocomplete="off" class="form-horizontal" action="/update_patient" method="POST"  enctype="multipart/form-data">
+                            <form autocomplete="off" id="form" class="form-horizontal" action="/confirm_patient" method="POST"  enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" value="{{$patient->id_patient}}" name="patient">
                                 <div class="form-group row">
@@ -101,7 +101,7 @@
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title"> طبيعة الإعاقة</label>
                                     <div class="col-lg-8">
-                                        <select required="" class="form-control"  name="handicap">
+                                        <select required="" class="form-control" onchange="threshold()" id="handicap" name="handicap">
                                             <option selected style="visibility : hidden;" value="{{$patient->handicap}}">{{$patient->name_handicap}}</option>
                                             @foreach($handicaps as $handicap)
                                                 <option value="{{$handicap->id_handicap}}">{{$handicap->name_handicap}}</option>
@@ -112,7 +112,7 @@
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title"> نسبة الإعاقة</label>
                                     <div class="col-lg-8">
-                                        <input style="text-align : right" dir="ltr" required="" value="{{$patient->taux}}" type="number" class="form-control"  name="taux">
+                                        <input style="text-align : right" dir="ltr" id="taux" onchange="threshold()" onkeyup="threshold()" required="" value="{{$patient->taux}}" type="number" class="form-control"  name="taux">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -138,8 +138,11 @@
                                     </div>
                                     @endif
                                 </div>
+                                <br><br>
+                                <input type="hidden" name="accepted" id="accepted" value="accept">
                                 <div class="form-group" align="center">
-                                    <button class="btn btn-primary" type="submit">حفظ</button>
+                                    <button id="reject_btn" class="btn btn-danger" type="button" onclick="reject_patient()">رفض</button>
+                                    <button id="accept_btn" class="btn btn-primary" type="submit">حفظ</button>
                                 </div>
                             </from>
                         </div>
@@ -154,7 +157,34 @@
             @include('components.footer')
 <script src="{{ url('js/sweetalert2.min.js') }}"></script>           
 <script type="text/javascript">
+threshold();
+function threshold(){
+    var handicap_v = document.getElementById('handicap').value;
+    var taux = document.getElementById('taux').value;
+    var handicaps = '{{json_encode($handicaps)}}';
+    handicaps = handicaps.split("&quot;").join('"');
+    handicaps = JSON.parse(handicaps);
     
+    let handicap = handicaps.find(x => x.id_handicap == handicap_v);
+    if(handicap.threshold > taux){
+        reject();
+    }else{
+        accept();
+    }
+
+}
+function reject(){
+    document.getElementById('taux').style.backgroundColor ="pink";
+    document.getElementById('accept_btn').disabled = true;
+}
+function accept(){
+    document.getElementById('taux').style.backgroundColor ="transparent";
+    document.getElementById('accept_btn').disabled = false;
+}
+function reject_patient(){
+    document.getElementById('accepted').value="reject";
+    document.getElementById('form').submit();
+}
 function changed_eng(val){
     if(val =="all"){
         document.getElementById('some').style.display ='none';

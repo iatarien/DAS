@@ -1,31 +1,30 @@
 
 
 confirm / reject
-num_card after confirmation
+num_card when confirmating
+threshold when confirming
+card add commune and acronym
 
-add communes :')
-
-recours and tanazol
+recours and tanazol and history
 filters for patients
-
-
-history
-
+- who inserted/confirmed and rejected
 
 
 
-upload_max_filesize = 100M
 
-- printer name - 6030.
+
+upload_max_filesize = 100M !!!!!!!!!!
+
+- printer name - 2900.
 - ages ? 
 - rejected ?
-
 - card data from back - communne 027
 - card num order - auto
 - confirm .... what to confirm ?
-
 - is medical filed mandatory ?- obligatoire
-
 - old data
-
 - The fuck is recours and changes
+
+
+
+- can u edit a confirmed patient ?
