@@ -37,7 +37,8 @@ class PatientController extends Controller
         $user = Auth::user();
         $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        whereNotNull("confirmed_by")->get();
+        join("users",'users.id',"=","patients.user_id")->
+        whereNull("confirmed_by")->get();
 
         return view('patients.patients',['user' => $user,"patients"=>$patients]);
         
@@ -60,6 +61,7 @@ class PatientController extends Controller
         $user = Auth::user();
         $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users",'users.id',"=","patients.user_id")->
         whereNull("confirmed_by")->whereNull("rejected_by")->get();
 
         return view('patients.validate',['user' => $user,"patients"=>$patients]);
@@ -70,9 +72,21 @@ class PatientController extends Controller
         $user = Auth::user();
         $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users",'users.id',"=","patients.confirmed_by")->
         whereNotNull("confirmed_by")->get();
 
         return view('patients.validated_patients',['user' => $user,"patients"=>$patients]);
+        
+    }
+    public function rejected_patients($filters="")
+    {   
+        $user = Auth::user();
+        $patients = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users",'users.id',"=","patients.rejected_by")->
+        whereNotNull("rejected_by")->get();
+
+        return view('patients.rejected',['user' => $user,"patients"=>$patients]);
         
     }
     public function calc_age($now, $birthday){
@@ -234,7 +248,7 @@ class PatientController extends Controller
     {   
         $user = Auth::user();
         $handicaps = DB::table('handicaps')->get();
-        $communes = DB::table('communes')->get();
+        $communes = DB::table('communes')->orderBy("code","ASC")->get();
         return view('patients.ajouter',
         ['user' => $user,"handicaps"=>$handicaps,"communes"=>$communes]);
         
@@ -255,7 +269,7 @@ class PatientController extends Controller
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("communes","communes.code","=","patients.commune")->
         where("id_patient",$id)->first();
-        $communes = DB::table('communes')->get();
+        $communes = DB::table('communes')->orderBy("code","ASC")->get();
         return view('patients.modifier',['user' => $user,"handicaps"=>$handicaps,
         "patient"=>$patient,"communes"=>$communes]);
         
@@ -364,6 +378,16 @@ class PatientController extends Controller
         $sexe = $request['sexe'];
 
         $num_card = $request['num_card'];
+        $last = strval($num_card);
+
+        if(strlen($last) == 1){
+            $last = "000".$last;
+        }elseif(strlen($last) == 2){
+            $last = "00".$last;
+        }elseif(strlen($last) == 3){
+            $last = "0".$last;
+        }
+        $num_card = $last;
         $date_card = $request['date_card'];
 
         $accepted = $request['accepted'];

@@ -20,7 +20,7 @@
 <li class="nav-item active">
     <a class="nav-link" href="/validate_patients">
         <i class="fas fa-fw fa-check"></i>
-        <span>تثبيت البطاقات</span></a>
+        <span>تثبيت أو رفض</span></a>
 </li>
 <hr class="sidebar-divider">
 
@@ -33,8 +33,15 @@
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
     <a class="nav-link" href="/validated_patients">
-        <i class="fas fa-fw fa-calendar"></i>
+        <i class="fas fa-fw fa-id-card"></i>
         <span> طباعة البطاقات </span></a>
+</li>
+<hr class="sidebar-divider">
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    <a class="nav-link" href="/rejected_patients">
+        <i class="fas fa-fw fa-calendar"></i>
+        <span> غير المستفيدين</span></a>
 </li>
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
@@ -43,13 +50,7 @@
         <i class="fas fa-fw fa-table"></i>
         <span>حصيلة إجمالية</span></a>
 </li>
-<hr class="sidebar-divider">
-<!-- Nav Item - Dashboard -->
-<li class="nav-item active">
-    <a class="nav-link" href="/rejected">
-        <i class="fas fa-fw fa-calendar"></i>
-        <span> الغير مستفيدين</span></a>
-</li>
+
 <hr class="sidebar-divider">
 
 <!-- Nav Item - Dashboard -->

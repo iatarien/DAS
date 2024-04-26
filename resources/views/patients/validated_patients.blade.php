@@ -50,7 +50,8 @@
                                             <th>الاسم</th>
                                             <th>تاريخ و مكان الإزدياد</th>
                                             <th>طبيعة الإعاقة</th>
-                                            <th>نسبة الإعاقة</th>   
+                                            <th>نسبة الإعاقة</th>  
+                                            <th>تبت من طرف</th> 
                                             <th>بطاقة معوق</th>   
                                             <th >بطاقة معلومات</th>  
                                             <th >شهادة معلومات</th>  
@@ -68,6 +69,7 @@
                                             <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
+                                            <td>{{$patient->full_name}}</td>
                                             <td>
                                                 <a class="btn btn-primary" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/card">بطاقة معوق</a>
                                             </td>
@@ -81,9 +83,9 @@
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
                                             </td>
                                             @if($patient->user_id == $user->id)
-                                                <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}">تعديل</a></td>
+                                                <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}"> تعديل </a></td>
                                             @else
-                                                <td><button disabled class="btn btn-info" href="#">تعديل</button></td>
+                                                <td><button disabled class="btn btn-info" href="#"> تعديل </button></td>
                                             @endif
                                         </tr>
                                         @endforeach

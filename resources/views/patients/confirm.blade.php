@@ -118,7 +118,7 @@
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title"> رقم البطاقة</label>
                                     <div class="col-lg-8">
-                                        <input style="text-align : right" required="" dir="ltr" type="number" class="form-control"  value="{{$patient->num_card}}" name="num_card">
+                                        <input style="text-align : right" required="" dir="ltr" type="number" class="form-control"  value="{{$patient->num_card}}" id="num_card" name="num_card">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -157,7 +157,7 @@
             @include('components.footer')
 <script src="{{ url('js/sweetalert2.min.js') }}"></script>           
 <script type="text/javascript">
-threshold();
+
 function threshold(){
     var handicap_v = document.getElementById('handicap').value;
     var taux = document.getElementById('taux').value;
@@ -174,10 +174,12 @@ function threshold(){
 
 }
 function reject(){
+    document.getElementById('num_card').value =0;
     document.getElementById('taux').style.backgroundColor ="pink";
     document.getElementById('accept_btn').disabled = true;
 }
 function accept(){
+    document.getElementById('num_card').value = document.getElementById('num_card').min;
     document.getElementById('taux').style.backgroundColor ="transparent";
     document.getElementById('accept_btn').disabled = false;
 }
@@ -192,7 +194,25 @@ function changed_eng(val){
         document.getElementById('some').style.display ='flex';
     } 
 }
+function get_last(){
+    link = "/get_last/";
+    $.ajax({
+        url: link,
+        method: "GET",  
+        success: function(response) {
+            console.log(response);
+            num_card = document.getElementById('num_card');
+            num_card.value = response;
+            num_card.setAttribute("min", response);
+            threshold();
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
 window.onload = function(){
+    get_last();
 	document.getElementById('loading').style.display = "none";
 };
 </script>

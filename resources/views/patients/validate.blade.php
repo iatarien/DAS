@@ -47,6 +47,7 @@
                                             <th>تاريخ و مكان الإزدياد</th>
                                             <th>طبيعة الإعاقة</th>
                                             <th>نسبة الإعاقة</th>   
+                                            <th>أدخل من طرف</th>
                                             <th>تثبيت</th>  
                                         </tr>
                                     </thead>
@@ -59,6 +60,7 @@
                                             <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
+                                            <td>{{$patient->full_name}}</td>
                                             <td><a class="btn btn-info" href="/validate_patient/{{$patient->id_patient}}">تثبيت</a></td>
       
                                         </tr>

@@ -34,6 +34,7 @@
 	.show {
 		color : black !important;
 	}
+
 </style>
 
 </head>
@@ -61,10 +62,14 @@ $type_ar ="";
 			<div style="font-size : 8mm; text-align : center;">
               بطاقة الشخص المعوق
 			</div><br><br><br>
-			<div style="display : flex; justify-content: center; align-items : center">
-			الرقم :&emsp; <div style="height : 11mm; width : 24mm; border : 0.54mm solid;display : flex; justify-content: center; align-items : center">
+			<div style="display : flex; justify-content: center; align-items : center" class="show">
+			<span id="hide">الرقم :&emsp;</span> <div style="height : 11mm; width : 10mm; border : 0.54mm solid;display : flex; justify-content: center; align-items : center">
 			<span class="show">{{$patient->num_card}}</span></div>
-			<div style="height : 11mm; width : 24mm; border : 0.54mm solid; border-right : none; display : flex; justify-content: center; align-items : center">
+			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-right : none; display : flex; justify-content: center; align-items : center">
+			<span class="show">{{$patient->acronym}}</span></div>
+			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-right : none;display : flex; justify-content: center; align-items : center">
+			<span class="show">{{$patient->commune}}</span></div>
+			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-right : none; display : flex; justify-content: center; align-items : center">
 			<span class="show">{{$patient->year}}</span></div>
 			</div>
         </div>
@@ -108,7 +113,7 @@ $type_ar ="";
 	  text-decoration: none;
 	  display: inline-block;
 	  font-size: 16px;" 
-  onclick=location.href="/patients/"> رجوع </button>
+  onclick=location.href="/validated_patients/"> رجوع </button>
 
 
  <br><br><br><br>
@@ -133,6 +138,7 @@ function hide(){
     {
         elements[i].style.borderColor ="transparent";
     }
+	document.getElementById('hide').style.color = "transparent";
 }
 function unhide(){
 	fiche = document.getElementById('fiche');
@@ -145,6 +151,7 @@ function unhide(){
     {
         elements[i].style.borderColor ="black";
     }
+	document.getElementById('hide').style.color = "black";
 }
 
 

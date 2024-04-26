@@ -42,7 +42,30 @@ class AttestationController extends Controller
         return view($view,['user'=> $user,"patient"=>$patient,"type"=>$type]);
 
     }
+    public function get_last()
+    {   
+        $user = Auth::user();
+        $year = Date('Y');
+        $last = DB::table('patients')->whereNotNull("confirmed_by")->
+        where("year",$year)->orderBy("num_card","DESC")->first();
+        if($last == NULL || $last ==""){
+            $last = "0001";
+        }else{
+            $last = $last->num_card;
+            $last = intval($last) + 1;
+            $last = strval($last);
+   
+            if(strlen($last) == 1){
+                $last = "000".$last;
+            }elseif(strlen($last) == 2){
+                $last = "00".$last;
+            }elseif(strlen($last) == 3){
+                $last = "0".$last;
+            }
+        }
+        return $last;
 
+    }
     public function close(){
         return view('close');
     }

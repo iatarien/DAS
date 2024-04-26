@@ -20,6 +20,7 @@ Route::get('/close', 'ReserveController@close');
 Route::get('/patients/{filters?}', 'PatientController@show_patients'); /* non validated to edit */
 Route::get('/validate_patients', 'PatientController@validate_patients'); /* to validate non validated */
 Route::get('/validated_patients', 'PatientController@validated_patients'); /* validated */
+Route::get('/rejected_patients', 'PatientController@rejected_patients'); /* rejected */
 
 Route::get('/add_patient', 'PatientController@add_patient');
 Route::get('/edit_patient/{id}', 'PatientController@edit_patient');
@@ -44,6 +45,7 @@ Route::post('/chnage_profile_photo','UsersController@chnage_profile_photo');
 /** ATTESTATIONS ROUTES */
 
 Route::get('/fiche/{id}/{type}', 'AttestationController@fiche');
+Route::get('/get_last/', 'AttestationController@get_last');
 
 /** HANDICAPS ROUTES */
 Route::get('/ajouter_handicap/', 'HandicapController@ajouter');

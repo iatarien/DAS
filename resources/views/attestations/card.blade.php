@@ -128,7 +128,7 @@ $type_ar ="";
 	  text-decoration: none;
 	  display: inline-block;
 	  font-size: 16px;" 
-  onclick=location.href="/patients/"> رجوع </button>
+  onclick=location.href="/validated_patients/"> رجوع </button>
 
 
  <br><br><br><br>
