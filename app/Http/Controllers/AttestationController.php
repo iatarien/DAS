@@ -48,6 +48,8 @@ class AttestationController extends Controller
         $year = Date('Y');
         $last = DB::table('patients')->whereNotNull("confirmed_by")->
         where("year",$year)->orderBy("num_card","DESC")->first();
+        //var_dump($last);
+        
         if($last == NULL || $last ==""){
             $last = "0001";
         }else{

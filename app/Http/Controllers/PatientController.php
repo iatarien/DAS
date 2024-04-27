@@ -38,7 +38,7 @@ class PatientController extends Controller
         $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->get();
+        whereNull("confirmed_by")->whereNull("rejected_by")->get();
 
         return view('patients.patients',['user' => $user,"patients"=>$patients]);
         

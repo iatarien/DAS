@@ -50,7 +50,22 @@
         <i class="fas fa-fw fa-table"></i>
         <span>حصيلة إجمالية</span></a>
 </li>
+<hr class="sidebar-divider">
 
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    <a class="nav-link" href="/handicaps">
+        <i class="fas fa-blind"></i>
+        <span>الطعون</span></a>
+</li>
+<hr class="sidebar-divider">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    <a class="nav-link" href="/handicaps">
+        <i class="fas fa-blind"></i>
+        <span>التنازلات</span></a>
+</li>
 <hr class="sidebar-divider">
 
 <!-- Nav Item - Dashboard -->

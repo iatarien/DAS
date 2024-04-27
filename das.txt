@@ -11,10 +11,10 @@ num_card when confirmating X
 
 
 user priviliges
-
-recours and tanazol and history
 filters for patients
-- 
+
+- recours CRUD
+- tanazol CRUD
 
 
 
@@ -30,7 +30,6 @@ upload_max_filesize = 100M !!!!!!!!!!
 - card num order - auto
 - confirm .... what to confirm ?
 - is medical filed mandatory ?- obligatoire
-
 - The fuck is recours and changes
 
 
