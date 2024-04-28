@@ -54,15 +54,28 @@
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
-    <a class="nav-link" href="/handicaps">
+    <a class="nav-link" href="/recours">
         <i class="fas fa-blind"></i>
         <span>الطعون</span></a>
 </li>
 <hr class="sidebar-divider">
-
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+        aria-expanded="true" aria-controls="collapseUtilities">
+        <i class="fas fa-fw fa-trash"></i>
+        <span>التنازلات</span>
+    </a>
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+        data-parent="#accordionSidebar">
+        <div dir="rtl"  class="py-2 collapse-inner rounded">
+            <a style="color : white; text-align : right;" class="collapse-item" href="/desistements">التنازلات</a>
+            <a style="color : white; text-align : right;" class="collapse-item" href="/select/desistement">إضافة تنازل</a>
+        </div>
+    </div>
+</li>
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
-    <a class="nav-link" href="/handicaps">
+    <a class="nav-link" href="/desistements">
         <i class="fas fa-blind"></i>
         <span>التنازلات</span></a>
 </li>

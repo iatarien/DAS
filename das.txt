@@ -11,7 +11,7 @@ num_card when confirmating X
 
 
 user priviliges
-filters for patients
+filters for patients and limit query
 
 - recours CRUD
 - tanazol CRUD
