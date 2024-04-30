@@ -29,7 +29,7 @@ class RecoursController extends Controller
      */
 
    
-
+    /********  DEISTEMENT *********/
    
     public function desisted()
     {   
@@ -42,55 +42,74 @@ class RecoursController extends Controller
         }
         return view('recours.desisted',['user' => $user,"patients"=>$patients]);
     }
-   
+    public function desisted_not()
+    {   
+        $user = Auth::user();
+        $patients = DB::table("patients")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->
+        get();
+        
+        return view('recours.desisted_not',['user' => $user,"patients"=>$patients]);
+    }
+    public function confirm_desistement($id){
+
+        $desisted_by = Auth::user()->id;
+        DB::table('patients')->where("id_patient",$id)->
+        update(["desisted_by"=>$desisted_by]);
+
+        return Redirect::to('/desistements');
+    }
+    public function confirm_desistements()
+    {   
+        $user = Auth::user();
+        $patients = DB::table("patients")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->
+        get();
+        
+        return view('recours.confirm_desist',['user' => $user,"patients"=>$patients]);
+    }
     public function ajouter_desistement($id){
         $user = Auth::user();
-        return view('handicaps.ajouter',['user'=>$user]);
+        $patient = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("communes","communes.code","=","patients.commune")->
+        where("id_patient",$id)->first();
+        return view('recours.ajouter_desist',['user'=>$user,"patient"=>$patient]);
     }
 
     public function select($type=""){
         $user = Auth::user();
         $patients = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        whereNull("desistement")->whereNull("desisteur")->
         whereNotNull("confirmed_by")->get();
 
         return view('recours.select',['user' => $user,"patients"=>$patients,"type"=>$type]);
     }
 
-    public function modifier($id){
-        $user = Auth::user();
-        $handicap = DB::table("handicaps")->where('id_handicap',$id)->first();
+    public function delete_desistement($id){
+        DB::table('patients')->where("id_patient",$id)->
+        update(["desisted_by"=>"NULL",
+        "desistement"=>"NULL",
+        "desisteur"=>"NULL"]);
         
-        return view('handicaps.modifier',['user'=>$user,"handicap"=>$handicap]);
+        return Redirect::to('/desistements');
     }
 
+    public function desist_patient(Request $request){
 
-    public function add_handicap(Request $request){
+        $id = $request['patient'];
+        $desistement = $request['desistement'];
+        $desisteur = Auth::user()->id;
 
-        $name_handicap = $request['name_handicap'];
-        $acronym = $request['acronym'];
-        $threshold = $request['threshold'];
+        DB::table('patients')->where("id_patient",$id)->
+        update(["desistement"=>$desistement,"desisteur"=>$desisteur]);
 
-        $id = DB::table('handicaps')->
-        insertGetId(["name_handicap"=>$name_handicap,"acronym"=>$acronym,
-        "threshold"=>$threshold]);
-        return Redirect::to('/handicaps');
+        return Redirect::to('/desistements_not');
     }
 
-    public function update_handicap(Request $request){
-
-        $id = $request['id'];
-
-        $name_handicap = $request['name_handicap'];
-        $acronym = $request['acronym'];
-        $threshold = $request['threshold'];
-        
-        DB::table('handicaps')->where("id_handicap",$id)->
-        update(["name_handicap"=>$name_handicap,"acronym"=>$acronym,
-        "threshold"=>$threshold]);
-
-        return Redirect::to('/handicaps');
-    }
-
+       /********  RECOURS *********/
     
 }

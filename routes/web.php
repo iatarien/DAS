@@ -60,11 +60,12 @@ Route::get('/select/{type?}', 'RecoursController@select');
 
 Route::get('/ajouter_desistement/{id}', 'RecoursController@ajouter_desistement');
 Route::get('/delete_desistement/{id}', 'RecoursController@delete_desistement');
-Route::get('/confirm_desistement/{id}', 'RecoursController@delete_desistement');
+Route::get('/confirm_desistements', 'RecoursController@confirm_desistements');
 Route::get('/desistements', 'RecoursController@desisted');
-Route::get('/desistements_hold', 'RecoursController@index_hold');
+Route::get('/desistements_not', 'RecoursController@desisted_not');
 
-
+Route::get('/confirm_desistement/{id}', 'RecoursController@confirm_desistement');
+Route::post('/desist_patient', 'RecoursController@desist_patient');
 /** AUTH ROUTES **/
 Auth::routes();
 Route::post('/login', 'Auth\LoginController@login');

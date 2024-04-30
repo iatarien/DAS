@@ -69,7 +69,7 @@
                                             <td>{{$patient->full_name}}</td>
                                             <td>{{$patient->desistement}}</td>
                       
-                                            <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}"> إلغاء </a></td>
+                                            <td><a class="btn btn-info" href="/delete_desistement/{{$patient->id_patient}}"> إلغاء </a></td>
         
                                         </tr>
                                         @endforeach

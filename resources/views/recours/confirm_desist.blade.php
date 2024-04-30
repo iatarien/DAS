@@ -38,7 +38,7 @@
                     <!-- Page Heading -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">طباعة البيانات</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">تثبيت التنازلات</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive" >
@@ -51,13 +51,9 @@
                                             <th>تاريخ و مكان الإزدياد</th>
                                             <th>طبيعة الإعاقة</th>
                                             <th>نسبة الإعاقة</th>  
-                                            <th>تبت من طرف</th> 
-                                            <th>بطاقة معوق</th>   
-                                            <th >بطاقة معلومات</th>  
-                                            <th >شهادة معلومات</th>  
-                                            <th >شهادة إدارية</th>  
-                                            <th>الملف الطبي</th>  
-                                            <th>تعديل</th>  
+                                            <th>ثبت التنازل من طرف</th>   
+                                            <th>تاريخ التنازل</th>  
+                                            <th>تثبيت</th>  
 
                                         </tr>
                                     </thead>
@@ -71,27 +67,9 @@
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->taux}} %</td>
                                             <td>{{$patient->full_name}}</td>
-                                            <td>
-                                                <a class="btn btn-primary" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/card">بطاقة معوق</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/fiche_info">بطاقة معلومات</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_info">شهادة معلومات</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-default" target="_blank" style="border : 1px solid black;" href="{{$patient->medical_file}}"> الملف الطبي</a>
-                                            </td>
-                                            @if($patient->user_id == $user->id)
-                                                <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}"> تعديل </a></td>
-                                            @else
-                                                <td><button disabled class="btn btn-info" href="#"> تعديل </button></td>
-                                            @endif
-                                           
+                                            <td>{{$patient->desistement}}</td>
+                                            <td><a class="btn btn-info" href="/confirm_desistement/{{$patient->id_patient}}"> تثبيت </a></td>
+        
                                         </tr>
                                         @endforeach
 
