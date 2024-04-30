@@ -58,7 +58,7 @@ class RecoursController extends Controller
         DB::table('patients')->where("id_patient",$id)->
         update(["desisted_by"=>$desisted_by]);
 
-        return Redirect::to('/desistements');
+        return Redirect::to('/desistements_not');
     }
     public function confirm_desistements()
     {   
@@ -111,5 +111,17 @@ class RecoursController extends Controller
     }
 
        /********  RECOURS *********/
-    
+
+    public function recours()
+    {   
+        $user = Auth::user();
+        $patients = DB::table("recours")->
+        join("patients","recours.patient","=","patients.id_patient")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users","users.id","=","patients.recours_by")->get();
+        foreach($patients as $patient){
+            $patient->recours_from = DB::table('users')->where('id',$patient->recours_from)->first()->full_name;
+        }
+        return view('recours.recours',['user' => $user,"patients"=>$patients]);
+    }
 }

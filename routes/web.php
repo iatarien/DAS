@@ -55,7 +55,7 @@ Route::get('/handicaps/', 'HandicapController@index');
 Route::post('/insert_handicap/', 'HandicapController@add_handicap');
 Route::post('/update_handicap/', 'HandicapController@update_handicap');
 
-/** RECOURS ROUTES */
+/** DESISTEMENT ROUTES */
 Route::get('/select/{type?}', 'RecoursController@select');
 
 Route::get('/ajouter_desistement/{id}', 'RecoursController@ajouter_desistement');
@@ -66,6 +66,17 @@ Route::get('/desistements_not', 'RecoursController@desisted_not');
 
 Route::get('/confirm_desistement/{id}', 'RecoursController@confirm_desistement');
 Route::post('/desist_patient', 'RecoursController@desist_patient');
+
+/** RECOURS ROUTES */
+Route::get('/ajouter_recours/{id}', 'RecoursController@ajouter_recours');
+Route::get('/delete_recours/{id}', 'RecoursController@delete_recours');
+Route::get('/confirm_recours', 'RecoursController@confirm_recours');
+Route::get('/recours', 'RecoursController@recours');
+Route::get('/recours_not', 'RecoursController@recours_not');
+
+Route::get('/confirm_recours/{id}', 'RecoursController@confirm_recours');
+Route::post('/recours_patient', 'RecoursController@recours_patient');
+
 /** AUTH ROUTES **/
 Auth::routes();
 Route::post('/login', 'Auth\LoginController@login');
