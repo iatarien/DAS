@@ -57,6 +57,7 @@
                                             <th>رقم البطاقة الجديدة</th>   
                                             <th>تم إدخال الطعن من طرف</th> 
                                             <th>تم تثبيت الطعن من طرف</th> 
+                                            <th>تعديل</th>
                                         </tr>
                                     </thead>
 
@@ -67,11 +68,14 @@
                                             <td>{{$patient->prenom}}</td>
                                             <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
                                             <td>{{$patient->date_recours}}</td>
-                                            <td>{{$patient->taux}} %</td>
+                                            <td>{{$patient->name_handicap}}</td>
+                                            <td>{{$patient->old_taux}} %</td>
+                                            <td>{{$patient->new_taux}} %</td>
+                                            <td>{{$patient->old_num}}</td>
+                                            <td>{{$patient->new_num}}</td>
+                                            <td>{{$patient->recours_from}}</td>
                                             <td>{{$patient->full_name}}</td>
-                                            <td>{{$patient->desistement}}</td>
-                      
-                                            <td><a class="btn btn-info" href="/delete_desistement/{{$patient->id_patient}}"> إلغاء </a></td>
+                                            <td><a class="btn btn-info" href="/edit_recours/{{$patient->id_patient}}"> تعديل </a></td>
         
                                         </tr>
                                         @endforeach

@@ -118,7 +118,7 @@ class RecoursController extends Controller
         $patients = DB::table("recours")->
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.recours_by")->get();
+        join("users","users.id","=","recours.recours_by")->get();
         foreach($patients as $patient){
             $patient->recours_from = DB::table('users')->where('id',$patient->recours_from)->first()->full_name;
         }
