@@ -50,14 +50,25 @@
         <i class="fas fa-fw fa-table"></i>
         <span>حصيلة إجمالية</span></a>
 </li>
-<hr class="sidebar-divider">
-
 <!-- Nav Item - Dashboard -->
-<li class="nav-item active">
-    <a class="nav-link" href="/recours">
-        <i class="fas fa-blind"></i>
-        <span>الطعون</span></a>
+<hr class="sidebar-divider">
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+        aria-expanded="true" aria-controls="collapseUtilities">
+        <i class="fas fa-fw fa-bolt"></i>
+        <span>الطعون</span>
+    </a>
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+        data-parent="#accordionSidebar">
+        <div dir="rtl"  class="py-2 collapse-inner rounded">
+            <a style="color : white; text-align : right;" class="collapse-item" href="/select/recours">إضافة طعن</a>
+            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_recours"> تثبيت الطعون</a>
+            <a style="color : white; text-align : right;" class="collapse-item" href="/recours_not">الطعون غير المثبتة</a>
+            <a style="color : white; text-align : right;" class="collapse-item" href="/recours">الطعون المثبتة</a>
+             </div>
+    </div>
 </li>
+
 <hr class="sidebar-divider">
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -69,9 +80,9 @@
         data-parent="#accordionSidebar">
         <div dir="rtl"  class="py-2 collapse-inner rounded">
             <a style="color : white; text-align : right;" class="collapse-item" href="/select/desistement">إضافة تنازل</a>
+            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_desistements"> تثبيت التنازلات</a>
             <a style="color : white; text-align : right;" class="collapse-item" href="/desistements_not">التنازلات غير المثبتة</a>
             <a style="color : white; text-align : right;" class="collapse-item" href="/desistements">التنازلات المثبتة</a>
-            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_desistements"> تثبيت التنازلات</a>
              </div>
     </div>
 </li>

@@ -11,11 +11,10 @@ num_card when confirmating X
 
 
 user priviliges
-filters for patients and limit query
-
-- stats (remove tanazol and recours)
-- recours CRUD X
-- tanazol CRUD 
+1 - filters for patients and limit query
+2 - stats (remove tanazol and recours)
+3 - recours CRUD 
+4 - tanazol CRUD X
 
 
 

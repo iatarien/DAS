@@ -75,7 +75,7 @@ Route::get('/recours', 'RecoursController@recours');
 Route::get('/recours_not', 'RecoursController@recours_not');
 
 Route::get('/confirm_recours/{id}', 'RecoursController@confirm_recours');
-Route::post('/recours_patient', 'RecoursController@recours_patient');
+Route::post('insert_recours', 'RecoursController@insert_recours');
 
 /** AUTH ROUTES **/
 Auth::routes();

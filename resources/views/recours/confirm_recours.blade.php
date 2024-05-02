@@ -38,7 +38,7 @@
                     <!-- Page Heading -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">الاأشخاص المستفيدين من بطاقة شخص معوق</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">الطعون غير المثبتة </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive" >
@@ -49,12 +49,14 @@
                                             <th>اللقب</th>
                                             <th>الاسم</th>
                                             <th>تاريخ و مكان الإزدياد</th>
+                                            <th >تاريخ الطعن</th> 
                                             <th>طبيعة الإعاقة</th>
-                                            <th>نسبة الإعاقة</th>  
-                                            <th>رقم البطاقة</th>   
-                                            <th >تاريخ الاستفادة</th>  
-                                            <th>إختيار</th>  
-
+                                            <th>نسبة الإعاقة القديمة</th>  
+                                            <th>نسبة الإعاقة الجديدة</th>  
+                                            <th>رقم البطاقة القديم</th>  
+                                            <th>رقم البطاقة الجديدة</th>   
+                                            <th>تم إدخال الطعن من طرف</th> 
+                                            <th>تثبيت</th>
                                         </tr>
                                     </thead>
 
@@ -64,11 +66,14 @@
                                             <td>{{$patient->nom}}</td>
                                             <td>{{$patient->prenom}}</td>
                                             <td>{{$patient->date_naissance}}<br> بـ{{$patient->lieu_naissance}}</td>
+                                            <td>{{$patient->date_recours}}</td>
                                             <td>{{$patient->name_handicap}}</td>
-                                            <td>{{$patient->taux}} %</td>
-                                            <td>{{$patient->num_card}}</td>
-                                            <td>{{$patient->date_card}}</td>
-                                            <td><a class="btn btn-success" href="/ajouter_{{$type}}/{{$patient->id_patient}}"> إختيار </a></td>
+                                            <td>{{$patient->old_taux}} %</td>
+                                            <td>{{$patient->new_taux}} %</td>
+                                            <td>{{$patient->old_num}}</td>
+                                            <td>{{$patient->new_num}}</td>
+                                            <td>{{$patient->full_name}}</td>
+                                            <td><a class="btn btn-info" href="/confirm_recours/{{$patient->id_patient}}"> تثبيت </a></td>
         
                                         </tr>
                                         @endforeach

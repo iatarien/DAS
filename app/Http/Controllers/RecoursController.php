@@ -124,4 +124,49 @@ class RecoursController extends Controller
         }
         return view('recours.recours',['user' => $user,"patients"=>$patients]);
     }
+    public function recours_not()
+    {   
+        $user = Auth::user();
+        $patients = DB::table("recours")->
+        join("patients","recours.patient","=","patients.id_patient")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users","users.id","=","recours.recours_from")->
+        whereNull("recours_by")->get();
+
+        return view('recours.recours_not',['user' => $user,"patients"=>$patients]);
+    }
+    public function confirm_recours()
+    {   
+        $user = Auth::user();
+        $patients = DB::table("recours")->
+        join("patients","recours.patient","=","patients.id_patient")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users","users.id","=","recours.recours_from")->
+        whereNull("recours_by")->get();
+
+        return view('recours.confirm_recours',['user' => $user,"patients"=>$patients]);
+    }
+    public function ajouter_recours($id){
+        $user = Auth::user();
+        $patient = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("communes","communes.code","=","patients.commune")->
+        where("id_patient",$id)->first();
+        return view('recours.ajouter_recours',['user'=>$user,"patient"=>$patient]);
+    }
+
+    public function insert_recours(Request $request){
+
+        $patient = $request['patient'];
+        $old_taux = $request['old_taux'];
+        $new_taux = $request['new_taux'];
+        $date_recours = $request['date_recours'];
+        $recours_from = Auth::user()->id;
+
+        DB::table('recours')->insert(["patient"=>$patient,"old_taux"=>$old_taux,
+        "new_taux"=>$new_taux,"date_recours"=>$date_recours,
+        "recours_from"=>$recours_from]);
+
+        return Redirect::to('/recours_not');
+    }
 }
