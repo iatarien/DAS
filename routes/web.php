@@ -69,14 +69,16 @@ Route::post('/desist_patient', 'RecoursController@desist_patient');
 
 /** RECOURS ROUTES */
 Route::get('/ajouter_recours/{id}', 'RecoursController@ajouter_recours');
+Route::get('/edit_recours/{id}', 'RecoursController@edit_recours');
 Route::get('/delete_recours/{id}', 'RecoursController@delete_recours');
 Route::get('/confirm_recours', 'RecoursController@confirm_recours');
 Route::get('/recours', 'RecoursController@recours');
 Route::get('/recours_not', 'RecoursController@recours_not');
 
 Route::get('/confirm_recours/{id}', 'RecoursController@confirm_recours');
-Route::post('insert_recours', 'RecoursController@insert_recours');
 
+Route::post('insert_recours', 'RecoursController@insert_recours');
+Route::post('update_recours', 'RecoursController@update_recours');
 /** AUTH ROUTES **/
 Auth::routes();
 Route::post('/login', 'Auth\LoginController@login');

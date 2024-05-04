@@ -54,7 +54,7 @@
                                             <th>نسبة الإعاقة القديمة</th>  
                                             <th>نسبة الإعاقة الجديدة</th>  
                                             <th>رقم البطاقة القديم</th>  
-                                            <th>رقم البطاقة الجديدة</th>   
+                                            <th> تاريخ الطعن</th>  
                                             <th>تم إدخال الطعن من طرف</th> 
                                             <th>تعديل</th>
                                         </tr>
@@ -70,10 +70,10 @@
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->old_taux}} %</td>
                                             <td>{{$patient->new_taux}} %</td>
-                                            <td>{{$patient->old_num}}</td>
+                                            <td>{{$patient->date_recours}}</td>
                                             <td>{{$patient->new_num}}</td>
                                             <td>{{$patient->full_name}}</td>
-                                            <td><a class="btn btn-info" href="/edit_recours/{{$patient->id_patient}}"> تعديل </a></td>
+                                            <td><a class="btn btn-info" href="/edit_recours/{{$patient->id_recours}}"> تعديل </a></td>
         
                                         </tr>
                                         @endforeach

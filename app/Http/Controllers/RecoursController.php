@@ -154,7 +154,15 @@ class RecoursController extends Controller
         where("id_patient",$id)->first();
         return view('recours.ajouter_recours',['user'=>$user,"patient"=>$patient]);
     }
-
+    public function edit_recours($id){
+        $user = Auth::user();
+        $recours = DB::table('recours')->where('id_recours',$id)->first();
+        $patient = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("communes","communes.code","=","patients.commune")->
+        where("id_patient",$recours->patient)->first();
+        return view('recours.edit_recours',['user'=>$user,"patient"=>$patient,"recours"=>$recours]);
+    }
     public function insert_recours(Request $request){
 
         $patient = $request['patient'];
@@ -166,6 +174,20 @@ class RecoursController extends Controller
         DB::table('recours')->insert(["patient"=>$patient,"old_taux"=>$old_taux,
         "new_taux"=>$new_taux,"date_recours"=>$date_recours,
         "recours_from"=>$recours_from]);
+
+        return Redirect::to('/recours_not');
+    }
+    public function update_recours(Request $request){
+
+        $recours = $request['recours'];
+        $old_taux = $request['old_taux'];
+        $new_taux = $request['new_taux'];
+        $date_recours = $request['date_recours'];
+        $recours_from = Auth::user()->id;
+
+        DB::table('recours')->where('id_recours',$recours)->
+        update(["old_taux"=>$old_taux,
+        "new_taux"=>$new_taux,"date_recours"=>$date_recours]);
 
         return Redirect::to('/recours_not');
     }

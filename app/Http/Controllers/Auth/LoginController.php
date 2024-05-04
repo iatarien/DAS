@@ -49,7 +49,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-            return Redirect::to('/');
+            return Redirect::to('/stats/'.Date('Y'));
 
             
         }else{
