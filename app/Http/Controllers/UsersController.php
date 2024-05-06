@@ -28,7 +28,7 @@ class UsersController extends Controller
     public function users()
     {
         $user = Auth::user();
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->where('service','!=','Admin')->get();
         return view('users',['users' => $users,'user'=>$user]);
     }
     public function modify_user($id)

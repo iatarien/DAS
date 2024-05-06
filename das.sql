@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 30, 2024 at 03:53 PM
--- Server version: 5.7.31
--- PHP Version: 7.4.9
+-- Generation Time: May 06, 2024 at 04:06 PM
+-- Server version: 5.7.40
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -154,19 +154,19 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `desisteur` int(11) DEFAULT NULL,
   `desisted_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_patient`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients`
 --
 
 INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`, `lieu_naissance`, `commune`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `rejected_by`, `num_card`, `date_card`, `medical_file`, `inserted_at`, `year`, `desistement`, `desisteur`, `desisted_by`) VALUES
-(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', '10', 'الجزائر العاصمة', 4, 100, 1, 1, NULL, '0500', '2024-04-19', '/files/23928-39.pdf', '2024-04-20', '2024', NULL, NULL, NULL),
-(3, 'لول', 'لال', 'lol', 'lal', 'ذكر', 'a', 'b', '2008-03-13', 'alger', '17', 'alger', 5, 80, 1, 2, NULL, '8001', '2024-04-22', NULL, '2024-04-22', '2023', '0000-00-00', 0, 0),
-(8, 'بقي', 'عيسى', 'Beggui', 'Aissa', 'ذكر', 'محمد', 'غربي فاطمة', '1982-10-24', 'عين البيضاء ورقلة', '17', 'حي بني ثور ورقلة', 5, 50, 1, 1, NULL, '0501', '2024-04-23', '/files/8Bilan 1ére trimestre 2024 ADM- PSD - Final.pdf', '2024-04-23', '2024', '0000-00-00', 0, 0),
-(9, 'ميسي', 'ليونل', 'Messi', 'Lionel', 'أنثى', 'اليخاندرو', 'ليلى', '1982-10-12', 'الارجنتين', '25', 'لوس أنجلس ميامي', 4, 50, 1, 1, NULL, '0502', '2024-04-24', '/files/9vignette 2021 5000 da.pdf', '2024-04-24', '2024', '2024-04-30', 1, 1),
-(11, 'سمير', 'سمون', 'samir', 'somone', 'أنثى', 'شخص', 'شخصة', '2001-05-14', 'ورقلة', '31', 'ورقلة', 3, 95, 1, NULL, NULL, '8002', '2024-04-26', '/files/11FP1.pdf', '2024-04-26', '2023', NULL, NULL, NULL),
-(12, 'ستيفن', 'هوكينج', 'stephen', 'hawking', 'ذكر', 'لا يهم', 'أيضا لا يهم', '1972-06-20', 'أمريكا', '11', 'أمريكا', 5, 100, 1, NULL, NULL, '0502', '2024-12-05', '/files/12facture proforma site.pdf', '2024-04-26', '2024', NULL, NULL, NULL);
+(2, 'اعطريان', 'وليد', 'iatarien', 'walid', 'ذكر', 'عبد العزيز', 'نادية', '2000-12-04', 'القصبة الجزائر', '17', 'الجزائر العاصمة', 4, 90, 1, 2, NULL, '0504', '2024-05-05', '/files/23928-39.pdf', '2024-04-20', '2024', NULL, NULL, NULL),
+(3, 'لول', 'لال', 'lol', 'lal', 'ذكر', 'a', 'b', '2008-03-13', 'alger', '17', 'alger', 5, 80, 1, 2, NULL, '8001', '2024-04-22', NULL, '2024-04-22', '2023', NULL, NULL, NULL),
+(8, 'بقي', 'عيسى', 'Beggui', 'Aissa', 'ذكر', 'محمد', 'غربي فاطمة', '1982-10-24', 'عين البيضاء ورقلة', '17', 'حي بني ثور ورقلة', 5, 50, 1, 2, NULL, '0501', '2024-04-23', '/files/8Bilan 1ére trimestre 2024 ADM- PSD - Final.pdf', '2024-04-23', '2024', NULL, NULL, NULL),
+(9, 'ميسي', 'ليونل', 'Messi', 'Lionel', 'أنثى', 'اليخاندرو', 'ليلى', '1982-10-12', 'الارجنتين', '25', 'لوس أنجلس ميامي', 4, 90, 1, NULL, NULL, '0503', '2024-05-16', '/files/9vignette 2021 5000 da.pdf', '2024-04-24', '2024', '2024-04-30', 1, 2),
+(11, 'سمير', 'سمون', 'samir', 'somone', 'أنثى', 'شخص', 'شخصة', '2001-05-14', 'ورقلة', '31', 'ورقلة', 3, 95, 1, NULL, NULL, NULL, NULL, '/files/11FP1.pdf', '2024-04-26', '2023', NULL, NULL, NULL),
+(13, 'اسكوبار', 'بابلو', 'Pablo', 'Escobar', 'ذكر', 'Julio', 'Maia', '1962-02-14', 'كولومبيا', '04', 'كولومبيا', 5, 80, 1, 2, NULL, '0505', '2024-06-05', '/files/13conception de logiciel du gestion des laboratoires univ-Tam (1).pdf', '2024-05-06', '2024', '2024-05-06', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -186,14 +186,15 @@ CREATE TABLE IF NOT EXISTS `recours` (
   `recours_from` int(11) DEFAULT NULL,
   `recours_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_recours`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recours`
 --
 
 INSERT INTO `recours` (`id_recours`, `patient`, `old_taux`, `new_taux`, `date_recours`, `old_num`, `new_num`, `recours_from`, `recours_by`) VALUES
-(1, 5, 50, 70, '2024-04-16', '8002/2023', '500/2024', 1, 1);
+(2, 2, 100, 90, '2024-05-05', '0500/2024', '0504', 1, NULL),
+(4, 3, 80, 80, '2024-05-06', '', '', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -213,7 +214,8 @@ CREATE TABLE IF NOT EXISTS `safe` (
 
 INSERT INTO `safe` (`id`, `password`) VALUES
 (1, 'admin'),
-(2, '12345');
+(2, '12345'),
+(51, 'lola');
 
 -- --------------------------------------------------------
 
@@ -233,15 +235,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `chapitre` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `full_name`, `position`, `service`, `password`, `photo`, `chapitre`) VALUES
-(1, 'admin', 'Administrateur', 'Admin', 'Admin', '$2y$10$N34kPOmf7fWr7xNbgCSG2ORVmq7jAtrtsZaj1FNuSzqWiOqBWc7GW', 'uploads/users/1_user_avatar.jpg', NULL),
-(2, 'comptable', 'comptable 1', 'Employé', 'Agent', '$2y$10$XL18PhrmUiGC8A/vKh29z./ClSg.48gbRN6NzPAltEW2Sl6om5hAy', 'img/user_avatar.jpg', NULL);
+(2, 'chef', 'Chef', 'Chef', 'Chef', '$2y$10$r2IcZRQatDkDfGGG6UMu6eTqMhLndAmMAfxZ/pZDXbo.rU8YzcrAW', 'uploads/users/1_user_avatar.jpg', NULL),
+(1, 'agent', 'Agent', 'Employé', 'Agent', '$2y$10$r2IcZRQatDkDfGGG6UMu6eTqMhLndAmMAfxZ/pZDXbo.rU8YzcrAW', 'img/user_avatar.jpg', NULL),
+(50, 'admin', 'Administrateur', 'Admin', 'Admin', '$2y$10$N34kPOmf7fWr7xNbgCSG2ORVmq7jAtrtsZaj1FNuSzqWiOqBWc7GW', 'uploads/users/1_user_avatar.jpg', NULL),
+(51, 'lola', 'lola', 'Employé', 'Agent', '$2y$10$Opse3Hbmk1gImFpNVgew1uhqYded782.flEwJkZqstIMtfpC.LAZq', 'img/user_avatar.jpg', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

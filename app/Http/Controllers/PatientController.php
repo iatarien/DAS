@@ -34,13 +34,23 @@ class PatientController extends Controller
      
     public function show_patients($filters="")
     {   
+
         $user = Auth::user();
-        $patients = DB::table('patients')->
+        $patients0 = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->whereNull("rejected_by")->get();
+        whereNull("confirmed_by")->whereNull("rejected_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.user_id")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        
 
-        return view('patients.patients',['user' => $user,"patients"=>$patients]);
+        return view('patients.patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
     public function validate_patient($id)
@@ -59,34 +69,57 @@ class PatientController extends Controller
     public function validate_patients($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->
+        $patients0 = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->whereNull("rejected_by")->get();
+        whereNull("confirmed_by")->whereNull("rejected_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.user_id")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
 
-        return view('patients.validate',['user' => $user,"patients"=>$patients]);
+        return view('patients.validate',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
     public function validated_patients($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->
+        $patients0 = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.confirmed_by")->
-        whereNotNull("confirmed_by")->get();
+        whereNotNull("confirmed_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.confirmed_by")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
 
-        return view('patients.validated_patients',['user' => $user,"patients"=>$patients]);
+        return view('patients.validated_patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
     public function rejected_patients($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->
+        $patients0 = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.rejected_by")->
-        whereNotNull("rejected_by")->get();
-
-        return view('patients.rejected',['user' => $user,"patients"=>$patients]);
+        whereNotNull("rejected_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.rejected_by")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        return view('patients.rejected',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
     public function calc_age($now, $birthday){
@@ -101,10 +134,12 @@ class PatientController extends Controller
         if($annee =="all" || $annee ==""){
             $patients100 = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
             where("taux",100)->get();
         }else{
             $patients100 = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
             where("year",$annee)->where("taux",100)->get();
         }
         
@@ -132,10 +167,12 @@ class PatientController extends Controller
         if($annee =="all" || $annee ==""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
             where("taux","<",100)->get();
         }else{
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
             where("year",$annee)->where("taux","<",100)->get();
         }
 

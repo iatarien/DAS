@@ -45,6 +45,24 @@
       th {
         vertical-align : middle !important;
       }
+      .dropdown-content {
+        display: block;
+        position: absolute;
+        background-color: white;
+        width: 300px;
+        padding: 12px 16px;
+        border: 1px solid #c7c7cc;
+        z-index: 1;
+        text-align : right;
+      }
+
+      /* Links inside the dropdown */
+      .dropdown-content span {
+        color: black;
+        padding: 6px 16px;
+        text-decoration: none;
+        display: block;
+      }
     </style>
 </head>
 

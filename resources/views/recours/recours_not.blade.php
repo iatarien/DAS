@@ -31,7 +31,16 @@
             <div id="content">
 
             @include('components.topbar')
-
+            <div class="form-group row" dir="rtl" style="justify-content : center;">
+                <div class="form-group" style="width : 300px;">
+                    <input id="op_input" autocomplete="off" dir="rtl" placeholder="الاسم و اللقب" list="ops" class="form-control"  onclick="op_like(this.value)" onkeyup="op_like(this.value)" > 
+                    <div id="myDropdown" class="dropdown-content" style="display: none;">
+                    @foreach ($patients0 as $patient)
+                    <span class="ops_clss" style="cursor: pointer;" onclick="filter('{{ $patient->id_patient }}')">{{$patient->nom}} {{$patient->prenom}}</span>
+                    @endforeach
+                    </div>
+                </div>
+            </div>
                 <!-- Begin Page Content -->
                 <div class="container-fluid" dir="rtl" style="text-align : right">
 
@@ -70,10 +79,15 @@
                                             <td>{{$patient->name_handicap}}</td>
                                             <td>{{$patient->old_taux}} %</td>
                                             <td>{{$patient->new_taux}} %</td>
+                                            <td>{{$patient->num_card}}</td>
                                             <td>{{$patient->date_recours}}</td>
-                                            <td>{{$patient->new_num}}</td>
                                             <td>{{$patient->full_name}}</td>
+                                            @if($user->id == $patient->recours_from)
                                             <td><a class="btn btn-info" href="/edit_recours/{{$patient->id_recours}}"> تعديل </a></td>
+                                            @else
+                                            <td><button disabled class="btn btn-info" href="#">تعديل</button></td>
+                                            @endif
+                                            
         
                                         </tr>
                                         @endforeach

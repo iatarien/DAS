@@ -38,9 +38,38 @@
     <script src="/js/sb-admin-2.min.js"></script>
 
     <script type="text/javascript">
+    function op_like(value){
+        document.getElementById("myDropdown").style.display ="block";
+        var input, filter, ul, li, a, i;
+        filter = value.toUpperCase();
+        a = document.getElementsByClassName("ops_clss");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+            } else {
+            a[i].style.display = "none";
+            }
+        }
+    }
+    function filter(value){
+        var getUrl = window.location;
+        //var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+        var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+        console.log(baseUrl);
+        if(getUrl.pathname.split('/')[1] =="select"){
+            baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/"+getUrl.pathname.split('/')[2];
+        }
+        window.location.href = baseUrl+"/"+value;
+    }
     window.onload = function(){
         document.getElementById('loading').style.display = "none";
     };
+    document.onclick= function(event) {
+        if(event.srcElement.id != "op_input"){
+            document.getElementById('myDropdown').style.display = "none";
+        }
+    }
     </script>
 
 </body>

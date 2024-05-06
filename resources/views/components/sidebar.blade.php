@@ -7,7 +7,8 @@
 
 
 <!-- Divider -->
-
+@if($user->service =="Agent" || $user->service =="Chef")
+@if($user->service =="Agent" )
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
@@ -17,18 +18,21 @@
 </li>
 
 <hr class="sidebar-divider">
-<li class="nav-item active">
-    <a class="nav-link" href="/validate_patients">
-        <i class="fas fa-fw fa-check"></i>
-        <span>تثبيت أو رفض</span></a>
-</li>
-<hr class="sidebar-divider">
-
+<!-- Nav Item - Dashboard -->
 <li class="nav-item active">
     <a class="nav-link" href="/patients">
         <i class="fas fa-fw fa-copy"></i>
         <span>الأشخاص غير المثبتين</span></a>
 </li>
+@endif
+@if($user->service =="Chef" )
+<hr class="sidebar-divider">
+<li class="nav-item active">
+    <a class="nav-link" href="/validate_patients">
+        <i class="fas fa-fw fa-check"></i>
+        <span>تثبيت أو رفض</span></a>
+</li>
+@endif
 <hr class="sidebar-divider">
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
@@ -41,7 +45,7 @@
 <li class="nav-item active">
     <a class="nav-link" href="/rejected_patients">
         <i class="fas fa-fw fa-calendar"></i>
-        <span> غير المستفيدين</span></a>
+        <span> المرفوضين</span></a>
 </li>
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
@@ -61,9 +65,13 @@
     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
         data-parent="#accordionSidebar">
         <div dir="rtl"  class="py-2 collapse-inner rounded">
+            @if($user->service =="Agent" )
             <a style="color : white; text-align : right;" class="collapse-item" href="/select/recours">إضافة طعن</a>
-            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_recours"> تثبيت الطعون</a>
             <a style="color : white; text-align : right;" class="collapse-item" href="/recours_not">الطعون غير المثبتة</a>
+            @endif
+            @if($user->service =="Chef" )
+            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_recours"> تثبيت الطعون</a>
+            @endif
             <a style="color : white; text-align : right;" class="collapse-item" href="/recours">الطعون المثبتة</a>
              </div>
     </div>
@@ -71,30 +79,37 @@
 
 <hr class="sidebar-divider">
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1"
+        aria-expanded="true" aria-controls="collapseUtilities1">
         <i class="fas fa-fw fa-trash"></i>
         <span>التنازلات</span>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+    <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities"
         data-parent="#accordionSidebar">
         <div dir="rtl"  class="py-2 collapse-inner rounded">
+            @if($user->service =="Agent" )
             <a style="color : white; text-align : right;" class="collapse-item" href="/select/desistement">إضافة تنازل</a>
-            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_desistements"> تثبيت التنازلات</a>
             <a style="color : white; text-align : right;" class="collapse-item" href="/desistements_not">التنازلات غير المثبتة</a>
+            @endif
+            @if($user->service =="Chef" )
+            <a style="color : white; text-align : right;" class="collapse-item" href="/confirm_desistements"> تثبيت التنازلات</a>
+            @endif
             <a style="color : white; text-align : right;" class="collapse-item" href="/desistements">التنازلات المثبتة</a>
              </div>
     </div>
 </li>
-
+@if($user->service =="Chef" )
 <hr class="sidebar-divider">
-
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
     <a class="nav-link" href="/handicaps">
         <i class="fas fa-blind"></i>
         <span>أنواع الإعاقات</span></a>
 </li>
+@endif
+
+@endif
+@if($user->service =="Admin" )
 <hr class="sidebar-divider">
 <!-- Nav Item - Tables -->
 <li class="nav-item active">
@@ -102,7 +117,8 @@
         <i class="fas fa-fw fa-users"></i>
         <span>الحسابات</span></a>
 </li>
-<!-- Divider -->
+@endif
+
 <hr class="sidebar-divider d-none d-md-block">
 
 </ul>

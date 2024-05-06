@@ -48,7 +48,9 @@ class LoginController extends Controller
         $credentials = array('username'=>$request['username'],'password'=>$request['password']);
 
         if (Auth::attempt($credentials)) {
-
+            if(Auth::user()->service == "Admin"){
+                return Redirect::to('/users');
+            }
             return Redirect::to('/stats/'.Date('Y'));
 
             

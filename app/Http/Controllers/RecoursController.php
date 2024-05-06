@@ -28,29 +28,59 @@ class RecoursController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-   
+    public function select($type="",$filters=""){
+        $user = Auth::user();
+        $patients0 = DB::table("patients")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        whereNull("desistement")->whereNull("desisteur")->
+        whereNotNull("confirmed_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        return view('recours.select',['user' => $user,"patients"=>$patients,"patients0"=>$patients0,"type"=>$type]);
+    }
+
+
     /********  DEISTEMENT *********/
    
-    public function desisted()
+    public function desisted($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table("patients")->
+        $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.desisted_by")->get();
+        join("users","users.id","=","patients.desisted_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","patients.desisted_by")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
         foreach($patients as $patient){
             $patient->desisteur_name = DB::table('users')->where('id',$patient->desisteur)->first()->full_name;
         }
-        return view('recours.desisted',['user' => $user,"patients"=>$patients]);
+        return view('recours.desisted',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
-    public function desisted_not()
+    public function desisted_not($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table("patients")->
+        $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->
-        get();
-        
-        return view('recours.desisted_not',['user' => $user,"patients"=>$patients]);
+        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","patients.desisteur")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        return view('recours.desisted_not',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
     public function confirm_desistement($id){
 
@@ -60,15 +90,21 @@ class RecoursController extends Controller
 
         return Redirect::to('/desistements_not');
     }
-    public function confirm_desistements()
+    public function confirm_desistements($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table("patients")->
+        $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->
-        get();
-        
-        return view('recours.confirm_desist',['user' => $user,"patients"=>$patients]);
+        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","patients.desisteur")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        return view('recours.confirm_desist',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
     public function ajouter_desistement($id){
         $user = Auth::user();
@@ -79,15 +115,6 @@ class RecoursController extends Controller
         return view('recours.ajouter_desist',['user'=>$user,"patient"=>$patient]);
     }
 
-    public function select($type=""){
-        $user = Auth::user();
-        $patients = DB::table("patients")->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        whereNull("desistement")->whereNull("desisteur")->
-        whereNotNull("confirmed_by")->get();
-
-        return view('recours.select',['user' => $user,"patients"=>$patients,"type"=>$type]);
-    }
 
     public function delete_desistement($id){
         DB::table('patients')->where("id_patient",$id)->
@@ -112,39 +139,64 @@ class RecoursController extends Controller
 
        /********  RECOURS *********/
 
-    public function recours()
+    public function recours($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table("recours")->
+        $patients0 = DB::table("recours")->
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","recours.recours_by")->get();
+        join("users","users.id","=","recours.recours_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table("recours")->
+            join("patients","recours.patient","=","patients.id_patient")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","recours.recours_by")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
         foreach($patients as $patient){
             $patient->recours_from = DB::table('users')->where('id',$patient->recours_from)->first()->full_name;
         }
-        return view('recours.recours',['user' => $user,"patients"=>$patients]);
+        return view('recours.recours',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
-    public function recours_not()
+    public function recours_not($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table("recours")->
+        $patients0 = DB::table("recours")->
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users","users.id","=","recours.recours_from")->
-        whereNull("recours_by")->get();
-
-        return view('recours.recours_not',['user' => $user,"patients"=>$patients]);
+        whereNull("recours_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table("recours")->
+            join("patients","recours.patient","=","patients.id_patient")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","recours.recours_from")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        return view('recours.recours_not',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
-    public function confirm_recours()
+    public function confirm_recours($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table("recours")->
+        $patients0 = DB::table("recours")->
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users","users.id","=","recours.recours_from")->
-        whereNull("recours_by")->get();
-
-        return view('recours.confirm_recours',['user' => $user,"patients"=>$patients]);
+        whereNull("recours_by")->limit(50)->get();
+        if($filters !=""){
+            $patients = DB::table("recours")->
+            join("patients","recours.patient","=","patients.id_patient")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","recours.recours_from")->
+            where("id_patient",$filters)->get();
+        }else {
+            $patients = $patients0;
+        }
+        return view('recours.confirm_recours',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
     public function ajouter_recours($id){
         $user = Auth::user();
@@ -162,6 +214,24 @@ class RecoursController extends Controller
         join("communes","communes.code","=","patients.commune")->
         where("id_patient",$recours->patient)->first();
         return view('recours.edit_recours',['user'=>$user,"patient"=>$patient,"recours"=>$recours]);
+    }
+    public function edit_real_recours($id){
+        $user = Auth::user();
+        $recours = DB::table('recours')->where('id_recours',$id)->first();
+        $patient = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("communes","communes.code","=","patients.commune")->
+        where("id_patient",$recours->patient)->first();
+        return view('recours.edit_real_recours',['user'=>$user,"patient"=>$patient,"recours"=>$recours]);
+    }
+    public function confirmer_recours($id){
+        $user = Auth::user();
+        $recours = DB::table('recours')->where('id_recours',$id)->first();
+        $patient = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("communes","communes.code","=","patients.commune")->
+        where("id_patient",$recours->patient)->first();
+        return view('recours.confirmer_recours',['user'=>$user,"patient"=>$patient,"recours"=>$recours]);
     }
     public function insert_recours(Request $request){
 
@@ -188,6 +258,49 @@ class RecoursController extends Controller
         DB::table('recours')->where('id_recours',$recours)->
         update(["old_taux"=>$old_taux,
         "new_taux"=>$new_taux,"date_recours"=>$date_recours]);
+
+        return Redirect::to('/recours_not');
+    }
+    public function update_real_recours(Request $request){
+
+        $patient_id = $request['patient'];
+        $patient = DB::table("patients")->where('id_patient',$patient_id)->first();
+        
+        $recours = $request['recours'];
+        $new_taux = $request['new_taux'];
+        $date_recours = $request['date_recours'];
+        $recours_by = Auth::user()->id;
+
+
+        DB::table('recours')->where('id_recours',$recours)->
+        update(["new_taux"=>$new_taux,
+        "date_recours"=>$date_recours,"recours_by"=>$recours_by]);
+
+        DB::table('patients')->where('id_patient',$patient_id)->
+        update(["date_card"=>$date_recours,"taux"=>$new_taux,"confirmed_by"=>$recours_by]);
+        
+        return Redirect::to('/recours');
+    }
+    public function validate_recours(Request $request){
+
+        $patient_id = $request['patient'];
+        $patient = DB::table("patients")->where('id_patient',$patient_id)->first();
+        
+        $recours = $request['recours'];
+        $old_taux = $request['old_taux'];
+        $new_taux = $request['new_taux'];
+        $date_recours = $request['date_recours'];
+        $recours_by = Auth::user()->id;
+        $old_num = $request['old_num']."/".$patient->year;
+        $new_num = $request['new_num'];
+
+        DB::table('recours')->where('id_recours',$recours)->
+        update(["old_taux"=>$old_taux,"new_taux"=>$new_taux,"old_num"=>$old_num,"new_num"=>$new_num,
+        "date_recours"=>$date_recours,"recours_by"=>$recours_by]);
+
+        DB::table('patients')->where('id_patient',$patient_id)->
+        update(["num_card"=>$new_num,"date_card"=>$date_recours,"taux"=>$new_taux,
+        "year"=>Date('Y'),"confirmed_by"=>$recours_by]);
 
         return Redirect::to('/recours_not');
     }
