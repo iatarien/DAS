@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <title>Excel to JSON Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <p id="q"></p>
+    <input type="file" id="data" accept=".xlsx" />
+    <script>
+        
+        document.querySelector('input').addEventListener('change', function() {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var arrayBuffer = this.result,
+                    array = new Uint8Array(arrayBuffer),
+                    binaryString = String.fromCharCode.apply(null, array);
+
+                var workbook = XLSX.read(binaryString, {
+                    type: "binary"
+                });
+
+                /* DO SOMETHING WITH workbook HERE */
+                var first_sheet_name = workbook.SheetNames[0];
+                /* Get worksheet */
+                var worksheet = workbook.Sheets[first_sheet_name];
+                data = XLSX.utils.sheet_to_json(worksheet, {
+                    raw: true
+                });
+                var str  ="INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`,"+
+                " `lieu_naissance`, `commune`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `rejected_by`, `num_card`, `date_card`, `medical_file`,"+
+                " `inserted_at`, `year`, `desistement`, `desisteur`, `desisted_by`)";
+                data.forEach(element => {
+
+                    if(element.MATRICULE != "جدد"){
+                        num_card = element.NUM_NEW;
+                        nom = element.NAME;
+                        prenom = element.PRN;
+                        date_naissance = element.DATN;
+                        commune = element.LIEURESID;
+                        if(element.SEXE == "ذ"){
+                            sexe = "ذكر";
+                        }else{
+                            sexe = "أنثى";
+                        }
+                        adresse = element.LIEURESID;
+                        taux = element.NUMPOST;
+                        date_card = element.DATIN;
+                        noms = element.NOM_PRENOM.split(" ");
+                        if(noms.length > 0){
+                            nom_fr= noms[0];
+                            noms.shift();
+                            prenom_fr = noms.join(" ");
+                        }else{
+                            nom_fr= "NULL";
+                            prenom_fr = "NULL";
+                        }
+                        
+                        lieu_naissance = element.LIEUN;
+                        handicap = element.type;
+                        father = element.nompére;
+                        mother = element.nommére;
+                        str += " VALUES (NULL, "+nom+", "+prenom+", "+nom_fr+", "+prenom_fr+","+sexe+","+father+","+mother+","+date_naissance+","+
+                        lieu_naissance+","+commune+","+adresse +"," +handicap+","+ taux+","+"0,0,NULL,"+num_card+","+date_card+","+"NULL,"+
+                        " NULL, NULL, NULL, NULL, NULL);<br>";
+                    }
+                    
+
+
+                    
+                    
+                });
+                document.getElementById('q').innerHTML = str;
+            }
+            reader.readAsArrayBuffer(this.files[0]);
+            
+        });
+    </script>
+</body>
+
+</html>
