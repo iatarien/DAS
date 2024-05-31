@@ -9,7 +9,22 @@
     <p id="q"></p>
     <input type="file" id="data" accept=".xlsx" />
     <script>
-        
+        function date_fromat(today){
+            
+            today = new Date(Math.round((today - 25569) * 86400 * 1000));
+            if(today == "Invalid Date"){
+                return "NULL";
+            }
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            const formattedToday = yyyy + '-' + mm + '-' + dd;
+            return '"'+formattedToday+'"';
+        }
         document.querySelector('input').addEventListener('change', function() {
             var reader = new FileReader();
             reader.onload = function() {
@@ -28,50 +43,124 @@
                 data = XLSX.utils.sheet_to_json(worksheet, {
                     raw: true
                 });
-                var str  ="INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`,"+
-                " `lieu_naissance`, `commune`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `rejected_by`, `num_card`, `date_card`, `medical_file`,"+
-                " `inserted_at`, `year`, `desistement`, `desisteur`, `desisted_by`)";
+                var str ="";
+                // var str  ="INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`,"+
+                // " `lieu_naissance`, `commune`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `rejected_by`, `num_card`, `date_card`, `medical_file`,"+
+                // " `inserted_at`, `year`, `desistement`, `desisteur`, `desisted_by`)<br>";
+                i = 1;
                 data.forEach(element => {
 
-                    if(element.MATRICULE != "جدد"){
-                        num_card = element.NUM_NEW;
-                        nom = element.NAME;
-                        prenom = element.PRN;
-                        date_naissance = element.DATN;
-                        commune = element.LIEURESID;
-                        if(element.SEXE == "ذ"){
-                            sexe = "ذكر";
-                        }else{
-                            sexe = "أنثى";
+                    if(element.MATRICULE != "LALAALA"  ){
+                        i++;
+                        //console.log(i+"\n");
+                        num_card = element.NUMERO;
+                        if(num_card == ""){
+                            num_card = "NULL";
                         }
-                        adresse = element.LIEURESID;
-                        taux = element.NUMPOST;
-                        date_card = element.DATIN;
-                        noms = element.NOM_PRENOM.split(" ");
-                        if(noms.length > 0){
-                            nom_fr= noms[0];
-                            noms.shift();
-                            prenom_fr = noms.join(" ");
+                        nom = element.NAME;
+                        if(nom == "" || nom == undefined){
+                            nom = "NULL";
                         }else{
-                            nom_fr= "NULL";
-                            prenom_fr = "NULL";
+                            nom = '"'+nom+'"';
                         }
                         
+                        prenom = element.PRN;
+                        if(prenom == ""){
+                            prenom = "NULL";
+                        }else{
+                            prenom = '"'+prenom+'"';
+                        }
+                        
+                        date_naissance = date_fromat(element.DATN);
+                        commune = element.LIEURESID;
+                        if(commune == ""){
+                            commune = "NULL";
+                        }else{
+                            commune = '"'+commune+'"';
+                        }
+                        if(element.SEXE == ""){
+                            sexe = "NULL";
+                        }else{
+                            if(element.SEXE == "ذ"){
+                                sexe = '"ذكر"';
+                            }else{
+                                sexe = '"أنثى"';
+                            }
+                        }
+                        
+                        adresse = element.LIEURESID;
+                        if(adresse == ""){
+                            adresse = "NULL";
+                        }else{
+                            adresse = '"'+adresse+'"';
+                        }
+                        taux = element.NUMPOST;
+                        if(taux == ""){
+                            taux = "NULL";
+                        }
+                        date_card = date_fromat(element.DATIN);
+                        if(date_card != "NULL" && date_card != undefined){
+                            years = date_card.replaceAll('"','');
+                            year = years.split("-")[0];
+                            //console.log(date_card);
+                        }else{
+                            year = "NULL";
+                        }
+                        
+                        if(element.NOM_PRENOM==""){
+                            nom_fr= "NULL";
+                            prenom_fr = "NULL";
+                        }else{
+                            noms = element.NOM_PRENOM.split(" ");
+                            if(noms.length > 0){
+                                nom_fr= '"'+ noms[0]+'"';
+                                noms.shift();
+                                prenom_fr = '"'+noms.join(" ")+'"';
+                            }else{
+                                nom_fr= "NULL";
+                                prenom_fr = "NULL";
+                            }
+                        }
+                        
+                        
                         lieu_naissance = element.LIEUN;
-                        handicap = element.type;
+                        if(lieu_naissance == ""){
+                            lieu_naissance = "NULL";
+                        }else{
+                            lieu_naissance = '"'+lieu_naissance+'"';
+                        }
+                        handicap = element.TYPE;
+                        if(handicap == ""){
+                            handicap = "NULL";
+                        }else{
+                            handicap = '"'+handicap+'"';
+                        }
                         father = element.nompére;
+                        if(father == ""){
+                            father = "NULL";
+                        }else{
+                            father = '"'+father+'"';
+                        }
                         mother = element.nommére;
-                        str += " VALUES (NULL, "+nom+", "+prenom+", "+nom_fr+", "+prenom_fr+","+sexe+","+father+","+mother+","+date_naissance+","+
-                        lieu_naissance+","+commune+","+adresse +"," +handicap+","+ taux+","+"0,0,NULL,"+num_card+","+date_card+","+"NULL,"+
-                        " NULL, NULL, NULL, NULL, NULL);<br>";
-                    }
+                        if(mother == ""){
+                            mother = "NULL";
+                        }else{
+                            mother = '"'+mother+'"';
+                        }
+                        str += 'INSERT INTO patients VALUES (NULL,<i style="visibility : hidden">a</i> '+nom+',<i style="visibility : hidden">a</i> '+prenom+',<i style="visibility : hidden">a</i> '+nom_fr+',<i style="visibility : hidden">a</i>'+prenom_fr+',<i style="visibility : hidden">a</i>'+sexe+',<i style="visibility : hidden">a</i>'+father+',<i style="visibility : hidden">a</i>'+mother+',<i style="visibility : hidden">a</i>'+date_naissance+',<i style="visibility : hidden">a</i>'+
+                        lieu_naissance+',<i style="visibility : hidden">a</i>'+commune+',<i style="visibility : hidden">a</i>'+adresse+',<i style="visibility : hidden">a</i>'+handicap+',<i style="visibility : hidden">a</i>'+taux+',<i style="visibility : hidden">a</i>'+'0,<i style="visibility : hidden">a</i>0,<i style="visibility : hidden">a</i>NULL,<i style="visibility : hidden">a</i>'+num_card+',<i style="visibility : hidden">a</i>'+date_card+',<i style="visibility : hidden">a</i>'+'NULL,<i style="visibility : hidden">a</i>'+
+                        ' NULL,<i style="visibility : hidden">a</i> '+year+',<i style="visibility : hidden">a</i> NULL,<i style="visibility : hidden">a</i> NULL,<i style="visibility : hidden">a</i> NULL);<br>';
                     
+                    }
 
 
                     
                     
                 });
+                str = str.replaceAll('undefined',"");
                 document.getElementById('q').innerHTML = str;
+                document.getElementById('data').style.display = "none";
+                //console.log(str);
             }
             reader.readAsArrayBuffer(this.files[0]);
             
