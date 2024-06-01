@@ -38,7 +38,20 @@ class HandicapController extends Controller
         return view('handicaps.index',
         ['user' => $user,"handicaps"=>$handicaps]);
     }
-   
+
+    public function unique()
+    {   
+        $user = Auth::user();
+        $q = "SELECT DISTINCT handicap FROM patients";
+        $handicaps0 = DB::select(DB::raw($q));
+        foreach($handicaps0 as $handicap0){
+            $handicap0->total = DB::table('patients')->where("handicap",$handicap0->handicap)->count();
+        }
+        $handicaps = DB::table("handicaps")->get();
+        //return $handicaps;
+        return view('handicaps.unique',['user'=>$user,"handicaps"=>$handicaps,"handicaps0"=>$handicaps0]);
+    }
+
     public function ajouter(){
         $user = Auth::user();
         return view('handicaps.ajouter',['user'=>$user]);

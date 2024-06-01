@@ -1,0 +1,169 @@
+<html>
+
+<head>
+    <title>Excel to JSON Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <p id="q"></p>
+    <input type="file" id="data" accept=".xlsx" />
+    <script>
+        function date_fromat(today){
+            
+            today = new Date(Math.round((today - 25569) * 86400 * 1000));
+            if(today == "Invalid Date"){
+                return "NULL";
+            }
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            const formattedToday = yyyy + '-' + mm + '-' + dd;
+            return '"'+formattedToday+'"';
+        }
+        document.querySelector('input').addEventListener('change', function() {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var arrayBuffer = this.result,
+                    array = new Uint8Array(arrayBuffer),
+                    binaryString = String.fromCharCode.apply(null, array);
+
+                var workbook = XLSX.read(binaryString, {
+                    type: "binary"
+                });
+
+                /* DO SOMETHING WITH workbook HERE */
+                var first_sheet_name = workbook.SheetNames[0];
+                /* Get worksheet */
+                var worksheet = workbook.Sheets[first_sheet_name];
+                data = XLSX.utils.sheet_to_json(worksheet, {
+                    raw: true
+                });
+                var str ="";
+                // var str  ="INSERT INTO `patients` (`id_patient`, `nom`, `prenom`, `nom_fr`, `prenom_fr`, `sexe`, `father`, `mother`, `date_naissance`,"+
+                // " `lieu_naissance`, `commune`, `adresse`, `handicap`, `taux`, `user_id`, `confirmed_by`, `rejected_by`, `num_card`, `date_card`, `medical_file`,"+
+                // " `inserted_at`, `year`, `desistement`, `desisteur`, `desisted_by`)<br>";
+                i = 1;
+                data.forEach(element => {
+
+                    if(element.MATRICULE != "LALAALA"  ){
+                        i++;
+                        //console.log(i+"\n");
+                        num_card = element.NUMERO;
+                        if(num_card == ""){
+                            num_card = "NULL";
+                        }
+                        nom = element.NAME;
+                        if(nom == "" || nom == undefined){
+                            nom = "NULL";
+                        }else{
+                            nom = '"'+nom+'"';
+                        }
+                        
+                        prenom = element.PRN;
+                        if(prenom == ""){
+                            prenom = "NULL";
+                        }else{
+                            prenom = '"'+prenom+'"';
+                        }
+                        
+                        date_naissance = date_fromat(element.DATN);
+                        commune = element.LIEURESID;
+                        if(commune == ""){
+                            commune = "NULL";
+                        }else{
+                            commune = '"'+commune+'"';
+                        }
+                        if(element.SEXE == ""){
+                            sexe = "NULL";
+                        }else{
+                            if(element.SEXE == "ذ"){
+                                sexe = '"ذكر"';
+                            }else{
+                                sexe = '"أنثى"';
+                            }
+                        }
+                        
+                        adresse = element.LIEURESID;
+                        if(adresse == ""){
+                            adresse = "NULL";
+                        }else{
+                            adresse = '"'+adresse+'"';
+                        }
+                        taux = element.NUMPOST;
+                        if(taux == ""){
+                            taux = "NULL";
+                        }
+                        date_card = date_fromat(element.DATIN);
+                        if(date_card != "NULL" && date_card != undefined){
+                            years = date_card.replaceAll('"','');
+                            year = years.split("-")[0];
+                            //console.log(date_card);
+                        }else{
+                            year = "NULL";
+                        }
+                        
+                        if(element.NOM_PRENOM==""){
+                            nom_fr= "NULL";
+                            prenom_fr = "NULL";
+                        }else{
+                            noms = element.NOM_PRENOM.split(" ");
+                            if(noms.length > 0){
+                                nom_fr= '"'+ noms[0]+'"';
+                                noms.shift();
+                                prenom_fr = '"'+noms.join(" ")+'"';
+                            }else{
+                                nom_fr= "NULL";
+                                prenom_fr = "NULL";
+                            }
+                        }
+                        
+                        
+                        lieu_naissance = element.LIEUN;
+                        if(lieu_naissance == ""){
+                            lieu_naissance = "NULL";
+                        }else{
+                            lieu_naissance = '"'+lieu_naissance+'"';
+                        }
+                        handicap = element.MULTI_HAND;
+                        if(handicap == ""){
+                            handicap = "NULL";
+                        }else{
+                            handicap = handicap.replaceAll('+',' ');
+                            handicap = '"'+handicap+'"';
+                        }
+                        father = element.nompére;
+                        if(father == ""){
+                            father = "NULL";
+                        }else{
+                            father = '"'+father+'"';
+                        }
+                        mother = element.nommére;
+                        if(mother == ""){
+                            mother = "NULL";
+                        }else{
+                            mother = '"'+mother+'"';
+                        }
+                        str += 'UPDATE patients SET handicap = '+handicap+' WHERE num_card = '+num_card+' AND nom ='+nom+' AND prenom = '+prenom+';<br>';
+                    }
+
+
+                    
+                    
+                });
+                str = str.replaceAll('undefined',"");
+                document.getElementById('q').innerHTML = str;
+                document.getElementById('data').style.display = "none";
+                //console.log(str);
+            }
+            reader.readAsArrayBuffer(this.files[0]);
+            
+        });
+    </script>
+</body>
+
+</html>

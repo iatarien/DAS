@@ -15,6 +15,9 @@ Route::get('/home', 'Auth\LoginController@logout');
 Route::get('/', 'HomeController@index');
 Route::get('/close', 'ReserveController@close');
 
+Route::get('/unique', 'HandicapController@unique');
+
+
 /** PATIENT ROUTES **/
 
 Route::get('/patients/{filters?}', 'PatientController@show_patients'); /* non validated to edit */

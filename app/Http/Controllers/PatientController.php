@@ -89,16 +89,19 @@ class PatientController extends Controller
     {   
         $user = Auth::user();
         $patients0 = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("patients.nom")->whereNotNull("patients.prenom")->
         join("users",'users.id',"=","patients.confirmed_by")->
-        whereNotNull("confirmed_by")->limit(50)->get();
+        whereNotNull("confirmed_by")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.confirmed_by")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("patients.nom")->whereNotNull("patients.prenom")->
+            join("users",'users.id',"=","patients.confirmed_by")->
+            whereNotNull("confirmed_by")->limit(50)->get();
         }
 
         return view('patients.validated_patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
@@ -210,7 +213,9 @@ class PatientController extends Controller
 
     public function calc_stats($stats,$patients,$handicaps){
         $stats = array();
+        $other_stats = array();
         foreach($handicaps as $handicap){
+
             $total_handicap_m = 0;
             $total_handicap_f = 0;
             $stats_0_3_m = 0;
@@ -275,9 +280,31 @@ class PatientController extends Controller
             $handicap->total_handicap_m = $total_handicap_m;
             $handicap->total_handicap_f = $total_handicap_f;
             $handicap->total_handicap = $total_handicap_f + $total_handicap_m;
-            array_push($stats,$handicap);
+
+            if($handicap->id_handicap < 5){
+                array_push($stats,$handicap);
+            }else{
+                array_push($other_stats,$handicap);
+            }
         }
-        
+        $o_s = new stdClass();
+        $o_s->name_handicap = "متعدد الإعاقات";
+        $o_s->stats_0_3_m = array_sum(array_column($other_stats,"stats_0_3_m"));
+        $o_s->stats_0_3_f= array_sum(array_column($other_stats,"stats_0_3_f"));
+        $o_s->stats_3_5_m= array_sum(array_column($other_stats,"stats_3_5_m"));
+        $o_s->stats_3_5_f= array_sum(array_column($other_stats,"stats_3_5_f"));
+        $o_s->stats_5_18_m= array_sum(array_column($other_stats,"stats_5_18_m"));
+        $o_s->stats_5_18_f= array_sum(array_column($other_stats,"stats_5_18_f"));
+        $o_s->stats_18_35_m= array_sum(array_column($other_stats,"stats_18_35_m"));
+        $o_s->stats_18_35_f= array_sum(array_column($other_stats,"stats_18_35_f"));
+        $o_s->stats_35_60_m= array_sum(array_column($other_stats,"stats_35_60_m"));
+        $o_s->stats_35_60_f= array_sum(array_column($other_stats,"stats_35_60_f"));
+        $o_s->stats_60_m= array_sum(array_column($other_stats,"stats_60_m"));
+        $o_s->stats_60_f= array_sum(array_column($other_stats,"stats_60_f"));
+        $o_s->total_handicap_m= array_sum(array_column($other_stats,"total_handicap_m"));
+        $o_s->total_handicap_f= array_sum(array_column($other_stats,"total_handicap_f"));
+        $o_s->total_handicap= array_sum(array_column($other_stats,"total_handicap"));
+        array_push($stats,$o_s);
         return $stats;
     }
 
