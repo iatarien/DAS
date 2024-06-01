@@ -42,14 +42,14 @@ class HandicapController extends Controller
     public function unique()
     {   
         $user = Auth::user();
-        $q = "SELECT DISTINCT handicap FROM patients";
-        $handicaps0 = DB::select(DB::raw($q));
-        foreach($handicaps0 as $handicap0){
-            $handicap0->total = DB::table('patients')->where("handicap",$handicap0->handicap)->count();
+        $q = "SELECT DISTINCT commune FROM patients";
+        $communes0 = DB::select(DB::raw($q));
+        foreach($communes0 as $handicap0){
+            $handicap0->total = DB::table('patients')->where("commune",$handicap0->commune)->count();
         }
-        $handicaps = DB::table("handicaps")->get();
+        $communes = DB::table("communes")->get();
         //return $handicaps;
-        return view('handicaps.unique',['user'=>$user,"handicaps"=>$handicaps,"handicaps0"=>$handicaps0]);
+        return view('handicaps.unique',['user'=>$user,"communes0"=>$communes0,"communes"=>$communes]);
     }
 
     public function ajouter(){

@@ -48,6 +48,7 @@
                                     <thead style="background-color : lightblue;">
                                         <tr>
                                             <th>N°</th>
+                                            <th> name</th>
                                             <th> Query</th>
                                             <th>Total</th>
                                         </tr>
@@ -55,13 +56,14 @@
 
                                     <tbody dir="ltr">
                                         <?php $i = 0?>
-                                        @foreach($handicaps0 as $handicap)
-                                            @if(!is_numeric($handicap->handicap))
+                                        @foreach($communes0 as $commune)
+                                            @if(!is_numeric($commune->commune))
                                                 <?php $i++?>
                                                 <tr>
                                                     <td>{{$i}}</td>
-                                                    <td>INSERT INTO handicap VALUES (NULL,"{{$handicap->handicap}}",NULL,0);</td>
-                                                    <td>{{$handicap->total}}</td>
+                                                    <td>{{$commune->commune}}</td>
+                                                    <td>UPDATE patients SET commune ="" WHERE commune = "{{$commune->commune}}";</td>
+                                                    <td>{{$commune->total}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -71,6 +73,12 @@
                             </div>
                         </div>
                     </div>
+                    <p dir="ltr">
+                        @foreach($communes as $commune)
+                            UPDATE patients SET commune = "{{$commune->code}}" WHERE commune = "{{$commune->commune_name}}";<br>
+      
+                        @endforeach
+                    </p>
                     <!-- Page Heading -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -83,22 +91,18 @@
                                     <thead style="background-color : lightblue;">
                                         <tr>
                                             <th>id</th>
-                                            <th>اسم الإعاقة</th>
-                                            <th>رمز الإعاقة</th>
-                                            <th>نسبة الإعاقة الدنيا</th>
-                                            <th>تعديل</th>  
+                                            <th>name</th>
+                                            <th>code</th>  
                                         </tr>
                                     </thead>
 
                                     <tbody>
 
-                                        @foreach($handicaps as $handicap)
+                                        @foreach($communes as $commune)
                                         <tr>
-                                            <td>{{$handicap->id_handicap}}</td>
-                                            <td>{{$handicap->name_handicap}}</td>
-                                            <td>{{$handicap->acronym}}</td>
-                                            <td>{{$handicap->threshold}}</td>
-                                            <td><a class="btn btn-info" href="/modifier_handicap/{{$handicap->id_handicap}}">تعديل</a></td>
+                                            <td>{{$commune->id}}</td>
+                                            <td>{{$commune->commune_name}}</td>
+                                            <td>{{$commune->code}}</td>
                                         </tr>
                                         @endforeach
 
