@@ -36,17 +36,20 @@ class PatientController extends Controller
     {   
 
         $user = Auth::user();
-        $patients0 = DB::table('patients')->
+        $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->whereNull("rejected_by")->limit(50)->get();
+        whereNull("confirmed_by")->whereNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.user_id")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients0 = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.user_id")->
+            whereNull("confirmed_by")->whereNull("rejected_by")->select('id_patient',"nom","prenom")->get();
         }
         
 
@@ -61,7 +64,7 @@ class PatientController extends Controller
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("communes","communes.code","=","patients.commune")->
         where("id_patient",$id)->first();
-        $communes = DB::table('communes')->get();
+        $communes = DB::table('communes')->where('code','!=','00')->orderBy('code','ASC')->get();
         return view('patients.confirm',['user' => $user,"handicaps"=>$handicaps,
         "patient"=>$patient,"communes"=>$communes]);
         
@@ -69,17 +72,20 @@ class PatientController extends Controller
     public function validate_patients($filters="")
     {   
         $user = Auth::user();
-        $patients0 = DB::table('patients')->
+        $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->whereNull("rejected_by")->limit(50)->get();
+        whereNull("confirmed_by")->whereNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.user_id")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients0 = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.user_id")->
+            whereNull("confirmed_by")->whereNull("rejected_by")->select('id_patient',"nom","prenom")->get();
         }
 
         return view('patients.validate',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
@@ -89,9 +95,9 @@ class PatientController extends Controller
     {   
         $user = Auth::user();
         $patients0 = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("patients.nom")->whereNotNull("patients.prenom")->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.confirmed_by")->
-        whereNotNull("confirmed_by")->get();
+        whereNotNull("confirmed_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
@@ -101,7 +107,7 @@ class PatientController extends Controller
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("patients.nom")->whereNotNull("patients.prenom")->
             join("users",'users.id',"=","patients.confirmed_by")->
-            whereNotNull("confirmed_by")->limit(50)->get();
+            whereNotNull("confirmed_by")->orderBy('id_patient',"DESC")->limit(50)->get();
         }
 
         return view('patients.validated_patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
@@ -110,17 +116,20 @@ class PatientController extends Controller
     public function rejected_patients($filters="")
     {   
         $user = Auth::user();
-        $patients0 = DB::table('patients')->
+        $patients = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.rejected_by")->
-        whereNotNull("rejected_by")->limit(50)->get();
+        whereNotNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.rejected_by")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients0 = DB::table('patients')->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users",'users.id',"=","patients.rejected_by")->
+            whereNotNull("rejected_by")->select('id_patient',"nom","prenom")->get();
         }
         return view('patients.rejected',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
@@ -312,7 +321,7 @@ class PatientController extends Controller
     {   
         $user = Auth::user();
         $handicaps = DB::table('handicaps')->get();
-        $communes = DB::table('communes')->orderBy("code","ASC")->get();
+        $communes = DB::table('communes')->where('code','!=','00')->orderBy('code','ASC')->get();
         return view('patients.ajouter',
         ['user' => $user,"handicaps"=>$handicaps,"communes"=>$communes]);
         
@@ -333,7 +342,7 @@ class PatientController extends Controller
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("communes","communes.code","=","patients.commune")->
         where("id_patient",$id)->first();
-        $communes = DB::table('communes')->orderBy("code","ASC")->get();
+        $communes = DB::table('communes')->where('code','!=','00')->orderBy('code','ASC')->get();
         return view('patients.modifier',['user' => $user,"handicaps"=>$handicaps,
         "patient"=>$patient,"communes"=>$communes]);
         
@@ -371,9 +380,9 @@ class PatientController extends Controller
 
         if(isset($request["medical_file"]) && $request["medical_file"] != NULL){
             $file = $request['medical_file'];
-            $destination0 = public_path().'\files';
-            $destination = '/files/';
-            $name= $destination.$id.$file->getClientOriginalName();
+            $destination0 = public_path().'\uploads\users';
+            $destination = '/uploads/users/';
+            $name= $destination.$id.'_'.$file->getClientOriginalName();
             $file->move($destination0,$name);
             DB::table('patients')->where('id_patient',$id)->update(
             ['medical_file'=>$name]);
@@ -412,14 +421,16 @@ class PatientController extends Controller
 
         if(isset($request["medical_file"]) && $request["medical_file"] != NULL){
             $file = $request['medical_file'];
-            $destination0 = public_path().'\files';
-            $destination = '/files/';
-            $name= $destination.$patient.$file->getClientOriginalName();
+            $destination0 = public_path().'\uploads\users';
+            $destination = '/uploads/users/';
+            $name= $destination.$id.'_'.$file->getClientOriginalName();
             $file->move($destination0,$name);
             DB::table('patients')->where('id_patient',$patient)->update(
             ['medical_file'=>$name]);
         }
-
+        if(Auth::user()->service =="Chef"){
+            return Redirect::to('/validated_patients');
+        }
         return Redirect::to('/patients');
     }
 
@@ -474,9 +485,9 @@ class PatientController extends Controller
 
         if(isset($request["medical_file"]) && $request["medical_file"] != NULL){
             $file = $request['medical_file'];
-            $destination0 = public_path().'\files';
-            $destination = '/files/';
-            $name= $destination.$patient.$file->getClientOriginalName();
+            $destination0 = public_path().'\uploads\users';
+            $destination = '/uploads/users/';
+            $name= $destination.$id.'_'.$file->getClientOriginalName();
             $file->move($destination0,$name);
             DB::table('patients')->where('id_patient',$patient)->update(
             ['medical_file'=>$name]);

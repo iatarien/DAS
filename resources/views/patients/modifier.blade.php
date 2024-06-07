@@ -166,8 +166,8 @@ $(function(){
                 isOk = maxSize > size;
                 if(!isOk){
                     Swal.fire({
-                    title: "La taille des fichiers est trop volumineuse !",
-                    text: "(La taille de chaque fichier ne doit pas dépasser 10 Mo)",
+                    title: "La taille du fichier est trop volumineuse !",
+                    text: "(La taille de  fichier ne doit pas dépasser 10 Mo)",
                     icon: "error",
                     confirmButtonText : "Rééssayer",
                     });

@@ -92,8 +92,12 @@
                                             <td>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
                                             </td>
+                                            <?php $no_file ="disabled"; ?>
+                                            @if($patient->medical_file != NULL && $patient->medical_file != "")
+                                                <?php $no_file ="btn-default"; ?>
+                                            @endif
                                             <td>
-                                                <a class="btn btn-default" target="_blank" style="border : 1px solid black;" href="{{$patient->medical_file}}"> الملف الطبي</a>
+                                                <a class="btn {{$no_file}}"  target="_blank" style="border : 1px solid black;" href="{{$patient->medical_file}}"> الملف الطبي</a>
                                             </td>
                                             @if($user->service =="Chef")
                                                 <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}"> تعديل </a></td>
