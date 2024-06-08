@@ -33,13 +33,16 @@ class RecoursController extends Controller
         $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         whereNull("desistement")->whereNull("desisteur")->
-        whereNotNull("confirmed_by")->limit(50)->get();
+        whereNotNull("confirmed_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("patients")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            whereNull("desistement")->whereNull("desisteur")->
+            whereNotNull("confirmed_by")->limit(50)->get();
         }
         return view('recours.select',['user' => $user,"patients"=>$patients,"patients0"=>$patients0,"type"=>$type]);
     }
@@ -52,14 +55,16 @@ class RecoursController extends Controller
         $user = Auth::user();
         $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.desisted_by")->limit(50)->get();
+        join("users","users.id","=","patients.desisted_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users","users.id","=","patients.desisted_by")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("patients")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","patients.desisted_by")->limit(50)->get();
         }
         foreach($patients as $patient){
             $patient->desisteur_name = DB::table('users')->where('id',$patient->desisteur)->first()->full_name;
@@ -71,14 +76,16 @@ class RecoursController extends Controller
         $user = Auth::user();
         $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->limit(50)->get();
+        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users","users.id","=","patients.desisteur")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("patients")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->limit(50)->get();
         }
         return view('recours.desisted_not',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
@@ -95,14 +102,16 @@ class RecoursController extends Controller
         $user = Auth::user();
         $patients0 = DB::table("patients")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->limit(50)->get();
+        join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users","users.id","=","patients.desisteur")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("patients")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","patients.desisteur")->whereNull("desisted_by")->limit(50)->get();
         }
         return view('recours.confirm_desist',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
@@ -118,9 +127,9 @@ class RecoursController extends Controller
 
     public function delete_desistement($id){
         DB::table('patients')->where("id_patient",$id)->
-        update(["desisted_by"=>"NULL",
-        "desistement"=>"NULL",
-        "desisteur"=>"NULL"]);
+        update(["desisted_by"=>NULL,
+        "desistement"=>NULL,
+        "desisteur"=>NULL]);
         
         return Redirect::to('/desistements');
     }
@@ -145,7 +154,7 @@ class RecoursController extends Controller
         $patients0 = DB::table("recours")->
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users","users.id","=","recours.recours_by")->limit(50)->get();
+        join("users","users.id","=","recours.recours_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table("recours")->
             join("patients","recours.patient","=","patients.id_patient")->
@@ -153,7 +162,10 @@ class RecoursController extends Controller
             join("users","users.id","=","recours.recours_by")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("recours")->
+            join("patients","recours.patient","=","patients.id_patient")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","recours.recours_by")->limit(50)->get();
         }
         foreach($patients as $patient){
             $patient->recours_from = DB::table('users')->where('id',$patient->recours_from)->first()->full_name;
@@ -167,7 +179,7 @@ class RecoursController extends Controller
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users","users.id","=","recours.recours_from")->
-        whereNull("recours_by")->limit(50)->get();
+        whereNull("recours_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table("recours")->
             join("patients","recours.patient","=","patients.id_patient")->
@@ -175,7 +187,11 @@ class RecoursController extends Controller
             join("users","users.id","=","recours.recours_from")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("recours")->
+            join("patients","recours.patient","=","patients.id_patient")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","recours.recours_from")->
+            whereNull("recours_by")->limit(50)->get();
         }
         return view('recours.recours_not',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }
@@ -186,7 +202,7 @@ class RecoursController extends Controller
         join("patients","recours.patient","=","patients.id_patient")->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users","users.id","=","recours.recours_from")->
-        whereNull("recours_by")->limit(50)->get();
+        whereNull("recours_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table("recours")->
             join("patients","recours.patient","=","patients.id_patient")->
@@ -194,7 +210,11 @@ class RecoursController extends Controller
             join("users","users.id","=","recours.recours_from")->
             where("id_patient",$filters)->get();
         }else {
-            $patients = $patients0;
+            $patients = DB::table("recours")->
+            join("patients","recours.patient","=","patients.id_patient")->
+            join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+            join("users","users.id","=","recours.recours_from")->
+            whereNull("recours_by")->limit(50)->get();
         }
         return view('recours.confirm_recours',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
     }

@@ -36,21 +36,24 @@ class PatientController extends Controller
     {   
 
         $user = Auth::user();
-        $patients = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->whereNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
+        
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.user_id")->
             where("id_patient",$filters)->get();
-        }else {
-            $patients0 = DB::table('patients')->
+        }else{
+            $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.user_id")->
-            whereNull("confirmed_by")->whereNull("rejected_by")->select('id_patient',"nom","prenom")->get();
+            whereNull("confirmed_by")->whereNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
         }
+
+        $patients0 = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users",'users.id',"=","patients.user_id")->
+        whereNull("confirmed_by")->whereNull("rejected_by")->select('id_patient',"nom","prenom")->get();
+       
         
 
         return view('patients.patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
@@ -72,22 +75,26 @@ class PatientController extends Controller
     public function validate_patients($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users",'users.id',"=","patients.user_id")->
-        whereNull("confirmed_by")->whereNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
+        
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.user_id")->
             where("id_patient",$filters)->get();
         }else {
-            $patients0 = DB::table('patients')->
+            $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.user_id")->
-            whereNull("confirmed_by")->whereNull("rejected_by")->select('id_patient',"nom","prenom")->get();
+            whereNull("confirmed_by")->whereNull("rejected_by")->
+            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+            orderBy('id_patient',"DESC")->limit(50)->get();
         }
-
+        $patients0 = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users",'users.id',"=","patients.user_id")->
+        whereNull("confirmed_by")->whereNull("rejected_by")->
+        whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+        select('id_patient',"nom","prenom")->get();
         return view('patients.validate',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
@@ -97,6 +104,7 @@ class PatientController extends Controller
         $patients0 = DB::table('patients')->
         join("handicaps","handicaps.id_handicap","=","patients.handicap")->
         join("users",'users.id',"=","patients.confirmed_by")->
+        whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
         whereNotNull("confirmed_by")->select('id_patient',"nom","prenom")->get();
         if($filters !=""){
             $patients = DB::table('patients')->
@@ -107,7 +115,9 @@ class PatientController extends Controller
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("patients.nom")->whereNotNull("patients.prenom")->
             join("users",'users.id',"=","patients.confirmed_by")->
-            whereNotNull("confirmed_by")->orderBy('id_patient',"DESC")->limit(50)->get();
+            whereNotNull("confirmed_by")->
+            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+            orderBy('id_patient',"DESC")->limit(50)->get();
         }
 
         return view('patients.validated_patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
@@ -116,21 +126,23 @@ class PatientController extends Controller
     public function rejected_patients($filters="")
     {   
         $user = Auth::user();
-        $patients = DB::table('patients')->
-        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
-        join("users",'users.id',"=","patients.rejected_by")->
-        whereNotNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
+
         if($filters !=""){
             $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.rejected_by")->
             where("id_patient",$filters)->get();
         }else {
-            $patients0 = DB::table('patients')->
+            $patients = DB::table('patients')->
             join("handicaps","handicaps.id_handicap","=","patients.handicap")->
             join("users",'users.id',"=","patients.rejected_by")->
-            whereNotNull("rejected_by")->select('id_patient',"nom","prenom")->get();
+            whereNotNull("rejected_by")->orderBy('id_patient',"DESC")->limit(50)->get();
+
         }
+        $patients0 = DB::table('patients')->
+        join("handicaps","handicaps.id_handicap","=","patients.handicap")->
+        join("users",'users.id',"=","patients.rejected_by")->
+        whereNotNull("rejected_by")->select('id_patient',"nom","prenom")->get();
         return view('patients.rejected',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
