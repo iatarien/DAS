@@ -423,7 +423,12 @@ class PatientController extends Controller
 
         $num_card = NULL;
         $date_card = NULL;
-
+        if(isset($request['num_card'])){
+            $num_card = $request['num_card'];
+        }
+        if(isset($request['date_card'])){
+            $date_card = $request['date_card'];
+        }
         $id = DB::table('patients')->where('id_patient',$patient)->
         update(["nom"=>$nom,"prenom"=>$prenom,"nom_fr"=>$nom_fr,"prenom_fr"=>$prenom_fr,
         "date_naissance"=>$date_naissance,"lieu_naissance"=>$lieu_naissance,"handicap"=>$handicap,

@@ -70,7 +70,7 @@ if($type =="fiche_info"){
 			<?php $dn = new DateTime($patient->date_naissance); ?>
             المولود(ة) بتاريخ : <strong>{{ $dn->format('d-m-Y')}}</strong>&emsp;&emsp; بــ : <strong>{{$patient->lieu_naissance}}</strong><br>
             ابن : <strong>{{$patient->father}}</strong>&emsp;&emsp; و : <strong>{{$patient->mother}}</strong><br>
-            السساكن(ة) بـ : <strong>{{$patient->adresse}}</strong><br>
+            الساكن(ة) بـ : <strong>{{$patient->adresse}}</strong><br>
             من فئة المعاقين : <strong>{{$patient->name_handicap}}</strong>&emsp;&emsp;<strong>%{{$patient->taux}}</strong><br><br>
 			<?php $d = new DateTime($patient->date_card); ?>
             الحامل(ة) لبطاقة معوق رقم : <strong>{{$patient->num_card}}</strong>&emsp;&emsp; تاريخ الإستفادة : <strong>{{ $d->format('d-m-Y')}}</strong><br> 

@@ -115,7 +115,20 @@
                                         <input style="text-align : right" dir="ltr" required="" value="{{$patient->taux}}" type="number" class="form-control"  name="taux">
                                     </div>
                                 </div>
-
+                                @if($user->service =="Chef")
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title"> رقم البطاقة</label>
+                                    <div class="col-lg-8">
+                                        <input style="text-align : right"  dir="ltr" type="number" class="form-control"  value="{{$patient->num_card}}" id="num_card" name="num_card">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 text-right" for="title">تاريخ :</label>
+                                    <div class="col-lg-8">
+                                    <input  style="text-align : right"  type="date" class="form-control" value="{{$patient->date_card}}" name="date_card">
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="form-group row">
                                     <label class="control-label col-lg-2 text-right" for="title">الملف الطبي :</label>
                                     <div class="col-lg-8">
