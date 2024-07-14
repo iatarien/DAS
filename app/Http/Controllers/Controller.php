@@ -24,6 +24,7 @@ class Controller extends BaseController
         $this->ministere = $settings->ministere;
         $this->direction = $settings->direction;
         $this->direction_fr = $settings->direction_fr;
+        $this->padding = $settings->padding;
         $this->year = Date('Y');
 
         View::share('ville', $this->ville);
@@ -34,6 +35,6 @@ class Controller extends BaseController
         View::share('ministere_fr', $this->ministere_fr);
         View::share('the_year', $this->year);
 
-
+        View::share('padding', $this->padding);
     }
 }

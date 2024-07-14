@@ -32,12 +32,12 @@
     }
 	.show {
 		color : black !important;
-		width : 70%;
+		width : 60%;
 		text-align : center;
 	}
 	.show_small {
 		color : black !important;
-		width : 85%;
+		width : 80%;
 		text-align : center;
 	}
 	.show_big {
@@ -54,18 +54,21 @@ $type_ar ="";
 ?>
 <section  style="background-color: lightblue; margin-top : 6mm; font-weight : bold; font-size: 3.8mm;" id="fiche" dir="rtl">
 	<div id="fiche_top" style="display: flex; justify-content: center; border : 1px solid; height : 99.6mm;">
-        <div style="width : 50%; border : 1px solid; padding-right : 5mm; padding-left : 8mm; padding-top : 10mm;" >
+        <div style="width : 50%; border : 1px solid; padding-right : 5mm; padding-left : 8mm; padding-top : 7mm;" >
             <div  style="display : flex; justify-content: center; align-items : center"><span >طبيعة الإعاقة : </span>
 			<span class="show">{{$patient->name_handicap}}</span></div>
 			<div  style="display : flex; justify-content: center; align-items : center"><span >نسبة الإعاقة : </span>
 			<span class="show">% {{$patient->taux}}</span></div>
-            <br><br>
+			<br>
+			<div  style="display : flex; justify-content: center; align-items : center; color : black !important;"><span > تاريخ الاستفادة : </span>
+			<span style="width : 55%; text-align : center;">{{$patient->date_card}}</span></div>
+            <br>
             <span>
                 سلمت هذه البطاقة من طرف مدير {{$direction}} لولاية <span class="show">&emsp;&emsp;{{$ville}}</span>
             </span>
             <br><br>
             <span style="text-align : center; width : 100%; display : block;">
-               في : <span class="show">&emsp;&emsp;{{$patient->date_card}}</span>
+               في : <span class="show">&emsp;&emsp;</span>
             </span>
             <br>
             <span style="text-align : center; width : 100%; display : block;">
@@ -73,19 +76,22 @@ $type_ar ="";
             </span>
         </div>
         <div style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm;" >
-            <div style="height : 24mm; width : 27mm; border : 0.54mm solid;"></div><br>
+            <div style="height : 24mm; width : 27mm; border : 0.54mm solid;"></div>
             	<div  style="display : flex; justify-content: center; align-items : center"><span > اللقب : </span>
 				<span class="show_small">{{$patient->nom}}</span> </div>
                 <div  style="display : flex; justify-content: center; align-items : center">الاسم : </span>
 				<span class="show_small">{{$patient->prenom}}</span></div>
                 <div  style="display : flex; justify-content: center; align-items : center"> <span> تاريخ و مكان الميلاد : </span>
-				<span class="show_big">{{$patient->date_naissance}}</span></div>
+				<span class="show_big" style="width : 40%;">{{$patient->date_naissance}}</span></div>
 				<div style="text-align : center;"><span class="show"> بــ : {{$patient->lieu_naissance}}</span><br></div>
-                    العنوان : .................................................</span><br>
+                    العنوان : ..................................</span><br>
 				<div style="text-align : center;"><span class="show">{{$patient->adresse}}</span><br></div>
-                    اللقب و الاسم باللغة اللاتينية :.......................<br>
+                    اللقب و الاسم باللغة اللاتينية : <br><br>
                     <div style="text-align : center;"><span class="show">{{$patient->nom_fr}} {{$patient->prenom_fr}}</span></div>
-                    إمضاء المعني :..........................................<br>
+                    إمضاء المعني : <br><br>
+					<span style="color : black !important; text-align : center; width : 100%; display : block;">
+					01/01/04 /{{$patient->acronym}}/ {{$patient->num_card}} 
+					</span>
             </span>
         </div>
 
@@ -143,12 +149,10 @@ window.onbeforeunload = function () {
 };
 
 
-
 function hide(){
 	fiche = document.getElementById('fiche');
 	fiche.style.color = "transparent";
 	fiche.style.backgroundColor = "transparent";
-
 
 }
 function unhide(){

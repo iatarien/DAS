@@ -68,6 +68,11 @@ class AttestationController extends Controller
         return $last;
 
     }
+
+    public function padding($val){
+        DB::table('company')->update(['padding'=> $val]);
+    }
+
     public function close(){
         return view('close');
     }
