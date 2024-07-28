@@ -39,7 +39,8 @@ class AttestationController extends Controller
         }elseif($type=="card2"){
             $view = 'attestations.card2';
         }
-        return view($view,['user'=> $user,"patient"=>$patient,"type"=>$type]);
+        $paddings = DB::table('paddings')->first();
+        return view($view,['user'=> $user,"patient"=>$patient,"type"=>$type,"paddings"=>$paddings]);
 
     }
     public function get_last()
@@ -72,7 +73,9 @@ class AttestationController extends Controller
     public function padding($val){
         DB::table('company')->update(['padding'=> $val]);
     }
-
+    public function paddings($name,$val){
+        DB::table('paddings')->update([$name=> $val]);
+    }
     public function close(){
         return view('close');
     }

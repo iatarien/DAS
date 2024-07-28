@@ -50,7 +50,7 @@ Route::post('/chnage_profile_photo','UsersController@chnage_profile_photo');
 Route::get('/fiche/{id}/{type}', 'AttestationController@fiche');
 Route::get('/get_last/', 'AttestationController@get_last');
 Route::get('/padding/{val}', 'AttestationController@padding');
-
+Route::get('/paddings/{name}/{val}', 'AttestationController@paddings');
 /** HANDICAPS ROUTES */
 Route::get('/ajouter_handicap/', 'HandicapController@ajouter');
 Route::get('/modifier_handicap/{id}', 'HandicapController@modifier');

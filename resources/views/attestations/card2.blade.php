@@ -65,7 +65,7 @@ $type_ar ="";
 			<div id="le_div" style="display : flex; font-size : 4.2mm;  justify-content: center; align-items : center; padding-top : {{$padding}}mm;" class="show">
 			<span id="hide">الرقم :&emsp;</span> <div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-right : none; border-top : none; border-bottom : none;display : flex; justify-content: center; align-items : center">
 			<span class="show">{{$patient->num_card}}</span></div>
-			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-top : none; border-bottom : none; border-right : none; display : flex; justify-content: center; align-items : center">
+			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-top : none; border-bottom : none; border-right : none; border-left : none; display : flex; justify-content: center; align-items : center">
 			<span class="show">{{$patient->acronym}}</span></div>
 			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-top : none; border-bottom : none; border-right : none;display : flex; justify-content: center; align-items : center">
 			<span class="show">{{$patient->commune}}</span></div>
