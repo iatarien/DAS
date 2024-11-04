@@ -43,11 +43,11 @@ class AttestationController extends Controller
         return view($view,['user'=> $user,"patient"=>$patient,"type"=>$type,"paddings"=>$paddings]);
 
     }
-    public function get_last()
+    public function get_last($handicap)
     {   
         $user = Auth::user();
         $year = Date('Y');
-        $last = DB::table('patients')->whereNotNull("confirmed_by")->
+        $last = DB::table('patients')->where("handicap",$handicap)->whereNotNull("confirmed_by")->
         where("year",$year)->orderBy("num_card","DESC")->first();
         //var_dump($last);
         

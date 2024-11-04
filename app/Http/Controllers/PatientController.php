@@ -343,6 +343,9 @@ class PatientController extends Controller
     {   
         $user = Auth::user();
         $patient = DB::table('patients')->where("id_patient",$id)->delete();
+        if($user->service =="Chef"){  
+            return Redirect::to('/validated_patients');
+        }
         return Redirect::to('/patients');
     }
 

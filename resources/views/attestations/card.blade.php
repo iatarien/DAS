@@ -77,7 +77,12 @@ $type_ar ="";
             </span>
         </div>
         <div style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm;" >
-            <div style="height : 20mm; width : 22mm; border : 0.54mm solid;"></div>
+            	<div style="display : inline">
+					<div style="height : 20mm; width : 22mm; border : 0.54mm solid; display : inline-block;"></div>
+					<div class="show" id="again" style="height : 20mm; width : 22mm; display : none; position : absolute; margin-right : 50px;">
+						<br> نسخة ثانية</div>
+				</div>
+				
             	<div id="id-names"  style="display : flex; margin-top : {{$paddings->names}}mm; justify-content: center; align-items : center"><span > اللقب : </span>
 				<span class="show_small">{{$patient->nom}}</span> </div>
                 <div  style="display : flex; justify-content: center; align-items : center">الاسم : </span>
@@ -158,6 +163,12 @@ style="width : 40%; text-align : center;" />
 onchange="changed(this.id, this.value)" id="num"
 style="width : 40%; text-align : center;" />
 </div><br>
+<div class="form-group" dir="rtl">
+<label>   تسخة ثانية : </label>
+<input type="checkbox"  
+onclick="la_again(this.id)" id="le_checkbox"
+style="width : 5%; text-align : center;" />
+</div><br>
 <br><br>
 <div align="center">
 	<button id="bouton" style="
@@ -207,7 +218,16 @@ style="width : 40%; text-align : center;" />
 window.onbeforeunload = function () {
     window.close();
 };
-
+function la_again(id) {
+	value = document.getElementById("le_checkbox").checked;
+	console.log(value);
+	if(value){
+		document.getElementById('again').style.display = "inline-block";
+	}else{
+		document.getElementById('again').style.display = "none";
+	}
+	
+}
 function changed(id,value){
 	document.getElementById('id-'+id).style.marginTop =  value+"mm";
 	link = "/paddings/"+id+"/"+value;

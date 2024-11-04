@@ -195,7 +195,8 @@ function changed_eng(val){
     } 
 }
 function get_last(){
-    link = "/get_last/";
+    var handicap_v = document.getElementById('handicap').value;
+    link = "/get_last/"+handicap_v;
     $.ajax({
         url: link,
         method: "GET",  

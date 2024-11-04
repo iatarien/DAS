@@ -67,7 +67,7 @@
                                             <th >شهادة إدارية</th>  
                                             <th>الملف الطبي</th>  
                                             <th>تعديل</th>  
-
+                                            <th>حذف</th> 
                                         </tr>
                                     </thead>
 
@@ -101,8 +101,10 @@
                                             </td>
                                             @if($user->service =="Chef")
                                                 <td><a class="btn btn-info" href="/edit_patient/{{$patient->id_patient}}"> تعديل </a></td>
+                                                <td><a class="btn btn-danger"  onclick="supprimer('/delete_patient/{{$patient->id_patient}}')" > حذف </a></td>
                                             @else
                                                 <td><button disabled class="btn btn-info" href="#"> تعديل </button></td>
+                                                <td><button disabled class="btn btn-danger" href="#"> حذف </button></td>
                                             @endif
                                            
                                         </tr>
