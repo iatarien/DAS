@@ -65,7 +65,7 @@ if($type =="fiche_info"){
             {{$type_ar}}
             </h1>
             <br>
-            <p style="font-size : 5.5mm; text-align : justify;">نحن مدير {{$direction}} لولاية {{$ville}} : <br><br>
+            <p contenteditable="true" style="font-size : 5.5mm; text-align : justify;">نحن مدير {{$direction}} لولاية {{$ville}} : <br><br>
             أشهد بأن السيد(ة) : <strong>{{$patient->nom}} {{$patient->prenom}}</strong><br>
 			<?php $dn = new DateTime($patient->date_naissance); ?>
             المولود(ة) بتاريخ : <strong>{{ $dn->format('d-m-Y')}}</strong>&emsp;&emsp; بــ : <strong>{{$patient->lieu_naissance}}</strong><br>

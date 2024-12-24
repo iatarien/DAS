@@ -152,7 +152,7 @@ class PatientController extends Controller
         $interval = $now->diff($date);
         return $interval->y;
     }
-    public function stats($annee="")
+    public function stats($annee="",$mois ="")
     {   
         $user = Auth::user();
         if($annee =="all" || $annee ==""){
@@ -161,10 +161,20 @@ class PatientController extends Controller
             whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
             where("taux",100)->get();
         }else{
-            $patients100 = DB::table('patients')->
-            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
-            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
-            where("year",$annee)->where("taux",100)->get();
+            if($mois =="" || $mois =="all"){
+                $patients100 = DB::table('patients')->
+                join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+                whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+                where("year",$annee)->where("taux",100)->get();
+            }else{
+                $patients100 = DB::table('patients')->
+                join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+                whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+                where("date_card",">=",$annee."-".$mois."-01")->
+                where("date_card","<=",$annee."-".$mois."-31")->
+                where("taux",100)->get();
+            }
+            
         }
         
         if($annee == "all" || $annee ==""){
@@ -180,10 +190,11 @@ class PatientController extends Controller
         $stats = array();
         $stats = $this->calc_stats($stats, $patients100,$handicaps);
 
-        return view('patients.stats',['user' => $user,"stats"=>$stats,"stats_2"=>$stats,"annee"=>$annee]);
+        return view('patients.stats',['user' => $user,"stats"=>$stats,"stats_2"=>$stats,
+        "annee"=>$annee,"mois"=>$mois]);
         
     }
-    public function get_stats($annee="")
+    public function get_stats($annee="",$mois ="")
     {   
         $user = Auth::user();
 
@@ -194,10 +205,20 @@ class PatientController extends Controller
             whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
             where("taux","<",100)->get();
         }else{
-            $patients = DB::table('patients')->
-            join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
-            whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
-            where("year",$annee)->where("taux","<",100)->get();
+            if($mois =="" || $mois =="all"){
+                $patients = DB::table('patients')->
+                join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+                whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+                where("year",$annee)->where("taux","<",100)->get();
+            }else{
+                $patients = DB::table('patients')->
+                join("handicaps","handicaps.id_handicap","=","patients.handicap")->whereNotNull("confirmed_by")->
+                whereNull("rejected_by")->whereNull("desisted_by")->whereNull("desistement")->
+                where("date_card",">=",$annee."-".$mois."-01")->
+                where("date_card","<=",$annee."-".$mois."-31")->
+                where("taux","<",100)->get();
+            }
+            
         }
 
         if($annee == "all" || $annee ==""){

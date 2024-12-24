@@ -42,6 +42,24 @@
                     <?php for($i = 2000; $i < 2150; $i++){ ?>
                         <option>{{$i}}</option>
                     <?php } ?>
+                </select>
+                <label style="display : flex; justify-content : left; align-items : end;" class="control-label col-md-1">الشهر</label>
+                <select style="text-align : center;" onchange="month_changed(this.value)" class="form-control col-md-2">
+                    @if(isset($mois))
+                        @if($mois =="all")
+                            <option style="visibility : hidden" value="all">جميع الأشهر</option>
+                        @else
+                            <option style="visibility : hidden">{{$mois}}</option>
+                        @endif
+                    @endif
+                    <option value="all">جميع الأشهر</option>
+                    <?php for($i = 1; $i < 10; $i++){ ?>
+                        <option>0{{$i}}</option>
+                    <?php } ?>
+                    <?php for($i = 10; $i < 13; $i++){ ?>
+                        <option>{{$i}}</option>
+                    <?php } ?>
+                    
                     </select>
             </div>
                 <!-- Begin Page Content -->
@@ -220,10 +238,21 @@ window.onload = function(){
 function year_changed(value){
     window.location.href ="/stats/"+value;
 }
-
+function month_changed(value){
+    year = "{{$annee}}";
+    if(year =="all"){
+        year ="{{Date('Y')}}";
+    }
+    window.location.href ="/stats/"+year+"/"+value;
+}
 function get_stats(){
     year = "{{$annee}}";
+    month = "{{$mois}}";
     link = "/get_stats/"+year;
+    if(month != ""){
+        link = "/get_stats/"+year+"/"+month;
+    }
+
     $.ajax({
         url: link,
         method: "GET",  

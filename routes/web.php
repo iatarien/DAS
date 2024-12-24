@@ -34,8 +34,8 @@ Route::post('/insert_patient', 'PatientController@insert_patient');
 Route::post('/update_patient', 'PatientController@update_patient');
 Route::post('/confirm_patient', 'PatientController@confirm_patient');
 
-Route::get('/stats/{annee?}', 'PatientController@stats');
-Route::get('/get_stats/{annee?}', 'PatientController@get_stats');
+Route::get('/stats/{annee?}/{mois?}', 'PatientController@stats');
+Route::get('/get_stats/{annee?}/{mois?}', 'PatientController@get_stats');
 
 /** USER ROUTES **/
 Route::get('/users', 'UsersController@users');

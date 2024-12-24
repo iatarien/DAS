@@ -79,8 +79,9 @@ $type_ar ="";
         <div style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm;" >
             	<div style="display : inline">
 					<div style="height : 20mm; width : 22mm; border : 0.54mm solid; display : inline-block;"></div>
-					<div class="show" id="again" style="height : 20mm; width : 22mm; display : none; position : absolute; margin-right : 50px;">
-						<br> نسخة ثانية</div>
+					<div contenteditable="true" dir="rtl" class="show" id="again" style="height : 20mm; width : 22mm; display : none; position : absolute; margin-right : 50px;">
+						<br> نسخة ثانية
+					</div>
 				</div>
 				
             	<div id="id-names"  style="display : flex; margin-top : {{$paddings->names}}mm; justify-content: center; align-items : center"><span > اللقب : </span>
@@ -88,7 +89,12 @@ $type_ar ="";
                 <div  style="display : flex; justify-content: center; align-items : center">الاسم : </span>
 				<span class="show_small">{{$patient->prenom}}</span></div>
                 <div id="id-date_N"   style="display : flex; justify-content: center; margin-top : {{$paddings->date_N}}mm; align-items : center"> <span> تاريخ و مكان الميلاد : </span>
-				<span class="show_big" style="width : 40%;">{{$patient->date_naissance}}</span></div>
+				<span class="show_big" style="width : 50%;" contenteditable ="true">
+					<span class="show" id="presume" style="display : none; width : 20%;">
+						خلال
+					</span>
+					{{$patient->date_naissance}}
+				</span></div>
 				<div id="id-lieu_N" style="text-align : center; margin-top : {{$paddings->lieu_N}}mm; "><span class="show"> بــ : {{$patient->lieu_naissance}}</span><br></div>
 
 				<div id="id-adresse" style="text-align : center; margin-top : {{$paddings->adresse}}mm; ">
@@ -108,6 +114,14 @@ $type_ar ="";
 
 	</div>
 </section>
+
+<br>
+<div class="form-group" dir="rtl">
+<label>    خلال : </label>
+<input type="checkbox"  
+onclick="presume(this.id)" id="presume_checkbox"
+style="width : 5%; text-align : center;" />
+</div>
 <br>
 <div class="form-group" dir="rtl">
 <label> طبيعة و نسبة الإعاقة : </label>
@@ -164,11 +178,12 @@ onchange="changed(this.id, this.value)" id="num"
 style="width : 40%; text-align : center;" />
 </div><br>
 <div class="form-group" dir="rtl">
-<label>   تسخة ثانية : </label>
+<label>   نسخة ثانية : </label>
 <input type="checkbox"  
 onclick="la_again(this.id)" id="le_checkbox"
 style="width : 5%; text-align : center;" />
 </div><br>
+
 <br><br>
 <div align="center">
 	<button id="bouton" style="
@@ -225,6 +240,16 @@ function la_again(id) {
 		document.getElementById('again').style.display = "inline-block";
 	}else{
 		document.getElementById('again').style.display = "none";
+	}
+	
+}
+function presume(id) {
+	value = document.getElementById(id).checked;
+	console.log(value);
+	if(value){
+		document.getElementById('presume').style.display = "inline-block";
+	}else{
+		document.getElementById('presume').style.display = "none";
 	}
 	
 }
