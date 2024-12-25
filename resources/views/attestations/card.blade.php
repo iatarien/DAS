@@ -89,12 +89,8 @@ $type_ar ="";
                 <div  style="display : flex; justify-content: center; align-items : center">الاسم : </span>
 				<span class="show_small">{{$patient->prenom}}</span></div>
                 <div id="id-date_N"   style="display : flex; justify-content: center; margin-top : {{$paddings->date_N}}mm; align-items : center"> <span> تاريخ و مكان الميلاد : </span>
-				<span class="show_big" style="width : 50%;" contenteditable ="true">
-					<span class="show" id="presume" style="display : none; width : 20%;">
-						خلال
-					</span>
-					{{$patient->date_naissance}}
-				</span></div>
+					<span class="show_big" style="width : 50%;" contenteditable ="true" dir="ltr" id="presume">{{$patient->date_naissance}}</span>
+				</div>
 				<div id="id-lieu_N" style="text-align : center; margin-top : {{$paddings->lieu_N}}mm; "><span class="show"> بــ : {{$patient->lieu_naissance}}</span><br></div>
 
 				<div id="id-adresse" style="text-align : center; margin-top : {{$paddings->adresse}}mm; ">
@@ -114,12 +110,12 @@ $type_ar ="";
 
 	</div>
 </section>
-
+<input type="hidden" id="real_date_N" value="{{$patient->date_naissance}}"/>
 <br>
 <div class="form-group" dir="rtl">
 <label>    خلال : </label>
 <input type="checkbox"  
-onclick="presume(this.id)" id="presume_checkbox"
+onclick="presume(this.id,this.checked)" id="presume_checkbox"
 style="width : 5%; text-align : center;" />
 </div>
 <br>
@@ -243,16 +239,21 @@ function la_again(id) {
 	}
 	
 }
-function presume(id) {
-	value = document.getElementById(id).checked;
-	console.log(value);
-	if(value){
-		document.getElementById('presume').style.display = "inline-block";
+function presume(id,checked) {
+	if(checked){
+		str = document.getElementById("presume").innerHTML;
+		const indexs = [5,6,8,9];
+
+		indexs.forEach(function(index, i) {
+			str = str.slice(0, index) +"X"+ str.slice(index + 1);
+		});
+		document.getElementById("presume").innerHTML = str;
 	}else{
-		document.getElementById('presume').style.display = "none";
+		document.getElementById("presume").innerHTML = document.getElementById("real_date_N").value;
 	}
 	
 }
+
 function changed(id,value){
 	document.getElementById('id-'+id).style.marginTop =  value+"mm";
 	link = "/paddings/"+id+"/"+value;
