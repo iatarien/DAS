@@ -52,7 +52,7 @@
 <?php
 $type_ar ="";
 ?>
-<section  style="background-color: lightblue; margin-top : 6mm; font-weight : bold; font-size: 3.8mm;" id="fiche" dir="rtl">
+<section  style="background-color: lightblue; margin-top : 6mm; font-weight : bold; font-size: {{$paddings->card_F}}mm;" id="fiche" dir="rtl">
 	<div id="fiche_top" style="display: flex; justify-content: center; border : 1px solid; height : 99.6mm;">
         <div style="width : 50%; border : 1px solid; padding-right : 5mm; padding-left : 8mm;" >
             <div id="id-handicap" style="display : flex; justify-content: center; margin-top : {{$paddings->handicap}}mm; align-items : center"><span >طبيعة الإعاقة : </span>
@@ -114,11 +114,25 @@ $type_ar ="";
 <br>
 <div class="form-group" dir="rtl">
 <label>    خلال : </label>
+@if($patient->presume != NULL && $patient->presume != 0)
 <input type="checkbox"  
-onclick="presume(this.id,this.checked)" id="presume_checkbox"
+onclick="presume(this.id,this.checked)" id="presume_checkbox" checked
 style="width : 5%; text-align : center;" />
 </div>
+@else
+<input type="checkbox" 
+onclick="presume(this.id,this.checked)" id="presume_checkbox"
+style="width : 5%; text-align : center;" />
+</div>			
+@endif
+
 <br>
+<div class="form-group" dir="rtl">
+<label> حجم الخط : </label>
+<input type="number" value ="{{$paddings->card_F}}" onkeyup="changed(this.id, this.value)"
+onchange="changed(this.id, this.value)" id="card_F" step="0.1"
+style="width : 40%; margin-left : 10%; text-align : center;" />
+</div><br>
 <div class="form-group" dir="rtl">
 <label> طبيعة و نسبة الإعاقة : </label>
 <input type="number" value ="{{$paddings->handicap}}" onkeyup="changed(this.id, this.value)"
@@ -229,6 +243,9 @@ style="width : 5%; text-align : center;" />
 window.onbeforeunload = function () {
     window.close();
 };
+@if($patient->presume != NULL && $patient->presume != 0)
+presume("presume_checkbox",true);				
+@endif
 function la_again(id) {
 	value = document.getElementById("le_checkbox").checked;
 	console.log(value);
@@ -239,6 +256,21 @@ function la_again(id) {
 	}
 	
 }
+function post_presume(id,value){
+	link = "/set_presume/"+id+"/"+value;
+	console.log(link);
+    $.ajax({
+        url: link,
+        method: "GET",  
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 function presume(id,checked) {
 	if(checked){
 		str = document.getElementById("presume").innerHTML;
@@ -248,14 +280,21 @@ function presume(id,checked) {
 			str = str.slice(0, index) +"X"+ str.slice(index + 1);
 		});
 		document.getElementById("presume").innerHTML = str;
+		post_presume("{{$patient->id_patient}}",1);
 	}else{
 		document.getElementById("presume").innerHTML = document.getElementById("real_date_N").value;
+		post_presume("{{$patient->id_patient}}","NULL");
 	}
 	
 }
 
 function changed(id,value){
-	document.getElementById('id-'+id).style.marginTop =  value+"mm";
+	if(id =="card_F"){
+		document.getElementById('fiche').style.fontSize =  value+"mm";
+	}else{
+		document.getElementById('id-'+id).style.marginTop =  value+"mm";
+	}
+
 	link = "/paddings/"+id+"/"+value;
     $.ajax({
         url: link,

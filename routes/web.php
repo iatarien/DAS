@@ -17,6 +17,7 @@ Route::get('/close', 'ReserveController@close');
 
 Route::get('/unique', 'HandicapController@unique');
 
+Route::get('/set_presume/{id}/{val}', 'PatientController@set_presume');
 
 /** PATIENT ROUTES **/
 

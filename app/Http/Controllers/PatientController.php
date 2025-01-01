@@ -59,6 +59,12 @@ class PatientController extends Controller
         return view('patients.patients',['user' => $user,"patients"=>$patients,"patients0"=>$patients0]);
         
     }
+    public function set_presume($id,$val)
+    {   
+        DB::table('patients')->where("id_patient",$id)->update(["presume"=>$val]);
+        echo $id." ".$val;
+        return "success";     
+    }
     public function validate_patient($id)
     {   
         $user = Auth::user();

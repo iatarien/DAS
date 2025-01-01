@@ -1,1 +1,8 @@
 ALTER TABLE `company` ADD `padding` INT NULL AFTER `direction_fr`;
+
+ALTER TABLE `patients` ADD `presume` SMALLINT(1) NULL AFTER `desisted_by`;
+
+ALTER TABLE `paddings` ADD `card_F` VARCHAR(10) NULL AFTER `num`, ADD `card_B` VARCHAR(10) NULL AFTER `card_F`;
+
+UPDATE `paddings` SET `card_F` = '3.8' WHERE `paddings`.`id` = 1;
+UPDATE `paddings` SET `card_B` = '4.2' WHERE `paddings`.`id` = 1;

@@ -54,7 +54,7 @@ $type_ar ="";
 			</div>
 
         </div>
-        <div style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm; font-size: 3.8mm; text-align : center;" >
+        <div  style="width : 50%; border : 1px solid; padding-right : 3mm; padding-left : 8mm; padding-top : 2mm; font-size: 3.8mm; text-align : center;" >
             <span> الجمهورية الجزائرية الديمقراطية الشعبية</span>
 			<hr style="border-color : black; width : 28mm; margin-top : 0;"><br>
 			<span>وزارة {{$ministere}}</span>
@@ -62,7 +62,7 @@ $type_ar ="";
 			<div style="font-size : 8mm; text-align : center;">
               بطاقة الشخص المعوق
 			</div>
-			<div id="le_div" style="display : flex; font-size : 4.2mm;  justify-content: center; align-items : center; padding-top : {{$padding}}mm;" class="show">
+			<div id="le_div" style="display : flex; font-size : {{$paddings->card_B}}mm;  justify-content: center; align-items : center; padding-top : {{$padding}}mm;" class="show">
 			<span id="hide">الرقم :&emsp;</span> <div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-right : none; border-top : none; border-bottom : none;display : flex; justify-content: center; align-items : center">
 			<span class="show">{{$patient->num_card}}</span></div>
 			<div style="height : 11mm; width : 10mm; border : 0.54mm solid; border-top : none; border-bottom : none; border-right : none; border-left : none; display : flex; justify-content: center; align-items : center">
@@ -76,11 +76,17 @@ $type_ar ="";
 
 	</div>
 </section>
-
 <br><br>
+<div class="form-group" dir="rtl" style="text-align : center;">
+<label> حجم الخط : </label>
+<input type="number" value ="{{$paddings->card_B}}" onkeyup="changed1(this.value)"
+onchange="changed1(this.value)" id="card_B" step="0.1"
+style="width : 40%; margin-left : 30%; text-align : center;" />
+</div><br>
+
 <input type="number" value ="{{$padding}}" onkeyup="changed(this.value)"
 onchange="changed(this.value)" id="le_input"
-style="width : 40%; margin-left : 30%; text-align : center;" />
+style="width : 40%; margin-left : 40%; text-align : center;" />
 <br><br>
 <div align="center">
 	<button id="bouton" style="
@@ -133,6 +139,21 @@ window.onbeforeunload = function () {
 function changed(value){
 	document.getElementById('le_div').style.paddingTop =  value+"mm";
 	link = "/padding/"+value;
+    $.ajax({
+        url: link,
+        method: "GET",  
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+function changed1(value){
+	document.getElementById('le_div').style.fontSize =  value+"mm";
+	link = "/paddings/card_B/"+value;
+	console.log(link);
     $.ajax({
         url: link,
         method: "GET",  

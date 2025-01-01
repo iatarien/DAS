@@ -68,7 +68,12 @@ if($type =="fiche_info"){
             <p contenteditable="true" style="font-size : 5.5mm; text-align : justify;">نحن مدير {{$direction}} لولاية {{$ville}} : <br><br>
             أشهد بأن السيد(ة) : <strong>{{$patient->nom}} {{$patient->prenom}}</strong><br>
 			<?php $dn = new DateTime($patient->date_naissance); ?>
-            المولود(ة) بتاريخ : <strong>{{ $dn->format('d-m-Y')}}</strong>&emsp;&emsp; بــ : <strong>{{$patient->lieu_naissance}}</strong><br>
+			@if($patient->presume != NULL && $patient->presume != 0)
+				المولود(ة) بتاريخ : <strong id="la_dn"><span style="color : transparent;">Y</span>{{ $dn->format('Y')}}-XX-XX</strong>&emsp;&emsp; 
+			@else
+				المولود(ة) بتاريخ : <strong id="la_dn">{{ $dn->format('d-m-Y')}}</strong>&emsp;&emsp; 
+			@endif
+			بــ : <strong>{{$patient->lieu_naissance}}</strong><br>
             ابن : <strong>{{$patient->father}}</strong>&emsp;&emsp; و : <strong>{{$patient->mother}}</strong><br>
             الساكن(ة) بـ : <strong>{{$patient->adresse}}</strong><br>
             من فئة المعاقين : <strong>{{$patient->name_handicap}}</strong>&emsp;&emsp;<strong>%{{$patient->taux}}</strong><br><br>
@@ -123,7 +128,15 @@ window.onbeforeunload = function () {
 };
 
 
-
+@if($patient->presume != NULL && $patient->presume != 0)
+// var dateElement = document.getElementById("la_dn");
+// dateElement.innerText = dateElement.innerText.replaceAll("_","-");
+// dateElement.innerText = dateElement.innerText.replaceAll("YY"," ");
+// var dateText = dateElement.innerText;
+// var parts = dateText.split("-");
+// console.log(parts);
+// dateElement.innerText = `${parts[2]}-${parts[0]}-${parts[1]}`;
+@endif
 function convert(num){
 	num = ""+ num;
 	var num1 = num;
