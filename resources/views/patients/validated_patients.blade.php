@@ -64,7 +64,8 @@
                                             <th>بطاقة معوق</th>   
                                             <th >بطاقة معلومات</th>  
                                             <th >شهادة معلومات</th>  
-                                            <th >شهادة إدارية</th>  
+                                            <th >شهادة إدارية</th> 
+                                            <th > مقرر</th>   
                                             <th>الملف الطبي</th>  
                                             <th>تعديل</th>  
                                             <th>حذف</th> 
@@ -91,6 +92,9 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-default" style="border : 1px solid black;" href="/fiche/{{$patient->id_patient}}/att_admin">شهادة إدارية</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-default" style="border : 1px solid black;" href="/decision/{{$patient->id_patient}}">مقرر</a>
                                             </td>
                                             <?php $no_file ="disabled"; ?>
                                             @if($patient->medical_file != NULL && $patient->medical_file != "")

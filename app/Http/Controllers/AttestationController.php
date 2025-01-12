@@ -43,6 +43,18 @@ class AttestationController extends Controller
         return view($view,['user'=> $user,"patient"=>$patient,"type"=>$type,"paddings"=>$paddings]);
 
     }
+    public function decision($id)
+    {   
+        $user = Auth::user();
+        $patient = DB::table('patients')->join("handicaps","handicaps.id_handicap","=","patients.handicap")->where("id_patient",$id)->first();
+        $commune = DB::table("communes")->where("code",$patient->commune)->first();
+        if(isset($commune) && $commune != NULL){
+            $commune = $commune->commune_name;
+        }
+        $view = 'attestations.decision';
+        return view($view,['user'=> $user,"patient"=>$patient,"commune"=>$commune]);
+
+    }
     public function get_last($handicap)
     {   
         $user = Auth::user();

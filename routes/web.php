@@ -49,6 +49,7 @@ Route::post('/chnage_profile_photo','UsersController@chnage_profile_photo');
 /** ATTESTATIONS ROUTES */
 
 Route::get('/fiche/{id}/{type}', 'AttestationController@fiche');
+Route::get('/decision/{id}/', 'AttestationController@decision');
 Route::get('/get_last/{handicap}', 'AttestationController@get_last');
 Route::get('/padding/{val}', 'AttestationController@padding');
 Route::get('/paddings/{name}/{val}', 'AttestationController@paddings');
